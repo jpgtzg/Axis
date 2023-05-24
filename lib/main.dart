@@ -1,7 +1,7 @@
 /// Written by Juan Pablo Gutiérrez
 /// 23 - 05 - 2023
 
-import 'package:axisscouting/home_screen.dart';
+import 'package:axis/widget/bottom_bar_interface.dart';
 import 'package:flutter/material.dart';
 void main() => runApp(const App());
 
@@ -17,7 +17,7 @@ class App extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: const BottomBarInterface(),
     );
   }
 }
