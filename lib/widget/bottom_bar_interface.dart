@@ -1,5 +1,7 @@
 /// Written by Juan Pablo Gutiérrez
 /// 23 - 05 - 2023
+///
+/// Represents the bottom bar interface on the main page
 
 import 'package:axis/screens/statistics_screen.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
@@ -29,13 +31,13 @@ class _BottomBarInterfaceState extends State<BottomBarInterface> {
             setState(() => currentIndex = index);
           },
           children: <Widget>[
-            const StatisticScreen(),
             Container(
               color: Colors.green,
             ),
             Container(
               color: Colors.blue,
             ),
+            const StatisticScreen(),
           ],
         ),
       ),
