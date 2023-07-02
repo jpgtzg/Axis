@@ -12,20 +12,21 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.only(
-          top: 3,
-          bottom: 3,
-          left: 2,
-          right: 2,
-        ),
-        child: Column(
-          children: [
-            BigButton(title: "Scouting", pressAction: () {}, image: null),
-            BigButton(title: "Scouting", pressAction: () {}, image: null),
-            BigButton(title: "Scouting", pressAction: () {}, image: null)
-          ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.only(
+            top: 3,
+            bottom: 3,
+            left: 2,
+            right: 2,
+          ),
+          child: Column(
+            children: [
+              BigButton(title: "Scouting", pressAction: () {}, image: null),
+              BigButton(title: "Scouting", pressAction: () {}, image: null),
+              BigButton(title: "Scouting", pressAction: () {}, image: null)
+            ],
+          ),
         ),
       ),
     );
