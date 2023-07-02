@@ -4,7 +4,6 @@
 /// Main file
 
 import 'package:axis/screens/homepage.dart';
-import 'package:axis/widget/bottom_bar_interface.dart';
 import 'package:flutter/material.dart';
 void main() => runApp(const App());
 
