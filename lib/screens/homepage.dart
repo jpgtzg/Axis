@@ -22,9 +22,9 @@ class HomePage extends StatelessWidget {
           ),
           child: Column(
             children: [
-              BigButton(title: "Scouting", pressAction: () {}, image: null),
-              BigButton(title: "Scouting", pressAction: () {}, image: null),
-              BigButton(title: "Scouting", pressAction: () {}, image: null)
+              BigButton(title: "Scouting", pressAction: () => print("Scouting"), image: null),
+              BigButton(title: "Scouting", pressAction: () => print("Scouting"), image: null),
+              BigButton(title: "Scouting", pressAction: () => print("Scouting"), image: null)
             ],
           ),
         ),
