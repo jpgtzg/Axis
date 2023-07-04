@@ -22,7 +22,7 @@ class SelectionButton extends StatelessWidget {
             left: 25,
           ),
           decoration: BoxDecoration(
-            color: const Color(0xff1E91D6),
+            color: Theme.of(context).primaryColor,
             borderRadius: BorderRadius.circular(25),
           ),
           child: Stack(

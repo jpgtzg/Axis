@@ -233,6 +233,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0"
+  firebase_core:
+    dependency: "direct main"
+    description:
+      name: firebase_core
+      sha256: a4a99204da264a0aa9d54a332ea0315ce7b0768075139c77abefe98093dd98be
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.14.0"
+  firebase_core_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_core_platform_interface
+      sha256: b63e3be6c96ef5c33bdec1aab23c91eb00696f6452f0519401d640938c94cba2
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.8.0"
+  firebase_core_web:
+    dependency: transitive
+    description:
+      name: firebase_core_web
+      sha256: "0fd5c4b228de29b55fac38aed0d9e42514b3d3bd47675de52bf7f8fccaf922fa"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.6.0"
   fixnum:
     dependency: transitive
     description:
@@ -256,6 +280,11 @@ packages:
     version: "2.0.1"
   flutter_test:
     dependency: "direct dev"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
+  flutter_web_plugins:
+    dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
@@ -284,13 +313,13 @@ packages:
     source: hosted
     version: "2.3.0"
   http:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http
-      sha256: "5895291c13fa8a3bd82e76d5627f69e0d85ca6a30dcac95c4ea19a5d555879c2"
+      sha256: "759d1a329847dd0f39226c688d3e06a6b8679668e350e2891a6474f8b4bb8525"
       url: "https://pub.dev"
     source: hosted
-    version: "0.13.6"
+    version: "1.1.0"
   http_multi_server:
     dependency: transitive
     description:
@@ -411,6 +440,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.3"
+  plugin_platform_interface:
+    dependency: transitive
+    description:
+      name: plugin_platform_interface
+      sha256: "6a2128648c854906c53fa8e33986fc0247a1116122f9534dd20e3ab9e16a32bc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.4"
   pool:
     dependency: transitive
     description:
@@ -439,26 +476,26 @@ packages:
     dependency: "direct main"
     description:
       name: realm
-      sha256: e9c63a5a982dd4357ba7f13a4dac7cdcf4eb6ec837f2f043a51ba414f4973337
+      sha256: "818bd06d65cf736dab3e41111a9f641d129083a6056788544ea6a94697fbac2e"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "1.3.0"
   realm_common:
     dependency: transitive
     description:
       name: realm_common
-      sha256: e31f72feddb77e7dcfb9a8a0d19c25c79d71ecf6d873de8801b9d58cc29b5a5e
+      sha256: b7fefe203362d9afc21094fdc1d97c9ada95c25f80fc5c352a0dd3f3cbf34625
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "1.3.0"
   realm_generator:
     dependency: transitive
     description:
       name: realm_generator
-      sha256: "9af5252323e19ba4cd63e984b5aad20a3f809d79a6fee7779ef959456b2bb78e"
+      sha256: "22a3b16b3f1830af221d7b07c847e85a44873a82d8b90f67bdd81cc4a2b64f2a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "1.3.0"
   sane_uuid:
     dependency: transitive
     description:
@@ -609,5 +646,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=3.0.0 <4.0.0"
-  flutter: ">=3.0.3"
+  dart: ">=3.0.2 <4.0.0"
+  flutter: ">=3.10.2"

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "570730126339",
+    "project_id": "axis-60c0f",
+    "storage_bucket": "axis-60c0f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:570730126339:android:d152157017efff9afbc236",
+        "android_client_info": {
+          "package_name": "com.example.axisscouting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "570730126339-vudv2dhj369mku0eg6m7b02uqnspdtrf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxGgMh4RebL7cI7B97blCf0JfCmCt3yM0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "570730126339-vudv2dhj369mku0eg6m7b02uqnspdtrf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "570730126339-qim3db2criimv8jhi80io726lnapinlq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.axisscouting"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
