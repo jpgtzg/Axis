@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 
 /* Widget configuration */
-const double standartSpacerHeight = 20;
+const double standartSpacerHeight = 30;
 
 /* Text Configuration */
 const String fontFamily = "Manrope";

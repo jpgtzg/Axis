@@ -35,25 +35,40 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const AxisLogo(),
-              const StandardSpacer(),
-              CarouselSlider(
-                options: CarouselOptions(
-                  enableInfiniteScroll: true,
-                  aspectRatio: 16 / 9,
-                  enlargeCenterPage: true,
-                ),
-                items: imgList
-                    .map(
-                      (item) => Image.network(
-                        item,
-                        fit: BoxFit.cover,
-                        width: MediaQuery.of(context).size.width / (1 / 8),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const StandardSpacer(),
+                      CarouselSlider(
+                        options: CarouselOptions(
+                          enableInfiniteScroll: true,
+                          aspectRatio: 16 / 9,
+                          enlargeCenterPage: true,
+                        ),
+                        items: imgList
+                            .map(
+                              (item) => Image.network(
+                                item,
+                                fit: BoxFit.cover,
+                                width:
+                                    MediaQuery.of(context).size.width / (1 / 8),
+                              ),
+                            )
+                            .toList(),
                       ),
-                    )
-                    .toList(),
+                      const StandardSpacer(),
+                      SelectionButton(),
+                      const StandardSpacer(),
+                      SelectionButton(),
+                      const StandardSpacer(),
+                      SelectionButton(),
+                      const StandardSpacer(),
+                      SelectionButton()
+                    ],
+                  ),
+                ),
               ),
-              const StandardSpacer(),
-              SelectionButton(),
             ],
           ),
         ),
