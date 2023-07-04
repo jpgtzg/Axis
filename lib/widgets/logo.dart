@@ -10,15 +10,10 @@ class AxisLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 200,
-      height: 100,
-      color: Colors.black,
-      child: Center(
-        child: Text(
-          "Axis",
-          style: bigTextStyle,
-        ),
+    return const Center(
+      child: Text(
+        "Axis",
+        style: bigTextStyle,
       ),
     );
   }

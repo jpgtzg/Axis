@@ -4,9 +4,15 @@
 /// Main file
 
 import 'package:axis/screens/home_screen.dart';
+import 'package:axis/system/tba/team/team_getter.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(const App());
+import 'constants.dart';
+
+void main() {
+  getTeamEvents();
+  runApp(const App());
+}
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -16,9 +22,8 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Axis Scouting',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
+      theme:
+          ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: paleteBlue)),
       home: const HomeScreen(),
     );
   }

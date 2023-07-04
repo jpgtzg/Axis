@@ -1,6 +1,8 @@
 /// Written by Juan Pablo Gutiérrez
 /// 02 - 07 - 2023
 
+import 'package:axis/constants.dart';
+import 'package:axis/widgets/gradient_scaffold.dart';
 import 'package:axis/widgets/logo.dart';
 import 'package:axis/widgets/selection_button.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -17,24 +19,32 @@ final List<String> imgList = [
   'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
 ];
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GradientScaffold(
+      gradient: backGroundGradient,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+          padding: const EdgeInsets.only(left: 15.0, right: 15.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const AxisLogo(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const AxisLogo(),
+                    IconButton(
+                      onPressed: () => print("PRESSED"),
+                      icon: menuIcon,
+                    ),
+                  ],
+                ),
+              ),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
