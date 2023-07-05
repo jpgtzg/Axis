@@ -1,8 +1,9 @@
 /// Written by Juan Pablo Gutiérez
 /// 02 - 07 - 2023
 
-import 'package:axis/constants.dart';
 import 'package:flutter/material.dart';
+
+import '../constants.dart';
 
 class SelectionButton extends StatelessWidget {
   const SelectionButton({super.key});
@@ -32,12 +33,7 @@ class SelectionButton extends StatelessWidget {
                 child: Text(
                   "Scouting",
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    /* fontFamily: "Manrope", */
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 25,
-                  ),
+                  style: defaultStyle,
                 ),
               ),
               Positioned(
@@ -55,11 +51,7 @@ class SelectionButton extends StatelessWidget {
                     child: Text(
                       "Seleccionar",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
+                      style: substitleStyle,
                     ),
                   ),
                 ),
