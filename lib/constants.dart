@@ -9,8 +9,18 @@ const double standartSpacerHeight = 30;
 /* Text Configuration */
 const String fontFamily = "Manrope";
 
-const TextStyle defaultStyle = TextStyle();
+const TextStyle defaultStyle = TextStyle(
+  fontFamily: fontFamily,
+  color: Colors.white,
+  fontWeight: FontWeight.w700,
+  fontSize: 25,
+);
 
+const TextStyle substitleStyle = TextStyle(
+  fontSize: 15,
+  fontWeight: FontWeight.w700,
+  color: Colors.white,
+);
 const TextStyle bigTextStyle = TextStyle(
   fontFamily: fontFamily,
   fontWeight: FontWeight.bold,
