@@ -1,6 +1,7 @@
 /// Written by Juan Pablo Gutiérrez
 /// Gets team-related data
-import 'package:axis/system/tba/team/event.dart';
+import 'package:axis/system/tba/event/event.dart';
+import 'package:axis/system/tba/team/match.dart';
 
 import '../tba_constants.dart';
 import '../tba_manager.dart';
@@ -13,9 +14,9 @@ import '../tba_manager.dart';
 /// @return An event List, might be null if no data was obtained
 Future<List<Event>?> getTeamEvents(int year, bool order) async {
   final url =
-      "$baseURL/team/frc$teamNum/events/${year.toString()}?X-TBA-Auth-Key=$AUTHKEY";
+      "$baseURL/team/frc$teamNum/events/${year.toString()}$authURL";
 
-  final data = await getData(url);
+  final data = await getListData(url);
 
   if (data == null) return null;
 
@@ -46,4 +47,87 @@ Future<List<Event>?> getTeamEvents(int year, bool order) async {
   }
 
   return eventList;
+}
+
+/// Gets events an a List of matches for a specific event
+///
+/// @param {Event} event Event from which to list the matches
+///
+/// @return A Match List, might be null if no data was obtained
+Future<List<FRCMatch>?> getTeamMatches(Event event) async {
+  final url =
+      "$baseURL/team/frc$teamNum/event/${event.eventKey}/matches$authURL";
+
+  final data = await getListData(url);
+
+  if (data == null) return null;
+
+  final List<FRCMatch> matchlist = [];
+
+  for (Map<String, dynamic> element in data) {
+    FRCMatch event = FRCMatch.fromJson(element);
+    matchlist.add(event);
+  }
+
+  // Applies selection sort to sort match numbers by ascending order
+
+  List<FRCMatch> finalList = [];
+  List<FRCMatch> qualsList = [];
+  List<FRCMatch> semisList = [];
+
+  for (var element in matchlist) {
+    if (element.matchNumType.startsWith("F")) {
+      finalList.add(element);
+    } else if (element.matchNumType.startsWith("Q")) {
+      qualsList.add(element);
+    } else if (element.matchNumType.startsWith("S")) {
+      semisList.add(element);
+    }
+  }
+
+  matchlist.clear();
+  matchlist.addAll(matchSelectionSort(qualsList, false));
+  matchlist.addAll(matchSelectionSort(semisList, false));
+  matchlist.addAll(matchSelectionSort(finalList, true));
+
+  return matchlist;
+}
+
+/// Applies selection sort to sort the match by type and by number
+///
+/// @return A sorted list of matches
+List<FRCMatch> matchSelectionSort(List<FRCMatch> list, bool finals) {
+  if (finals) {
+    for (var i = 0; i < list.length - 1; i++) {
+      int minNum = i;
+      for (var j = i + 1; j < list.length; j++) {
+        if (int.parse(list[minNum].matchNumType.substring(6, 7)) >
+            int.parse(list[j].matchNumType.substring(6, 7))) {
+          minNum = j;
+        }
+      }
+
+      // Swaps dates
+      var tempEvent = list[minNum];
+      list[minNum] = list[i];
+      list[i] = tempEvent;
+    }
+  } else {
+    for (var i = 0; i < list.length - 1; i++) {
+      int minNum = i;
+      for (var j = i + 1; j < list.length; j++) {
+        if (int.parse(list[minNum].matchNumType.substring(5)) >
+            int.parse(list[j].matchNumType.substring(5))) {
+          minNum = j;
+        }
+      }
+
+      // Swaps dates
+      var tempEvent = list[minNum];
+      list[minNum] = list[i];
+      list[i] = tempEvent;
+    }
+  }
+
+  return list;
 }
