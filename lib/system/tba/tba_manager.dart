@@ -5,21 +5,25 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-//TODO finish
-enum ApiActions {
-  as,
-  teamData,
-}
-
 /// Gets JSON data from specific url
-/// 
+///
 /// @param {String} url Url at which to retrieve information
-/// 
+///
 /// @return A List with parsed JSON data
-Future<List<dynamic>?> getData(String url) async {
+Future<List<dynamic>?> getListData(String url) async {
   final response = await getResponse(url);
-
+  
   return getAsList(response);
+}
+// Gets JSON data from specific url
+///
+/// @param {String} url Url at which to retrieve information
+///
+/// @return A Map with parsed JSON data
+Future<Map?> getMapData(String url) async {
+  final response = await getResponse(url);
+  
+  return getAsMap(response);
 }
 
 /// Gets a response from http uri
@@ -60,6 +64,19 @@ List? getAsList(http.Response response) {
 
   try {
     contentJson = json.decode(content!) as List<dynamic>;
+  } catch (e) {
+    return null;
+  }
+
+  return contentJson;
+}
+
+Map? getAsMap(http.Response response) {
+  final content = processResponse(response);
+
+  final Map contentJson;
+  try {
+    contentJson = json.decode(content!) as Map<String, dynamic>;
   } catch (e) {
     return null;
   }
