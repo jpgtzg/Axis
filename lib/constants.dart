@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 /* Widget configuration */
 const double standartSpacerHeight = 30;
 
+const double smallerSpacerHeight = 10;
+
 /* Text Configuration */
 const String fontFamily = "Manrope";
 
@@ -15,12 +17,20 @@ const TextStyle defaultStyle = TextStyle(
   fontWeight: FontWeight.w700,
   fontSize: 25,
 );
-
-const TextStyle substitleStyle = TextStyle(
-  fontSize: 15,
+const TextStyle smallerDefaultStyle = TextStyle(
+  fontFamily: fontFamily,
   fontWeight: FontWeight.w700,
   color: Colors.white,
+  fontSize: 18,
 );
+
+const TextStyle substitleStyle = TextStyle(
+  fontFamily: fontFamily,
+  fontWeight: FontWeight.w700,
+  color: Colors.white,
+  fontSize: 15,
+);
+
 const TextStyle bigTextStyle = TextStyle(
   fontFamily: fontFamily,
   fontWeight: FontWeight.bold,
