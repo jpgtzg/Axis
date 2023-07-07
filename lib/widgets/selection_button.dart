@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 
 class SelectionButton extends StatelessWidget {
-  const SelectionButton({super.key});
+  final String titleText;
+  const SelectionButton({required this.titleText, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +29,10 @@ class SelectionButton extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              const Positioned(
+              Positioned(
                 left: 2,
                 child: Text(
-                  "Scouting",
+                  titleText,
                   textAlign: TextAlign.center,
                   style: defaultStyle,
                 ),
