@@ -17,17 +17,12 @@ class Event {
       required this.eventType,
       required this.eventKey});
 
-  @override
-  String toString() {
-    return "Name: $name";
-  }
-
   factory Event.fromJson(Map<String, dynamic> jsonEvent) {
     return Event(
         name: jsonEvent["name"] as String,
         startDate: jsonEvent["start_date"] as String,
         endDate: jsonEvent["end_date"] as String,
         eventType: jsonEvent["event_type_string"] as String,
-        eventKey: jsonEvent["event_code"] as String);
+        eventKey: jsonEvent["key"] as String);
   }
 }
