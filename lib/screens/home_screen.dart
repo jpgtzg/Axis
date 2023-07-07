@@ -42,7 +42,9 @@ class HomeScreen extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      const StandardSpacer(),
+                      const StandardSpacer(
+                        height: standartSpacerHeight,
+                      ),
                       FutureBuilder(
                         future: getTeamEvents(DateTime.now().year, true),
                         builder: (context, snapshot) {
@@ -66,14 +68,22 @@ class HomeScreen extends StatelessWidget {
                           );
                         },
                       ),
-                      const StandardSpacer(),
-                      SelectionButton(),
-                      const StandardSpacer(),
-                      SelectionButton(),
-                      const StandardSpacer(),
-                      SelectionButton(),
-                      const StandardSpacer(),
-                      SelectionButton()
+                      const StandardSpacer(
+                        height: standartSpacerHeight,
+                      ),
+                      const SelectionButton(titleText: "Match Scouting"),
+                      const StandardSpacer(
+                        height: standartSpacerHeight,
+                      ),
+                      const SelectionButton(titleText: "Pit Scouting"),
+                      const StandardSpacer(
+                        height: standartSpacerHeight,
+                      ),
+                      const SelectionButton(titleText: "View Data"),
+                      const StandardSpacer(
+                        height: standartSpacerHeight,
+                      ),
+                      const SelectionButton(titleText: "titleText"),
                     ],
                   ),
                 ),
