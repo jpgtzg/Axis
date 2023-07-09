@@ -86,7 +86,7 @@ class RegionalScreen extends StatelessWidget {
                                     }
 
                                     return ListView.builder(
-                                      itemCount: data!.length,
+                                      itemCount: data.length,
                                       itemBuilder: (context, index) {
                                         return Text(
                                           "${data[index].matchNumType} ${(data[index].blueAlliance!.contains("6647")) ? data[index].blueAlliance.toString() : (data[index].redAlliance!.contains("6647")) ? data[index].redAlliance.toString() : "No alliance known yet"}",
@@ -134,7 +134,7 @@ class RegionalScreen extends StatelessWidget {
                                     }
 
                                     return ListView.builder(
-                                      itemCount: data!.length,
+                                      itemCount: data.length,
                                       itemBuilder: (context, index) {
                                         return Text(
                                           "${data[index].rank}. ${data[index].team} : ${data[index].rankingPoints}",

@@ -133,6 +133,12 @@ List<FRCMatch> matchSelectionSort(List<FRCMatch> list, bool finals) {
   return list;
 }
 
+/// Gets image media from team
+/// 
+/// @param {String} teamKey Key of the team to retrieve data from
+/// @param {String} year Year from which to retrieve data from
+/// 
+/// @return String with image url
 Future<String?>? getImageUrl(String teamKey, String year) async {
   final url = "$baseURL/team/frc$teamKey/media/$year$authURL";
 
