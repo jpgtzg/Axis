@@ -134,10 +134,10 @@ List<FRCMatch> matchSelectionSort(List<FRCMatch> list, bool finals) {
 }
 
 /// Gets image media from team
-/// 
+///
 /// @param {String} teamKey Key of the team to retrieve data from
 /// @param {String} year Year from which to retrieve data from
-/// 
+///
 /// @return String with image url
 Future<String?>? getImageUrl(String teamKey, String year) async {
   final url = "$baseURL/team/frc$teamKey/media/$year$authURL";
@@ -146,7 +146,13 @@ Future<String?>? getImageUrl(String teamKey, String year) async {
 
   if (data == null) return null;
 
-  String ur = data[(Random().nextInt(data.length - 2)) + 1]["direct_url"];
+  String imageUrl;
+  while (true) {
+    imageUrl = data[(Random().nextInt(data.length - 2)) + 1]["direct_url"];
 
-  return ur;
+    // Verifies image url directs to an imgur image instead of a cad or youtube url
+    if (imageUrl.contains("imgur")) break;
+  }
+
+  return imageUrl;
 }
