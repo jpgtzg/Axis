@@ -1,5 +1,7 @@
 /// Written by Juan Pablo Gutiérrez
 /// Gets team-related data
+import 'dart:math';
+
 import 'package:axis/system/tba/event/event.dart';
 import 'package:axis/system/tba/team/match.dart';
 
@@ -13,8 +15,7 @@ import '../tba_manager.dart';
 ///
 /// @return An event List, might be null if no data was obtained
 Future<List<Event>?> getTeamEvents(int year, bool order) async {
-  final url =
-      "$baseURL/team/frc$teamNum/events/${year.toString()}$authURL";
+  final url = "$baseURL/team/frc$teamNum/events/${year.toString()}$authURL";
 
   final data = await getListData(url);
 
@@ -130,4 +131,16 @@ List<FRCMatch> matchSelectionSort(List<FRCMatch> list, bool finals) {
   }
 
   return list;
+}
+
+Future<String?>? getImageUrl(String teamKey, String year) async {
+  final url = "$baseURL/team/frc$teamKey/media/$year$authURL";
+
+  final data = await getListData(url);
+
+  if (data == null) return null;
+
+  String ur = data[(Random().nextInt(data.length - 2)) + 1]["direct_url"];
+
+  return ur;
 }
