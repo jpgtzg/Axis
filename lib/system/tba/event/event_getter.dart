@@ -28,3 +28,7 @@ Future<List<Rank>?>? getEventRankings(Event event) async {
 
   return rankingList;
 }
+
+Future<List<dynamic>?>? getEventStatus(Event event) async {
+  return null;
+}
