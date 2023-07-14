@@ -1,11 +1,14 @@
+/// Written by Juan Pablo Gutiérrez
+/// 06 - 07 - 2023
+/// Gets event-related data
+
 import 'package:axis/system/tba/event/event.dart';
 import 'package:axis/system/tba/event/rank.dart';
 import 'package:axis/system/tba/tba_constants.dart';
 import 'package:axis/system/tba/tba_manager.dart';
-
-/// Written by Juan Pablo Gutiérrez
-/// 06 - 07 - 2023
-/// Gets event-related data
+import 'package:axis/system/tba/team/team.dart';
+import 'package:axis/system/tba/team/team_getter.dart';
+import 'package:flutter/foundation.dart';
 
 /// Gets the rankings for a specific event
 ///
@@ -16,7 +19,7 @@ Future<List<Rank>?>? getEventRankings(Event event) async {
   final url = "$baseURL/event/${event.eventKey}/rankings$authURL";
 
   final data = await getMapData(url);
-  
+
   if (data == null) return null;
 
   final List<Rank> rankingList = [];
@@ -29,6 +32,28 @@ Future<List<Rank>?>? getEventRankings(Event event) async {
   return rankingList;
 }
 
-Future<List<dynamic>?>? getEventStatus(Event event) async {
-  return null;
+Future<List<Team>?>? getEventTeams(Event event) async {
+  final url = "$baseURL/event/${event.eventKey}/teams$authURL";
+
+  final data = await getListData(url);
+
+  if (data == null) return null;
+
+  final List<Team> teamsList = [];
+
+  for (Map<String, dynamic> element in data) {
+    Team team = Team.fromJson(element);
+    teamsList.add(team);
+  }
+
+  compute(getListURL, teamsList);
+
+  return teamsList;
+}
+
+void getListURL(List<Team> teamsLists) async{
+  final year = DateTime.now().year.toString();
+  for (var element in teamsLists) {
+    await getImageUrl(element.teamNumber, year);
+  }
 }

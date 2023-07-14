@@ -139,19 +139,27 @@ List<FRCMatch> matchSelectionSort(List<FRCMatch> list, bool finals) {
 /// @param {String} year Year from which to retrieve data from
 ///
 /// @return String with image url
-Future<String?>? getImageUrl(String teamKey, String year) async {
+Future<String> getImageUrl(String teamKey, String year) async {
   final url = "$baseURL/team/frc$teamKey/media/$year$authURL";
 
-  final data = await getListData(url);
+  final List<dynamic>? data = await getListData(url);
 
-  if (data == null) return null;
+  if (data == null)
+    return "https://4.bp.blogspot.com/-3uyUTVhvMuo/WjAGEF31DhI/AAAAAAAAAEU/6EurwWD_ebc8o5bFfWoclQuhjSm1Aj5sQCK4BGAYYCw/s1600/FRC_Logo.svgS.jpg";
 
   String imageUrl;
   while (true) {
-    imageUrl = data[(Random().nextInt(data.length - 2)) + 1]["direct_url"];
+    if (data.length > 1) {
+      int randomIndex = Random().nextInt(data.length - 1) + 1;
+      imageUrl = data[randomIndex]['direct_url'];
+    } else {
+      imageUrl =
+          'https://4.bp.blogspot.com/-3uyUTVhvMuo/WjAGEF31DhI/AAAAAAAAAEU/6EurwWD_ebc8o5bFfWoclQuhjSm1Aj5sQCK4BGAYYCw/s1600/FRC_Logo.svgS.jpg';
+    }
 
-    // Verifies image url directs to an imgur image instead of a cad or youtube url
-    if (imageUrl.contains("imgur")) break;
+    if (imageUrl.contains('imgur') || imageUrl.contains('blogspot')) {
+      break;
+    }
   }
 
   return imageUrl;
