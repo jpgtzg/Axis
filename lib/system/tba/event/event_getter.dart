@@ -2,6 +2,8 @@
 /// 06 - 07 - 2023
 /// Gets event-related data
 
+import 'dart:isolate';
+
 import 'package:axis/system/tba/event/event.dart';
 import 'package:axis/system/tba/event/rank.dart';
 import 'package:axis/system/tba/tba_constants.dart';
@@ -39,21 +41,24 @@ Future<List<Team>?>? getEventTeams(Event event) async {
 
   if (data == null) return null;
 
-  final List<Team> teamsList = [];
+  List<Team> teamsList = [];
 
   for (Map<String, dynamic> element in data) {
     Team team = Team.fromJson(element);
     teamsList.add(team);
   }
 
-  compute(getListURL, teamsList);
+  teamsList = await getListURL(teamsList);
 
   return teamsList;
 }
 
-void getListURL(List<Team> teamsLists) async{
+Future<List<Team>> getListURL(List<Team> teamsLists) async {
   final year = DateTime.now().year.toString();
   for (var element in teamsLists) {
-    await getImageUrl(element.teamNumber, year);
+    String teamURL = await getImageUrl(element.teamNumber, year);
+    element.setImgUrl(teamURL);
   }
+
+  return teamsLists;
 }

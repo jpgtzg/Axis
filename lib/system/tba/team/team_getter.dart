@@ -147,20 +147,20 @@ Future<String> getImageUrl(String teamKey, String year) async {
   if (data == null)
     return "https://4.bp.blogspot.com/-3uyUTVhvMuo/WjAGEF31DhI/AAAAAAAAAEU/6EurwWD_ebc8o5bFfWoclQuhjSm1Aj5sQCK4BGAYYCw/s1600/FRC_Logo.svgS.jpg";
 
-  String imageUrl;
-  while (true) {
-    if (data.length > 1) {
-      int randomIndex = Random().nextInt(data.length - 1) + 1;
-      imageUrl = data[randomIndex]['direct_url'];
-    } else {
-      imageUrl =
-          'https://4.bp.blogspot.com/-3uyUTVhvMuo/WjAGEF31DhI/AAAAAAAAAEU/6EurwWD_ebc8o5bFfWoclQuhjSm1Aj5sQCK4BGAYYCw/s1600/FRC_Logo.svgS.jpg';
-    }
+  String? imageUrl;
 
-    if (imageUrl.contains('imgur') || imageUrl.contains('blogspot')) {
-      break;
+  if (data.length > 1) {
+    for (var i = 0; i < data.length; i++) {
+      var url = data[i]["direct_url"];
+
+      if (url.contains('imgur')) {
+        imageUrl = data[i]['direct_url'];
+        break;
+      }
     }
   }
+
+  imageUrl ??= 'https://4.bp.blogspot.com/-3uyUTVhvMuo/WjAGEF31DhI/AAAAAAAAAEU/6EurwWD_ebc8o5bFfWoclQuhjSm1Aj5sQCK4BGAYYCw/s1600/FRC_Logo.svgS.jpg';
 
   return imageUrl;
 }
