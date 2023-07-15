@@ -1,5 +1,7 @@
 /// Written by Juan Pablo Gutiérrez
 /// 05 - 07 - 2023
+
+import 'package:axis/screens/robot_list_screen.dart';
 import 'package:axis/system/tba/event/event_getter.dart';
 import 'package:axis/system/tba/team/team_getter.dart';
 import 'package:axis/widgets/back_icon.dart';
@@ -41,9 +43,7 @@ class RegionalScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                const StandardSpacer(
-                  height: standartSpacerHeight,
-                ),
+                const StandardSpacer(height: standartSpacerHeight),
                 AspectRatio(
                   aspectRatio: 16 / 9,
                   child: Container(
@@ -149,6 +149,29 @@ class RegionalScreen extends StatelessWidget {
                           ),
                         ),
                       ],
+                    ),
+                  ),
+                ),
+                const StandardSpacer(height: standartSpacerHeight),
+                GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RobotListScreen(event: event),
+                    ),
+                  ),
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: const Center(
+                        child: Text(
+                          "View Teams",
+                          style: defaultStyle,
+                        ),
+                      ),
                     ),
                   ),
                 ),
