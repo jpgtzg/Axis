@@ -52,8 +52,9 @@ class HomeScreen extends StatelessWidget {
                             return const Center(
                               child: CircularProgressIndicator(),
                             );
+                          } else if (snapshot.hasError) {
+                            return Text("${snapshot.error}");
                           }
-
                           final data = snapshot.data;
 
                           return CarouselSlider(

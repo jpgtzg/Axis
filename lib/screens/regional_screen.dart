@@ -71,6 +71,8 @@ class RegionalScreen extends StatelessWidget {
                                       return const Center(
                                         child: CircularProgressIndicator(),
                                       );
+                                    } else if (snapshot.hasError) {
+                                      return Text("${snapshot.error}");
                                     }
 
                                     final data = snapshot.data;
@@ -119,6 +121,8 @@ class RegionalScreen extends StatelessWidget {
                                       return const Center(
                                         child: CircularProgressIndicator(),
                                       );
+                                    } else if (snapshot.hasError) {
+                                      return Text("${snapshot.error}");
                                     }
 
                                     final data = snapshot.data;
@@ -175,6 +179,23 @@ class RegionalScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                const StandardSpacer(height: standartSpacerHeight),
+                GestureDetector(
+                    onTap: () => print("selectedf"),
+                    child: AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(30)),
+                        child: const Center(
+                          child: Text(
+                            "View OPRs",
+                            style: defaultStyle,
+                          ),
+                        ),
+                      ),
+                    ))
               ],
             ),
           ),

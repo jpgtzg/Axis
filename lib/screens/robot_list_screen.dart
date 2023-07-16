@@ -33,8 +33,20 @@ class RobotListScreen extends StatelessWidget {
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Fetching robots..",
+                        style: defaultStyle,
+                      ),
+                      const StandardSpacer(height: standartSpacerHeight),
+                      CircularProgressIndicator(),
+                    ],
+                  ),
                 );
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
               }
 
               final data = snapshot.data;
