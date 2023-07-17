@@ -1,7 +1,5 @@
 /// Written by Juan Pablo Gutiérrez
 /// Gets team-related data
-import 'dart:math';
-
 import 'package:axis/system/tba/event/event.dart';
 import 'package:axis/system/tba/team/match.dart';
 
