@@ -7,6 +7,7 @@ import 'package:axis/system/tba/team/team_getter.dart';
 import 'package:axis/widgets/back_icon.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
 import 'package:axis/widgets/standart_spacer.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -180,22 +181,76 @@ class RegionalScreen extends StatelessWidget {
                   ),
                 ),
                 const StandardSpacer(height: standartSpacerHeight),
-                GestureDetector(
-                    onTap: () => print("selectedf"),
-                    child: AspectRatio(
-                      aspectRatio: 16 / 9,
+                AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
                       child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(30)),
-                        child: const Center(
-                          child: Text(
-                            "View OPRs",
-                            style: defaultStyle,
-                          ),
+                        width: MediaQuery.of(context).size.width,
+                        child: FutureBuilder(
+                          future: getEventRankings(event),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else if (snapshot.hasError) {
+                              return Text("${snapshot.error}");
+                            }
+
+                            final data = snapshot.data;
+
+                            if (data == null || data.isEmpty) {
+                              return const Center(
+                                child: Text(
+                                  "No data was found, check back later",
+                                  style: smallerDefaultStyle,
+                                  textAlign: TextAlign.center,
+                                ),
+                              );
+                            }
+
+                            return BarChart(
+                              BarChartData(
+                                maxY: data[0].rankingPoints + 1,
+                                minY: 0,
+                                //map the data to the bargroups
+                                barGroups: data
+                                    .map(
+                                      (e) => BarChartGroupData(
+                                        groupVertically: true,
+                                        x: int.parse(e.team),
+                                        barRods: [
+                                          BarChartRodData(
+                                            width: 4,
+                                            color: paleteLightBlue,
+                                            toY: e.rankingPoints,
+                                            gradient: const LinearGradient(
+                                              begin: Alignment.topRight,
+                                              end: Alignment.bottomLeft,
+                                              colors: [
+                                                paletePink,
+                                                paletePurple,
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                            );
+                          },
                         ),
                       ),
-                    ))
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -204,3 +259,40 @@ class RegionalScreen extends StatelessWidget {
     );
   }
 }
+
+
+/*
+child: FutureBuilder(
+                                  future: getEventRankings(event),
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    } else if (snapshot.hasError) {
+                                      return Text("${snapshot.error}");
+                                    }
+
+                                    final data = snapshot.data;
+
+                                    if (data == null || data.isEmpty) {
+                                      return const Center(
+                                        child: Text(
+                                          "No data was found, check back later",
+                                          style: smallerDefaultStyle,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      );
+                                    }
+
+                                    return ListView.builder(
+                                      itemCount: data.length,
+                                      itemBuilder: (context, index) {
+                                        return Text(
+                                          "${data[index].rank}. ${data[index].team} : ${data[index].rankingPoints}",
+                                          style: substitleStyle,
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),*/
