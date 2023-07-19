@@ -191,7 +191,7 @@ class RegionalScreen extends StatelessWidget {
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Container(
-                        width: MediaQuery.of(context).size.width,
+                        width: MediaQuery.of(context).size.width + MediaQuery.of(context).size.width + MediaQuery.of(context).size.width + MediaQuery.of(context).size.width,
                         child: FutureBuilder(
                           future: getEventRankings(event),
                           builder: (context, snapshot) {
@@ -224,7 +224,7 @@ class RegionalScreen extends StatelessWidget {
                                     .map(
                                       (e) => BarChartGroupData(
                                         groupVertically: true,
-                                        x: int.parse(e.team),
+                                        x: double.parse(e.team).toInt(),
                                         barRods: [
                                           BarChartRodData(
                                             width: 4,
