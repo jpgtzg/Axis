@@ -2,15 +2,12 @@
 /// 06 - 07 - 2023
 /// Gets event-related data
 
-import 'dart:isolate';
-
 import 'package:axis/system/tba/event/event.dart';
 import 'package:axis/system/tba/event/rank.dart';
 import 'package:axis/system/tba/tba_constants.dart';
 import 'package:axis/system/tba/tba_manager.dart';
 import 'package:axis/system/tba/team/team.dart';
 import 'package:axis/system/tba/team/team_getter.dart';
-import 'package:flutter/foundation.dart';
 
 /// Gets the rankings for a specific event
 ///
