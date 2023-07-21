@@ -3,6 +3,7 @@
 
 import 'package:axis/system/tba/event/event.dart';
 import 'package:axis/system/tba/team/match.dart';
+import 'package:axis/widgets/standart_spacer.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +42,7 @@ class MatchWidget extends StatelessWidget {
         return CarouselSlider(
           options: CarouselOptions(
             enableInfiniteScroll: false,
-            aspectRatio: 16 / 4,
+            aspectRatio: 16 / 3,
             enlargeCenterPage: true,
           ),
           items: data
@@ -62,7 +63,7 @@ class MatchCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 30.0, right: 30.0),
       decoration: BoxDecoration(
         color: Colors.black,
         borderRadius: BorderRadius.circular(30),
@@ -72,27 +73,19 @@ class MatchCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            match.matchNumType,
+            match.matchNumType.toUpperCase(),
             style: substitleStyle,
-          ),
-          const VerticalDivider(
-            thickness: 1,
-            color: Colors.white,
           ),
           Expanded(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
                   match.redAlliance!
                       .toString()
                       .substring(1, match.redAlliance!.toString().length - 1),
                   style: redAllianceStyle,
-                ),
-                const Divider(
-                  thickness: 1,
-                  color: Colors.white,
-                  height: 20,
                 ),
                 Text(
                   match.blueAlliance!
