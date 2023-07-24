@@ -3,7 +3,6 @@
 
 import 'package:axis/system/tba/event/event.dart';
 import 'package:axis/system/tba/team/match.dart';
-import 'package:axis/widgets/standart_spacer.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +31,7 @@ class MatchWidget extends StatelessWidget {
         if (data == null || data.isEmpty) {
           return const Center(
             child: Text(
-              "No data was found, check back later",
+              "No match data was found, check back later",
               style: smallerDefaultStyle,
               textAlign: TextAlign.center,
             ),
