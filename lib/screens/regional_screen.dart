@@ -74,6 +74,7 @@ class RegionalScreen extends StatelessWidget {
                 AspectRatio(
                   aspectRatio: 13 / 9,
                   child: Container(
+                    padding: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(30)),
@@ -115,19 +116,6 @@ class RegionalScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget getTitles(double value, TitleMeta meta) {
-    const style = TextStyle(
-      color: Colors.white,
-      fontWeight: FontWeight.bold,
-      fontSize: 14,
-    );
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 16,
-      child: Text(value.toString().substring(0, value.toString().length - 2)),
     );
   }
 }

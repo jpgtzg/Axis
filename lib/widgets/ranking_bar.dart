@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import '../system/tba/event/rank.dart';
 
 class RankingBar extends StatefulWidget {
-  List<Rank> data;
-  RankingBar({required this.data, super.key});
+  final List<Rank> data;
+  const RankingBar({required this.data, super.key});
 
   @override
   State<StatefulWidget> createState() => RankingBarState();
@@ -41,16 +41,10 @@ class RankingBarState extends State<RankingBar> {
                   height: 38,
                 ),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: BarChart(
-                      mainBarData(),
-                      swapAnimationDuration: animDuration,
-                    ),
+                  child: BarChart(
+                    mainBarData(),
+                    swapAnimationDuration: animDuration,
                   ),
-                ),
-                const SizedBox(
-                  height: 12,
                 ),
               ],
             ),
@@ -64,17 +58,15 @@ class RankingBarState extends State<RankingBar> {
     int x,
     double y, {
     bool isTouched = false,
-    Color? barColor,
     double width = 22,
     List<int> showTooltips = const [],
   }) {
-    barColor ??= Colors.yellow;
     return BarChartGroupData(
       x: x,
       barRods: [
         BarChartRodData(
           toY: y,
-          color: isTouched ? Colors.blue : barColor,
+          color: isTouched ? Colors.blue : Colors.yellow,
           width: width,
           borderSide: isTouched
               ? const BorderSide(color: Colors.yellow)
@@ -88,14 +80,12 @@ class RankingBarState extends State<RankingBar> {
       ],
       showingTooltipIndicators: showTooltips,
     );
-    
   }
 
   BarChartData mainBarData() {
     return BarChartData(
       barTouchData: BarTouchData(
         touchTooltipData: BarTouchTooltipData(
-          tooltipBgColor: Colors.blueGrey,
           tooltipHorizontalAlignment: FLHorizontalAlignment.right,
           tooltipMargin: -10,
           getTooltipItem: (group, groupIndex, rod, rodIndex) {
