@@ -6,6 +6,7 @@ import 'package:axis/widgets/back_icon.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
 import 'package:axis/widgets/match_widget.dart';
 import 'package:axis/widgets/standart_spacer.dart';
+import 'package:axis/widgets/view_teams_button.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -46,30 +47,9 @@ class RegionalScreen extends StatelessWidget {
                 const StandardSpacer(height: standartSpacerHeight),
                 MatchWidget(event: event),
                 const StandardSpacer(height: standartSpacerHeight),
-                GestureDetector(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => RobotListScreen(event: event),
-                    ),
-                  ),
-                  child: AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(30)),
-                      child: const Center(
-                        child: Text(
-                          "View Teams",
-                          style: defaultStyle,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const StandardSpacer(height: standartSpacerHeight),
                 RankingBox(event: event),
+                const StandardSpacer(height: standartSpacerHeight),
+                ViewTeamsButton(event: event),
               ],
             ),
           ),

@@ -10,7 +10,7 @@ import '../../system/tba/event/rank.dart';
 
 class RankingBar extends StatefulWidget {
   final List<Rank> data;
-  const RankingBar({required this.data, super.key});
+  const   RankingBar({required this.data, super.key});
 
   @override
   State<StatefulWidget> createState() => RankingBarState();
@@ -67,7 +67,7 @@ class RankingBarState extends State<RankingBar> {
       barRods: [
         BarChartRodData(
           toY: y,
-          color: isTouched ? Colors.blue : Colors.yellow,
+          color: isTouched ? Colors.blue : paletePink ,
           width: width,
           borderSide: isTouched
               ? const BorderSide(color: Colors.yellow)

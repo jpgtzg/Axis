@@ -19,7 +19,16 @@ class RankingBox extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
-            color: Colors.red, borderRadius: BorderRadius.circular(30)),
+            gradient: const LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                paletePink,
+                paletePurple,
+              ],
+            ),
+            color: Colors.red,
+            borderRadius: BorderRadius.circular(30)),
         child: FutureBuilder(
           future: getEventRankings(event),
           builder: (context, snapshot) {
