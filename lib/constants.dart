@@ -27,7 +27,7 @@ const TextStyle smallerDefaultStyle = TextStyle(
 const TextStyle substitleStyle = TextStyle(
   fontFamily: fontFamily,
   fontWeight: FontWeight.w700,
-  color: Colors.white,
+  color: Colors.white,  
   fontSize: 15,
 );
 
@@ -37,6 +37,21 @@ const TextStyle bigTextStyle = TextStyle(
   color: Colors.white,
   fontSize: 52,
 );
+
+const TextStyle blueAllianceStyle = TextStyle(
+  fontFamily: fontFamily,
+  fontWeight: FontWeight.w700,
+  color: Colors.blue,  
+  fontSize: 15,
+);
+
+const TextStyle redAllianceStyle = TextStyle(
+  fontFamily: fontFamily,
+  fontWeight: FontWeight.w700,
+  color: Colors.red,  
+  fontSize: 15,
+);
+
 
 /* Color configuration */
 const Color paletePink = Color(0xffFF128E);
