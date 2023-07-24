@@ -5,7 +5,8 @@ import 'package:axis/constants.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-import '../system/tba/event/rank.dart';
+import '../../system/tba/event/rank.dart';
+
 
 class RankingBar extends StatefulWidget {
   final List<Rank> data;

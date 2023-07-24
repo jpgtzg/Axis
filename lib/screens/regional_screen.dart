@@ -2,17 +2,15 @@
 /// 05 - 07 - 2023
 
 import 'package:axis/screens/robot_list_screen.dart';
-import 'package:axis/system/tba/event/event_getter.dart';
 import 'package:axis/widgets/back_icon.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
 import 'package:axis/widgets/match_widget.dart';
-import 'package:axis/widgets/ranking_bar.dart';
 import 'package:axis/widgets/standart_spacer.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
 import '../system/tba/event/event.dart';
+import '../widgets/ranking_points/ranking_box.dart';
 
 class RegionalScreen extends StatelessWidget {
   final Event event;
@@ -71,46 +69,7 @@ class RegionalScreen extends StatelessWidget {
                   ),
                 ),
                 const StandardSpacer(height: standartSpacerHeight),
-                AspectRatio(
-                  aspectRatio: 13 / 9,
-                  child: Container(
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(30)),
-                    child: FutureBuilder(
-                      future: getEventRankings(event),
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text("${snapshot.error}");
-                        }
-
-                        final data = snapshot.data;
-
-                        if (data == null || data.isEmpty) {
-                          return const Center(
-                            child: Text(
-                              "No data was found, check back later",
-                              style: smallerDefaultStyle,
-                              textAlign: TextAlign.center,
-                            ),
-                          );
-                        }
-
-                        return SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: RankingBar(
-                            data: data,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
+                RankingBox(event: event),
               ],
             ),
           ),
