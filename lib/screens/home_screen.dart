@@ -55,7 +55,18 @@ class HomeScreen extends StatelessWidget {
                           } else if (snapshot.hasError) {
                             return Text("${snapshot.error}");
                           }
+
                           final data = snapshot.data;
+
+                          if (data == null || data.isEmpty) {
+                            return const Center(
+                              child: Text(
+                                "No data was found, check back later",
+                                style: smallerDefaultStyle,
+                                textAlign: TextAlign.center,
+                              ),
+                            );
+                          }
 
                           return CarouselSlider(
                             options: CarouselOptions(
@@ -63,7 +74,7 @@ class HomeScreen extends StatelessWidget {
                               aspectRatio: 16 / 9,
                               enlargeCenterPage: true,
                             ),
-                            items: data!
+                            items: data
                                 .map((item) => RegionalCard(event: item))
                                 .toList(),
                           );
