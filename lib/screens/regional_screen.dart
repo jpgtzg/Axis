@@ -3,9 +3,10 @@
 
 import 'package:axis/screens/robot_list_screen.dart';
 import 'package:axis/system/tba/event/event_getter.dart';
-import 'package:axis/system/tba/team/team_getter.dart';
 import 'package:axis/widgets/back_icon.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
+import 'package:axis/widgets/match_widget.dart';
+import 'package:axis/widgets/ranking_bar.dart';
 import 'package:axis/widgets/standart_spacer.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -45,118 +46,7 @@ class RegionalScreen extends StatelessWidget {
                   ],
                 ),
                 const StandardSpacer(height: standartSpacerHeight),
-                AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: Container(
-                    padding: const EdgeInsets.all(20.0),
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "Competing matches:",
-                                style: smallerDefaultStyle,
-                              ),
-                              Expanded(
-                                child: FutureBuilder(
-                                  future: getTeamMatches(event),
-                                  builder: (context, snapshot) {
-                                    if (!snapshot.hasData) {
-                                      return const Center(
-                                        child: CircularProgressIndicator(),
-                                      );
-                                    } else if (snapshot.hasError) {
-                                      return Text("${snapshot.error}");
-                                    }
-
-                                    final data = snapshot.data;
-
-                                    if (data == null || data.isEmpty) {
-                                      return const Center(
-                                        child: Text(
-                                          "No data was found, check back later",
-                                          style: smallerDefaultStyle,
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      );
-                                    }
-
-                                    return ListView.builder(
-                                      itemCount: data.length,
-                                      itemBuilder: (context, index) {
-                                        return Text(
-                                          "${data[index].matchNumType} ${(data[index].blueAlliance!.contains("6647")) ? data[index].blueAlliance.toString() : (data[index].redAlliance!.contains("6647")) ? data[index].redAlliance.toString() : "No alliance known yet"}",
-                                          style: substitleStyle,
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "Rankings:",
-                                style: smallerDefaultStyle,
-                              ),
-                              const StandardSpacer(
-                                height: smallerSpacerHeight,
-                              ),
-                              Expanded(
-                                child: FutureBuilder(
-                                  future: getEventRankings(event),
-                                  builder: (context, snapshot) {
-                                    if (!snapshot.hasData) {
-                                      return const Center(
-                                        child: CircularProgressIndicator(),
-                                      );
-                                    } else if (snapshot.hasError) {
-                                      return Text("${snapshot.error}");
-                                    }
-
-                                    final data = snapshot.data;
-
-                                    if (data == null || data.isEmpty) {
-                                      return const Center(
-                                        child: Text(
-                                          "No data was found, check back later",
-                                          style: smallerDefaultStyle,
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      );
-                                    }
-
-                                    return ListView.builder(
-                                      itemCount: data.length,
-                                      itemBuilder: (context, index) {
-                                        return Text(
-                                          "${data[index].rank}. ${data[index].team} : ${data[index].rankingPoints}",
-                                          style: substitleStyle,
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                MatchWidget(event: event),
                 const StandardSpacer(height: standartSpacerHeight),
                 GestureDetector(
                   onTap: () => Navigator.push(
@@ -182,72 +72,41 @@ class RegionalScreen extends StatelessWidget {
                 ),
                 const StandardSpacer(height: standartSpacerHeight),
                 AspectRatio(
-                  aspectRatio: 16 / 9,
+                  aspectRatio: 13 / 9,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width + MediaQuery.of(context).size.width + MediaQuery.of(context).size.width + MediaQuery.of(context).size.width,
-                        child: FutureBuilder(
-                          future: getEventRankings(event),
-                          builder: (context, snapshot) {
-                            if (!snapshot.hasData) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            } else if (snapshot.hasError) {
-                              return Text("${snapshot.error}");
-                            }
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(30)),
+                    child: FutureBuilder(
+                      future: getEventRankings(event),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text("${snapshot.error}");
+                        }
 
-                            final data = snapshot.data;
+                        final data = snapshot.data;
 
-                            if (data == null || data.isEmpty) {
-                              return const Center(
-                                child: Text(
-                                  "No data was found, check back later",
-                                  style: smallerDefaultStyle,
-                                  textAlign: TextAlign.center,
-                                ),
-                              );
-                            }
+                        if (data == null || data.isEmpty) {
+                          return const Center(
+                            child: Text(
+                              "No data was found, check back later",
+                              style: smallerDefaultStyle,
+                              textAlign: TextAlign.center,
+                            ),
+                          );
+                        }
 
-                            return BarChart(
-                              BarChartData(
-                                maxY: data[0].rankingPoints + 1,
-                                minY: 0,
-                                //map the data to the bargroups
-                                barGroups: data
-                                    .map(
-                                      (e) => BarChartGroupData(
-                                        groupVertically: true,
-                                        x: double.parse(e.team).toInt(),
-                                        barRods: [
-                                          BarChartRodData(
-                                            width: 4,
-                                            color: paleteLightBlue,
-                                            toY: e.rankingPoints,
-                                            gradient: const LinearGradient(
-                                              begin: Alignment.topRight,
-                                              end: Alignment.bottomLeft,
-                                              colors: [
-                                                paletePink,
-                                                paletePurple,
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                    .toList(),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+                        return SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: RankingBar(
+                            data: data,
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -258,41 +117,17 @@ class RegionalScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget getTitles(double value, TitleMeta meta) {
+    const style = TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+      fontSize: 14,
+    );
+    return SideTitleWidget(
+      axisSide: meta.axisSide,
+      space: 16,
+      child: Text(value.toString().substring(0, value.toString().length - 2)),
+    );
+  }
 }
-
-
-/*
-child: FutureBuilder(
-                                  future: getEventRankings(event),
-                                  builder: (context, snapshot) {
-                                    if (!snapshot.hasData) {
-                                      return const Center(
-                                        child: CircularProgressIndicator(),
-                                      );
-                                    } else if (snapshot.hasError) {
-                                      return Text("${snapshot.error}");
-                                    }
-
-                                    final data = snapshot.data;
-
-                                    if (data == null || data.isEmpty) {
-                                      return const Center(
-                                        child: Text(
-                                          "No data was found, check back later",
-                                          style: smallerDefaultStyle,
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      );
-                                    }
-
-                                    return ListView.builder(
-                                      itemCount: data.length,
-                                      itemBuilder: (context, index) {
-                                        return Text(
-                                          "${data[index].rank}. ${data[index].team} : ${data[index].rankingPoints}",
-                                          style: substitleStyle,
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),*/
