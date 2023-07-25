@@ -1,5 +1,5 @@
   /// Written by Juan Pablo Gutiérrrez
-  /// Manages TheBlueAlliance API calls
+  /// Manages TheBlueAlliance and Statbotics API calls
 
   import 'dart:convert';
 
@@ -45,7 +45,7 @@
   Future<http.Response> getResponse(String uri) async {
     final url = Uri.parse(uri);
 
-    final response;
+    final http.Response response;
     if (client == null) {
       setClient();
       response = await client!.get(url);
