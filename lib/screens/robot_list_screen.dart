@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 import '../system/tba/event/event.dart';
 import '../widgets/back_icon.dart';
+import '../widgets/top_bar.dart';
 
 class RobotListScreen extends StatelessWidget {
   final Event event;
@@ -31,20 +32,7 @@ class RobotListScreen extends StatelessWidget {
           padding: const EdgeInsets.only(left: 15.0, right: 15.0),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const BackIcon(),
-                  Flexible(
-                    child: Text(
-                      event.name,
-                      textAlign: TextAlign.right,
-                      style: defaultStyle,
-                      overflow: TextOverflow.visible,
-                    ),
-                  ),
-                ],
-              ),
+              TopBar(event: event),
               const StandardSpacer(height: standartSpacerHeight),
               Expanded(
                 child: FutureBuilder(

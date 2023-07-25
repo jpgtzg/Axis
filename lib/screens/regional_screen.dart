@@ -5,6 +5,7 @@ import 'package:axis/widgets/back_icon.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
 import 'package:axis/widgets/match_widget.dart';
 import 'package:axis/widgets/standart_spacer.dart';
+import 'package:axis/widgets/top_bar.dart';
 import 'package:axis/widgets/view_teams_button.dart';
 import 'package:flutter/material.dart';
 
@@ -33,20 +34,7 @@ class RegionalScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const BackIcon(),
-                    Flexible(
-                      child: Text(
-                        event.name,
-                        textAlign: TextAlign.right,
-                        style: defaultStyle,
-                        overflow: TextOverflow.visible,
-                      ),
-                    ),
-                  ],
-                ),
+                TopBar(event: event),
                 const StandardSpacer(height: standartSpacerHeight),
                 MatchWidget(event: event),
                 const StandardSpacer(height: standartSpacerHeight),
