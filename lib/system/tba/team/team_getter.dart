@@ -29,9 +29,9 @@ Future<List<Event>?> getTeamEvents(int year, bool order) async {
   /// Sorts the list by time of year
   if (order) {
     // Applies selection sort
-    for (var i = 0; i < eventList.length - 1; i++) {
+    for (int i = 0; i < eventList.length - 1; i++) {
       int minDate = i;
-      for (var j = i + 1; j < eventList.length; j++) {
+      for (int j = i + 1; j < eventList.length; j++) {
         if (!(DateTime.parse(eventList[minDate].startDate)
             .isAfter(DateTime.parse(eventList[j].startDate)))) {
           minDate = j;
@@ -42,6 +42,15 @@ Future<List<Event>?> getTeamEvents(int year, bool order) async {
       var tempEvent = eventList[minDate];
       eventList[minDate] = eventList[i];
       eventList[i] = tempEvent;
+    }
+
+    // Puts the closest events first for convenience purposes
+    for (int i = 0; i < eventList.length; i++) {
+      if (DateTime.parse(eventList[i].startDate).isAfter(DateTime.now())) {
+        var tempEvent = eventList[i];
+        eventList.removeAt(i);
+        eventList.insert(0, tempEvent);
+      }
     }
   }
 
