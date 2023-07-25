@@ -1,7 +1,6 @@
 /// Written by Juan Pablo Gutiérrez
 /// 05 - 07 - 2023
 
-import 'package:axis/widgets/back_icon.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
 import 'package:axis/widgets/match_widget.dart';
 import 'package:axis/widgets/standart_spacer.dart';
@@ -34,7 +33,7 @@ class RegionalScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                TopBar(event: event),
+              TopBar(topText: event.name),
                 const StandardSpacer(height: standartSpacerHeight),
                 MatchWidget(event: event),
                 const StandardSpacer(height: standartSpacerHeight),
