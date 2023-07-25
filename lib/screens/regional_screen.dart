@@ -1,7 +1,6 @@
 /// Written by Juan Pablo Gutiérrez
 /// 05 - 07 - 2023
 
-import 'package:axis/screens/robot_list_screen.dart';
 import 'package:axis/widgets/back_icon.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
 import 'package:axis/widgets/match_widget.dart';
@@ -38,9 +37,13 @@ class RegionalScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const BackIcon(),
-                    Text(
-                      event.name,
-                      style: defaultStyle,
+                    Flexible(
+                      child: Text(
+                        event.name,
+                        textAlign: TextAlign.right,
+                        style: defaultStyle,
+                        overflow: TextOverflow.visible,
+                      ),
                     ),
                   ],
                 ),

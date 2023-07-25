@@ -35,9 +35,13 @@ class RobotListScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const BackIcon(),
-                  Text(
-                    event.name,
-                    style: defaultStyle,
+                  Flexible(
+                    child: Text(
+                      event.name,
+                      textAlign: TextAlign.right,
+                      style: defaultStyle,
+                      overflow: TextOverflow.visible,
+                    ),
                   ),
                 ],
               ),
