@@ -5,7 +5,7 @@
 import 'package:axis/system/tba/event/event.dart';
 import 'package:axis/system/tba/event/rank.dart';
 import 'package:axis/system/tba/tba_constants.dart';
-import 'package:axis/system/tba/tba_manager.dart';
+import 'package:axis/system/api_manager.dart';
 import 'package:axis/system/tba/team/team.dart';
 import 'package:axis/system/tba/team/team_getter.dart';
 
@@ -15,7 +15,7 @@ import 'package:axis/system/tba/team/team_getter.dart';
 ///
 /// @return a List of rankings
 Future<List<Rank>?>? getEventRankings(Event event) async {
-  final url = "$baseURL/event/${event.eventKey}/rankings$authURL";
+  final url = "$baseTBAURL/event/${event.eventKey}/rankings$authURL";
 
   final data = await getMapData(url);
 
@@ -32,7 +32,7 @@ Future<List<Rank>?>? getEventRankings(Event event) async {
 }
 
 Future<List<Team>?>? getEventTeams(Event event) async {
-  final url = "$baseURL/event/${event.eventKey}/teams$authURL";
+  final url = "$baseTBAURL/event/${event.eventKey}/teams$authURL";
 
   final data = await getListData(url);
 
@@ -47,6 +47,8 @@ Future<List<Team>?>? getEventTeams(Event event) async {
 
   teamsList = await getListURL(teamsList);
 
+  teamsList = await getListCOPR(teamsList, event.eventKey);
+
   return teamsList;
 }
 
@@ -58,4 +60,28 @@ Future<List<Team>> getListURL(List<Team> teamsLists) async {
   }
 
   return teamsLists;
+}
+
+Future<List<Team>> getListCOPR(List<Team> teamsLists, String eventKey) async {
+  Map? coprList = await getEventCOPR(eventKey);
+
+  if (coprList == null) return teamsLists;
+
+  for (var team in teamsLists) {
+    team.setOpr(coprList["oprs"]["frc${team.teamNumber}"]);
+    team.setDpr(coprList["dprs"]["frc${team.teamNumber}"]);
+    team.setCcwm(coprList["ccwms"]["frc${team.teamNumber}"]);
+  }
+
+  return teamsLists;
+}
+
+Future<Map?> getEventCOPR(String eventKey) async {
+  final url = "$baseTBAURL/event/$eventKey/oprs$authURL";
+
+  final data = await getMapData(url);
+
+  if (data == null) return null;
+
+  return data;
 }
