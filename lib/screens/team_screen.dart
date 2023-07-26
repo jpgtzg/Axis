@@ -1,7 +1,6 @@
 /// Written by Juan Pablo Gutiérrez
 /// 24 - 07 - 2023
 
-import 'package:axis/system/statbotics/statbotics_getter.dart';
 import 'package:axis/widgets/copr/copr_chart.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
 import 'package:axis/widgets/top_bar.dart';

@@ -4,7 +4,6 @@
 import 'package:axis/system/api_manager.dart';
 import 'package:axis/system/tba/tba_constants.dart';
 
-import '../tba/event/event.dart';
 import 'epa.dart';
 
 Future<EPA?> getEPA(String teamKey, String eventKey) async {
