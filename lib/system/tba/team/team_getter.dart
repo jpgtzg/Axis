@@ -4,7 +4,7 @@ import 'package:axis/system/tba/event/event.dart';
 import 'package:axis/system/tba/team/match.dart';
 
 import '../tba_constants.dart';
-import '../tba_manager.dart';
+import '../../api_manager.dart';
 
 /// Gets events an specific team assisted on a specific season (year)
 ///
@@ -13,7 +13,7 @@ import '../tba_manager.dart';
 ///
 /// @return An event List, might be null if no data was obtained
 Future<List<Event>?> getTeamEvents(int year, bool order) async {
-  final url = "$baseURL/team/frc$teamNum/events/${year.toString()}$authURL";
+  final url = "$baseTBAURL/team/frc$teamNum/events/${year.toString()}$authURL";
 
   final data = await getListData(url);
 
@@ -64,7 +64,7 @@ Future<List<Event>?> getTeamEvents(int year, bool order) async {
 /// @return A Match List, might be null if no data was obtained
 Future<List<FRCMatch>?> getTeamMatches(Event event) async {
   final url =
-      "$baseURL/team/frc$teamNum/event/${event.eventKey}/matches$authURL";
+      "$baseTBAURL/team/frc$teamNum/event/${event.eventKey}/matches$authURL";
 
   final data = await getListData(url);
 
@@ -147,7 +147,7 @@ List<FRCMatch> matchSelectionSort(List<FRCMatch> list, bool finals) {
 ///
 /// @return String with image url
 Future<String> getImageUrl(String teamKey, String year) async {
-  final url = "$baseURL/team/frc$teamKey/media/$year$authURL";
+  final url = "$baseTBAURL/team/frc$teamKey/media/$year$authURL";
 
   final List<dynamic>? data = await getListData(url);
 

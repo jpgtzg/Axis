@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 
 import '../constants.dart';
 import '../system/tba/event/event.dart';
-import '../widgets/back_icon.dart';
 import '../widgets/top_bar.dart';
 
 class RobotListScreen extends StatelessWidget {
@@ -32,7 +31,7 @@ class RobotListScreen extends StatelessWidget {
           padding: const EdgeInsets.only(left: 15.0, right: 15.0),
           child: Column(
             children: [
-              TopBar(event: event),
+              TopBar(topText: event.name),
               const StandardSpacer(height: standartSpacerHeight),
               Expanded(
                 child: FutureBuilder(
@@ -44,7 +43,7 @@ class RobotListScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Fetching robots..",
+                              "Fetching robots...",
                               style: defaultStyle,
                             ),
                             StandardSpacer(height: standartSpacerHeight),
@@ -75,7 +74,7 @@ class RobotListScreen extends StatelessWidget {
                         return Column(
                           children: [
                             const StandardSpacer(height: standartSpacerHeight),
-                            TeamCard(team: data[index]),
+                            TeamCard(team: data[index], event: event,),
                           ],
                         );
                       },
