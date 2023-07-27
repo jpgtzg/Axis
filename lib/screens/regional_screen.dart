@@ -19,12 +19,12 @@ class RegionalScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GradientScaffold(
-      gradient: const LinearGradient(
+      gradient: LinearGradient(
         begin: Alignment.topRight,
         end: Alignment.bottomLeft,
         colors: [
-          paleteBlue,
-          paletePurple,
+          paleteBlue.withOpacity(0.9),
+          paletePurple.withOpacity(0.8),
         ],
       ),
       body: SafeArea(
