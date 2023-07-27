@@ -1,6 +1,7 @@
 /// Written by Juan Pablo Gutiérrez
 /// 24 - 07 - 2023
 
+import 'package:axis/system/statbotics/statbotics_getter.dart';
 import 'package:axis/widgets/copr/copr_chart.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
 import 'package:axis/widgets/top_bar.dart';
@@ -31,33 +32,61 @@ class TeamScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TopBar(topText: team.teamNumber),
-              const StandardSpacer(height: smallerSpacerHeight),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: FutureBuilder(
+              future: getEPA(team.teamNumber, event.eventKey),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                }
+
+                final data = snapshot.data;
+
+                if (data == null) {
+                  return const Center(
+                    child: Text(
+                      "No data available",
+                      style: smallerDefaultStyle,
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                }
+
+                team.setEPA(data);
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Flexible(
-                      child: Text(
-                        team.teamName,
-                        style: defaultStyle,
-                        overflow: TextOverflow.visible,
+                    TopBar(topText: team.teamNumber),
+                    const StandardSpacer(height: smallerSpacerHeight),
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              team.teamName,
+                              style: defaultStyle,
+                              overflow: TextOverflow.visible,
+                            ),
+                          ),
+                          WinrateText(
+                            team: team,
+                          )
+                        ],
                       ),
                     ),
-                    WinrateText(
-                        teamNumber: team.teamNumber, eventKey: event.eventKey)
+                    COPRRadarChart(
+                      team: team,
+                      eventKey: event.eventKey,
+                    ),
                   ],
-                ),
-              ),
-              COPRRadarChart(
-                team: team,
-              ),
-            ],
-          ),
+                );
+              }),
         ),
       ),
     );

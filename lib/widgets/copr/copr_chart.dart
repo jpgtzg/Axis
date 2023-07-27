@@ -9,7 +9,8 @@ import '../../system/tba/team/team.dart';
 
 class COPRRadarChart extends StatefulWidget {
   final Team team;
-  const COPRRadarChart({required this.team, super.key});
+  final String eventKey;
+  const COPRRadarChart({required this.team, required this.eventKey, super.key});
 
   @override
   State<COPRRadarChart> createState() => _COPRRadarChartState();
@@ -39,6 +40,10 @@ class _COPRRadarChartState extends State<COPRRadarChart> {
                 'CCWM: ${widget.team.ccwm.toString().substring(0, 6)}',
                 style: smallerDefaultStyle,
               ),
+              Text(
+                'EPA: ${widget.team.epa!.mean.toString()}',
+                style: smallerDefaultStyle,
+              ),
             ],
           ),
           AspectRatio(
@@ -63,6 +68,8 @@ class _COPRRadarChartState extends State<COPRRadarChart> {
                       return const RadarChartTitle(text: 'DPR', angle: 0);
                     case 2:
                       return const RadarChartTitle(text: 'CCWM', angle: 0);
+                    case 3:
+                      return const RadarChartTitle(text: 'EPA', angle: 0);
                     default:
                       return const RadarChartTitle(text: '');
                   }
@@ -105,6 +112,7 @@ class _COPRRadarChartState extends State<COPRRadarChart> {
           widget.team.opr ?? 0,
           widget.team.dpr ?? 0,
           widget.team.ccwm ?? 0,
+          widget.team.epa!.mean,
         ],
       ),
     ];
