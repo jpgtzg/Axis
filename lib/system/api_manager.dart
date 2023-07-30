@@ -63,6 +63,7 @@
   /// @returns Null if status code is not 200, response body as a string if true
   String? processResponse(http.Response response) {
     if (response.statusCode != 200) {
+      // ignore: avoid_print
       print("Could not retrieve information: ${response.statusCode}");
       return null;
     }

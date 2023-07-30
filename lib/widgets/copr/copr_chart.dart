@@ -25,26 +25,37 @@ class _COPRRadarChartState extends State<COPRRadarChart> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'OPR: ${widget.team.opr.toString().substring(0, 6)}',
-                style: smallerDefaultStyle,
-              ),
-              Text(
-                'DPR: ${widget.team.dpr.toString().substring(0, 6)}',
-                style: smallerDefaultStyle,
-              ),
-              Text(
-                'CCWM: ${widget.team.ccwm.toString().substring(0, 6)}',
-                style: smallerDefaultStyle,
-              ),
-              Text(
-                'EPA: ${widget.team.epa!.mean.toString()}',
-                style: smallerDefaultStyle,
-              ),
-            ],
+          SizedBox(
+            width: MediaQuery.of(context).size.width / 3.2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'OPR: ${widget.team.opr.toString()}',
+                  style: smallerDefaultStyle,
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                ),
+                Text(
+                  'DPR: ${widget.team.dpr.toString()}',
+                  style: smallerDefaultStyle,
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                ),
+                Text(
+                  'CCWM: ${widget.team.ccwm.toString()}',
+                  style: smallerDefaultStyle,
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                ),
+                Text(
+                  'EPA: ${widget.team.epa!.mean.toString()}',
+                  style: smallerDefaultStyle,
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                ),
+              ],
+            ),
           ),
           AspectRatio(
             aspectRatio: 1,

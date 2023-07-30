@@ -152,6 +152,7 @@ Future<String> getImageUrl(String teamKey, String year) async {
   final List<dynamic>? data = await getListData(url);
 
   if (data == null)
+    // ignore: curly_braces_in_flow_control_structures
     return "https://4.bp.blogspot.com/-3uyUTVhvMuo/WjAGEF31DhI/AAAAAAAAAEU/6EurwWD_ebc8o5bFfWoclQuhjSm1Aj5sQCK4BGAYYCw/s1600/FRC_Logo.svgS.jpg";
 
   String? imageUrl;
