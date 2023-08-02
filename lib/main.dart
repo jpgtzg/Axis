@@ -4,26 +4,31 @@
 /// Main file
 
 import 'package:axis/screens/home_screen.dart';
-import 'package:axis/system/tba/team/team_getter.dart';
+import 'package:axis/system/api_manager.dart';
+import 'package:axis/system/axis/realm/_MatchSchema.dart';
 import 'package:flutter/material.dart';
+import 'package:realm/realm.dart';
 
 import 'constants.dart';
 
-void main() {
-  getTeamEvents();
-  runApp(const App());
+void main() async {
+  setClient();
+
+
+  runApp(const AxisApp());
 }
 
-class App extends StatelessWidget {
-  const App({super.key});
+class AxisApp extends StatelessWidget {
+  const AxisApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Axis Scouting',
       debugShowCheckedModeBanner: false,
-      theme:
-          ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: paleteBlue)),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: paleteBlue),
+      ),
       home: const HomeScreen(),
     );
   }
