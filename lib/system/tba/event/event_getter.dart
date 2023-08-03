@@ -4,7 +4,7 @@
 
 import 'package:axis/system/tba/event/event.dart';
 import 'package:axis/system/tba/event/rank.dart';
-import 'package:axis/system/tba/tba_constants.dart';
+import 'package:axis/system/tba/system_constants.dart';
 import 'package:axis/system/api_manager.dart';
 import 'package:axis/system/tba/team/team.dart';
 import 'package:axis/system/tba/team/team_getter.dart';

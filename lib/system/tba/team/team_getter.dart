@@ -3,7 +3,7 @@
 import 'package:axis/system/tba/event/event.dart';
 import 'package:axis/system/tba/team/match.dart';
 
-import '../tba_constants.dart';
+import '../system_constants.dart';
 import '../../api_manager.dart';
 
 /// Gets events an specific team assisted on a specific season (year)

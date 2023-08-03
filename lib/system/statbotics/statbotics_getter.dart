@@ -2,7 +2,7 @@
 /// 26 - 07 - 2023
 
 import 'package:axis/system/api_manager.dart';
-import 'package:axis/system/tba/tba_constants.dart';
+import 'package:axis/system/tba/system_constants.dart';
 
 import 'epa.dart';
 
