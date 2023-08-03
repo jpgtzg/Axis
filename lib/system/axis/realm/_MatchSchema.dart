@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:realm/realm.dart';
 
 part '_MatchSchema.g.dart';
