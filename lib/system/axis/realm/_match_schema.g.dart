@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '_MatchSchema.dart';
+part of '_match_schema.dart';
 
 // **************************************************************************
 // RealmObjectGenerator
