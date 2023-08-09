@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '_match_schema.dart';
+part of '_match.dart';
 
 // **************************************************************************
 // RealmObjectGenerator
@@ -53,8 +53,7 @@ class MatchSchema extends _MatchSchema
   static SchemaObject? _schema;
   static SchemaObject _initSchema() {
     RealmObjectBase.registerFactory(MatchSchema._);
-    return const SchemaObject(
-        ObjectType.realmObject, MatchSchema, 'MatchSchema', [
+    return const SchemaObject(ObjectType.realmObject, MatchSchema, 'match', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
       SchemaProperty('answers', RealmPropertyType.mixed,
