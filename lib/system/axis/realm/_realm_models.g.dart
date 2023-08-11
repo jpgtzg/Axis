@@ -56,10 +56,10 @@ class MatchFormSettings extends _MatchFormSettings
 
 class Question extends _Question
     with RealmEntity, RealmObjectBase, EmbeddedObject {
-  Question({
-    String? input,
-    String? type,
-  }) {
+  Question(
+    String input,
+    String type,
+  ) {
     RealmObjectBase.set(this, 'input', input);
     RealmObjectBase.set(this, 'type', type);
   }
@@ -67,14 +67,14 @@ class Question extends _Question
   Question._();
 
   @override
-  String? get input => RealmObjectBase.get<String>(this, 'input') as String?;
+  String get input => RealmObjectBase.get<String>(this, 'input') as String;
   @override
-  set input(String? value) => RealmObjectBase.set(this, 'input', value);
+  set input(String value) => RealmObjectBase.set(this, 'input', value);
 
   @override
-  String? get type => RealmObjectBase.get<String>(this, 'type') as String?;
+  String get type => RealmObjectBase.get<String>(this, 'type') as String;
   @override
-  set type(String? value) => RealmObjectBase.set(this, 'type', value);
+  set type(String value) => RealmObjectBase.set(this, 'type', value);
 
   @override
   Stream<RealmObjectChanges<Question>> get changes =>
@@ -88,8 +88,8 @@ class Question extends _Question
   static SchemaObject _initSchema() {
     RealmObjectBase.registerFactory(Question._);
     return const SchemaObject(ObjectType.embeddedObject, Question, 'Question', [
-      SchemaProperty('input', RealmPropertyType.string, optional: true),
-      SchemaProperty('type', RealmPropertyType.string, optional: true),
+      SchemaProperty('input', RealmPropertyType.string),
+      SchemaProperty('type', RealmPropertyType.string),
     ]);
   }
 }

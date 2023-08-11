@@ -11,17 +11,14 @@ class _MatchFormSettings {
   @PrimaryKey()
   @MapTo('_id')
   late ObjectId id;
-
   late List<_Question> questionsArray;
-}
+} 
 
 @RealmModel(ObjectType.embeddedObject)
 class _Question {
-  String? input;
-
-  String? type;
+  late String input;
+  late String type;
 }
-
 
 @RealmModel()
 @MapTo('match')
