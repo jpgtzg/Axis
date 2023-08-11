@@ -7,14 +7,16 @@ import '../constants.dart';
 
 class SelectionButton extends StatelessWidget {
   final String titleText;
-  const SelectionButton({required this.titleText, super.key});
+  final Widget widgetScreen;
+  const SelectionButton({required this.titleText, required this.widgetScreen, super.key});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        print("selected");
-      },
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => widgetScreen),
+      ),
       child: AspectRatio(
         aspectRatio: 13 / 4,
         child: Container(
