@@ -2,6 +2,7 @@
 /// 02 - 07 - 2023
 
 import 'package:axis/constants.dart';
+import 'package:axis/screens/match_scouting/match_forms_screen.dart';
 import 'package:axis/system/tba/team/team_getter.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
 import 'package:axis/widgets/logo.dart';
@@ -83,19 +84,27 @@ class HomeScreen extends StatelessWidget {
                       const StandardSpacer(
                         height: standartSpacerHeight,
                       ),
-                      const SelectionButton(titleText: "Match Scouting"),
+                      const SelectionButton(
+                          titleText: "Match Scouting",
+                          widgetScreen: MatchFormScreen()),
                       const StandardSpacer(
                         height: standartSpacerHeight,
                       ),
-                      const SelectionButton(titleText: "Pit Scouting"),
+                      const SelectionButton(
+                          titleText: "Pit Scouting",
+                          widgetScreen: MatchFormScreen()),
                       const StandardSpacer(
                         height: standartSpacerHeight,
                       ),
-                      const SelectionButton(titleText: "View Data"),
+                      const SelectionButton(
+                          titleText: "View Data",
+                          widgetScreen: MatchFormScreen()),
                       const StandardSpacer(
                         height: standartSpacerHeight,
                       ),
-                      const SelectionButton(titleText: "titleText"),
+                      const SelectionButton(
+                          titleText: "titleText",
+                          widgetScreen: MatchFormScreen()),
                     ],
                   ),
                 ),
