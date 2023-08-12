@@ -1,14 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '_realm_models.dart';
+part of 'realm_models.dart';
 
 // **************************************************************************
 // RealmObjectGenerator
 // **************************************************************************
 
-class MatchFormSettings extends _MatchFormSettings
+class MatchFormSettingsSchema extends _MatchFormSettingsSchema
     with RealmEntity, RealmObjectBase, RealmObject {
-  MatchFormSettings(
+  MatchFormSettingsSchema(
     ObjectId id, {
     Iterable<Question> questionsArray = const [],
   }) {
@@ -17,7 +17,7 @@ class MatchFormSettings extends _MatchFormSettings
         this, 'questionsArray', RealmList<Question>(questionsArray));
   }
 
-  MatchFormSettings._();
+  MatchFormSettingsSchema._();
 
   @override
   ObjectId get id => RealmObjectBase.get<ObjectId>(this, '_id') as ObjectId;
@@ -33,63 +33,23 @@ class MatchFormSettings extends _MatchFormSettings
       throw RealmUnsupportedSetError();
 
   @override
-  Stream<RealmObjectChanges<MatchFormSettings>> get changes =>
-      RealmObjectBase.getChanges<MatchFormSettings>(this);
+  Stream<RealmObjectChanges<MatchFormSettingsSchema>> get changes =>
+      RealmObjectBase.getChanges<MatchFormSettingsSchema>(this);
 
   @override
-  MatchFormSettings freeze() =>
-      RealmObjectBase.freezeObject<MatchFormSettings>(this);
+  MatchFormSettingsSchema freeze() =>
+      RealmObjectBase.freezeObject<MatchFormSettingsSchema>(this);
 
   static SchemaObject get schema => _schema ??= _initSchema();
   static SchemaObject? _schema;
   static SchemaObject _initSchema() {
-    RealmObjectBase.registerFactory(MatchFormSettings._);
-    return const SchemaObject(
-        ObjectType.realmObject, MatchFormSettings, 'MatchFormSettings', [
+    RealmObjectBase.registerFactory(MatchFormSettingsSchema._);
+    return const SchemaObject(ObjectType.realmObject, MatchFormSettingsSchema,
+        'MatchFormSettingsSchema', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
       SchemaProperty('questionsArray', RealmPropertyType.object,
           linkTarget: 'Question', collectionType: RealmCollectionType.list),
-    ]);
-  }
-}
-
-class Question extends _Question
-    with RealmEntity, RealmObjectBase, EmbeddedObject {
-  Question(
-    String input,
-    String type,
-  ) {
-    RealmObjectBase.set(this, 'input', input);
-    RealmObjectBase.set(this, 'type', type);
-  }
-
-  Question._();
-
-  @override
-  String get input => RealmObjectBase.get<String>(this, 'input') as String;
-  @override
-  set input(String value) => RealmObjectBase.set(this, 'input', value);
-
-  @override
-  String get type => RealmObjectBase.get<String>(this, 'type') as String;
-  @override
-  set type(String value) => RealmObjectBase.set(this, 'type', value);
-
-  @override
-  Stream<RealmObjectChanges<Question>> get changes =>
-      RealmObjectBase.getChanges<Question>(this);
-
-  @override
-  Question freeze() => RealmObjectBase.freezeObject<Question>(this);
-
-  static SchemaObject get schema => _schema ??= _initSchema();
-  static SchemaObject? _schema;
-  static SchemaObject _initSchema() {
-    RealmObjectBase.registerFactory(Question._);
-    return const SchemaObject(ObjectType.embeddedObject, Question, 'Question', [
-      SchemaProperty('input', RealmPropertyType.string),
-      SchemaProperty('type', RealmPropertyType.string),
     ]);
   }
 }
@@ -141,13 +101,54 @@ class MatchSchema extends _MatchSchema
   static SchemaObject? _schema;
   static SchemaObject _initSchema() {
     RealmObjectBase.registerFactory(MatchSchema._);
-    return const SchemaObject(ObjectType.realmObject, MatchSchema, 'match', [
+    return const SchemaObject(
+        ObjectType.realmObject, MatchSchema, 'MatchSchema', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
       SchemaProperty('answers', RealmPropertyType.mixed,
           optional: true, collectionType: RealmCollectionType.list),
       SchemaProperty('questions', RealmPropertyType.mixed,
           optional: true, collectionType: RealmCollectionType.list),
+    ]);
+  }
+}
+
+class Question extends _Question
+    with RealmEntity, RealmObjectBase, EmbeddedObject {
+  Question(
+    String input,
+    String type,
+  ) {
+    RealmObjectBase.set(this, 'input', input);
+    RealmObjectBase.set(this, 'type', type);
+  }
+
+  Question._();
+
+  @override
+  String get input => RealmObjectBase.get<String>(this, 'input') as String;
+  @override
+  set input(String value) => RealmObjectBase.set(this, 'input', value);
+
+  @override
+  String get type => RealmObjectBase.get<String>(this, 'type') as String;
+  @override
+  set type(String value) => RealmObjectBase.set(this, 'type', value);
+
+  @override
+  Stream<RealmObjectChanges<Question>> get changes =>
+      RealmObjectBase.getChanges<Question>(this);
+
+  @override
+  Question freeze() => RealmObjectBase.freezeObject<Question>(this);
+
+  static SchemaObject get schema => _schema ??= _initSchema();
+  static SchemaObject? _schema;
+  static SchemaObject _initSchema() {
+    RealmObjectBase.registerFactory(Question._);
+    return const SchemaObject(ObjectType.embeddedObject, Question, 'Question', [
+      SchemaProperty('input', RealmPropertyType.string),
+      SchemaProperty('type', RealmPropertyType.string),
     ]);
   }
 }

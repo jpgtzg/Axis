@@ -3,5 +3,6 @@
 
 Future<bool> isDeviceOnline() async {
   //TODO ADD LOGIC
+  
   return true;
 }
