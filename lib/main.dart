@@ -5,7 +5,7 @@
 
 import 'package:axis/screens/home_screen.dart';
 import 'package:axis/system/api_manager.dart';
-import 'package:axis/system/axis/realm/_MatchSchema.dart';
+import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:axis/system/axis/realm/realm_manager.dart';
 import 'package:axis/system/tba/system_constants.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,12 @@ void main() async {
   final user = await app.logIn(Credentials.anonymous());
   final realmConfig = Configuration.flexibleSync(
     user,
-    [MatchSchema.schema],
+    [
+      MatchSchema.schema,
+      Question.schema,
+      MatchFormSettingsSchema.schema,
+
+    ],clientResetHandler: ManualRecoveryHandler((clientResetError) => print(clientResetError))
   );
 
   late Realm realm;
@@ -31,21 +36,34 @@ void main() async {
   } else {
     realm = Realm(realmConfig);
   }
-  // Check if the subscription already exists before adding
-  /*  final userTodoSub = realm.subscriptions.findByName('getMatchData');
-  if (userTodoSub == null) {
-    realm.subscriptions.update((mutableSubscriptions) {
-      // server-side rules ensure user only downloads their own Todos
-      mutableSubscriptions.add(realm.all<MatchSchema>(), name: 'getMatchData');
-    });
-  } */
+  /* final match = MatchSchema(ObjectId());
 
-  final match = MatchSchema(
-    ObjectId(),
-  );
+  match.answers.add(const RealmValue.string("Ans 2"));
+  match.questions.add(const RealmValue.string("Ques 2"));
+
+  final matchSub = realm.subscriptions.findByName('getMatchSchema');
+  if (matchSub == null) {
+    realm.subscriptions.update((mutableSubscriptions) {
+      mutableSubscriptions.add(realm.all<MatchSchema>(),
+          name: 'getMatchSchema');
+    });
+  }
+ */
+  final matchSettingsSub =
+      realm.subscriptions.findByName('getMatchFormsSetting');
+  if (matchSettingsSub == null) {
+    realm.subscriptions.update((mutableSubscriptions) {
+      mutableSubscriptions.add(realm.all<MatchFormSettingsSchema>(),
+          name: 'getMatchFormsSetting');
+    });
+  }
+
+  final matchFormSettings = MatchFormSettingsSchema(ObjectId());
+
+  matchFormSettings.questionsArray.add(Question("Input", "Numero de equipo"));
 
   realm.write(() {
-    realm.add(match);
+    realm.add(matchFormSettings);
   });
 
 /*   var r = await getTeamEvents(2023, true);
