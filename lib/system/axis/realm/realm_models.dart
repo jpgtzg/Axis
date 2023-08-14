@@ -8,8 +8,11 @@ class _MatchFormSettingsSchema {
   @MapTo('_id')
   late ObjectId id;
 
+  late int questionNumber;
+
   late List<_Question> questionsArray;
 }
+
 
 @RealmModel()
 class _MatchSchema {

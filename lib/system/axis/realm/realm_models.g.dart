@@ -9,10 +9,12 @@ part of 'realm_models.dart';
 class MatchFormSettingsSchema extends _MatchFormSettingsSchema
     with RealmEntity, RealmObjectBase, RealmObject {
   MatchFormSettingsSchema(
-    ObjectId id, {
+    ObjectId id,
+    int questionNumber, {
     Iterable<Question> questionsArray = const [],
   }) {
     RealmObjectBase.set(this, '_id', id);
+    RealmObjectBase.set(this, 'questionNumber', questionNumber);
     RealmObjectBase.set<RealmList<Question>>(
         this, 'questionsArray', RealmList<Question>(questionsArray));
   }
@@ -23,6 +25,13 @@ class MatchFormSettingsSchema extends _MatchFormSettingsSchema
   ObjectId get id => RealmObjectBase.get<ObjectId>(this, '_id') as ObjectId;
   @override
   set id(ObjectId value) => RealmObjectBase.set(this, '_id', value);
+
+  @override
+  int get questionNumber =>
+      RealmObjectBase.get<int>(this, 'questionNumber') as int;
+  @override
+  set questionNumber(int value) =>
+      RealmObjectBase.set(this, 'questionNumber', value);
 
   @override
   RealmList<Question> get questionsArray =>
@@ -48,6 +57,7 @@ class MatchFormSettingsSchema extends _MatchFormSettingsSchema
         'MatchFormSettingsSchema', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
+      SchemaProperty('questionNumber', RealmPropertyType.int),
       SchemaProperty('questionsArray', RealmPropertyType.object,
           linkTarget: 'Question', collectionType: RealmCollectionType.list),
     ]);
