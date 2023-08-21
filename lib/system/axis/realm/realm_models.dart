@@ -27,7 +27,7 @@ class _MatchSchema {
 
 @RealmModel(ObjectType.embeddedObject)
 class _Question {
-  late String input;
-
+  late String question;
+  
   late String type;
 }
