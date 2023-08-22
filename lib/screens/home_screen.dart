@@ -84,25 +84,25 @@ class HomeScreen extends StatelessWidget {
                       const StandardSpacer(
                         height: standartSpacerHeight,
                       ),
-                      const SelectionButton(
+                      SelectionButton(
                           titleText: "Match Scouting",
                           widgetScreen: MatchFormScreen()),
                       const StandardSpacer(
                         height: standartSpacerHeight,
                       ),
-                      const SelectionButton(
+                      SelectionButton(
                           titleText: "Pit Scouting",
                           widgetScreen: MatchFormScreen()),
                       const StandardSpacer(
                         height: standartSpacerHeight,
                       ),
-                      const SelectionButton(
+                      SelectionButton(
                           titleText: "View Data",
                           widgetScreen: MatchFormScreen()),
                       const StandardSpacer(
                         height: standartSpacerHeight,
                       ),
-                      const SelectionButton(
+                      SelectionButton(
                           titleText: "titleText",
                           widgetScreen: MatchFormScreen()),
                     ],

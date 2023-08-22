@@ -14,19 +14,22 @@ import 'constants.dart';
 
 void main() async {
   setClient();
-  setRealm();
+  await setRealm();
 
   MatchFormSettingsSchema matchFormSettingsSchema = MatchFormSettingsSchema(ObjectId(), 26);
   
   matchFormSettingsSchema.questionsArray.add(Question("Numero de equipo", "String input")); 
   matchFormSettingsSchema.questionsArray.add(Question("Nombre de equipo", "String input")); 
-  matchFormSettingsSchema.questionsArray.add(Question("Puntos de equipo", "int input")); 
+  matchFormSettingsSchema.questionsArray.add(Question("Puntos de equipo", "Int input")); 
+  matchFormSettingsSchema.questionsArray.add(Question("Puntos en auto de equipo", "Int input")); 
+  matchFormSettingsSchema.questionsArray.add(Question("Puntos en teleop de equipo", "Int input")); 
+  matchFormSettingsSchema.questionsArray.add(Question("Puntos en endgame de equipo", "Int input")); 
   matchFormSettingsSchema.questionNumber = matchFormSettingsSchema.questionsArray.length;
+
+  updateMatchForm(matchFormSettingsSchema);
 
 /*   write(matchFormSettingsSchema);
  */
-  updateMatchForm(matchFormSettingsSchema);
-
   runApp(const AxisApp());
 }
 

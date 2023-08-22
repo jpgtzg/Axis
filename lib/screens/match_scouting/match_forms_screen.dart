@@ -1,7 +1,10 @@
 /// Written by Juan Pablo Gutiérrez
 /// 8 - 08 - 2023
 
+import 'dart:ffi';
+
 import 'package:axis/system/axis/realm/realm_manager.dart';
+import 'package:axis/widgets/forms/text_form.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
 import 'package:axis/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
@@ -10,66 +13,89 @@ import '../../constants.dart';
 import '../../widgets/standart_spacer.dart';
 
 class MatchFormScreen extends StatelessWidget {
-  const MatchFormScreen({super.key});
+  MatchFormScreen({super.key});
+
+  final List<TextEditingController> controllers = [];
 
   @override
   Widget build(BuildContext context) {
     return GradientScaffold(
-      gradient: LinearGradient(
+      gradient: const LinearGradient(
         begin: Alignment.topRight,
         end: Alignment.bottomLeft,
         colors: [
-          paleteBlue,
-          paleteLightBlue,
+          paletePink,
+          paletePurple,
         ],
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.only(left: 15.0, right: 15.0),
+          padding: const EdgeInsets.only(left: 15.0, right: 15.0),
           child: Column(
             children: [
-              TopBar(topText: "Match Scouting"),
-              FutureBuilder(
-                future: get("MatchFormSettingsSchema"),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Fetching robots...",
-                            style: defaultStyle,
-                          ),
-                          StandardSpacer(height: standartSpacerHeight),
-                          CircularProgressIndicator(),
-                        ],
-                      ),
+              const TopBar(topText: "Match Scouting"),
+              const StandardSpacer(height: standartSpacerHeight),
+              Expanded(
+                child: FutureBuilder(
+                  future: getMatchFormSettings(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Fetching robots...",
+                              style: defaultStyle,
+                            ),
+                            StandardSpacer(height: standartSpacerHeight),
+                            CircularProgressIndicator(),
+                          ],
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}");
+                    }
+
+                    final data = snapshot.data;
+
+                    if (data == null) {
+                      return const Center(
+                        child: Text(
+                          "No form settings yet, ask your coach to set them up!",
+                          style: smallerDefaultStyle,
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                    }
+
+                    for (var i = 0; i < data.questionNumber; i++) {
+                      controllers.add(TextEditingController());
+                    }
+
+                    return ListView.builder(
+                      itemCount: data.questionNumber,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            TextForm(
+                              text: data.questionsArray[index].question,
+                              inputText:
+                                  "Enter ${data.questionsArray[index].type}",
+                              padding: 5,
+                              controller: controllers.elementAt(index),
+                            ),
+                          ],
+                        );
+                      },
                     );
-                  } else if (snapshot.hasError) {
-                    return Text("${snapshot.error}");
-                  }
-
-                  final data = snapshot.data;
-
-                  if (data == null) {
-                    return const Center(
-                      child: Text(
-                        "No form settings yet, ask your coach to set them up!",
-                        style: smallerDefaultStyle,
-                        textAlign: TextAlign.center,
-                      ),
-                    );
-                  }
-
-                  return ListView.builder(
-                    physics: const ScrollPhysics(),
-                    itemCount: 21,
-                    itemBuilder: (context, index) {
-                      return Text("aaa");
-                    },
-                  );
-                },
+                  },
+                ),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.send),
+                iconSize: 10,
               ),
             ],
           ),
