@@ -56,16 +56,26 @@ void write(RealmObject schemaObject) async {
   });
 }
 
-void updateMatchForm(MatchFormSettingsSchema matchFormSettingsSchema) async {
-  var fullList = await get("MatchFormSettingsSchema");
+void updateMatchForm(MatchFormSettingsSchema matchFormSettings) async {
+  var fullList = await getMatchFormSettings();
 
   if (fullList != null) {
-    var setting = fullList as MatchFormSettingsSchema;
+    var setting = fullList;
+
     realm!.write(() {
-      setting.questionNumber = matchFormSettingsSchema.questionNumber;
-      setting.questionsArray = matchFormSettingsSchema.questionsArray;
+      setting.questionNumber = matchFormSettings.questionNumber;
+      setting.questionsArray.clear();
+      setting.questionsArray.addAll(matchFormSettings.questionsArray);
     });
   }
+}
+
+Future<MatchFormSettingsSchema> getMatchFormSettings() async {
+  if (realm == null) {
+    await setRealm();
+  }
+
+  return realm!.all<MatchFormSettingsSchema>().first;
 }
 
 Future<Object?> get(String schemaType) async {
