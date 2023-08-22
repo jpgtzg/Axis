@@ -126,19 +126,20 @@ class MatchSchema extends _MatchSchema
 class Question extends _Question
     with RealmEntity, RealmObjectBase, EmbeddedObject {
   Question(
-    String input,
+    String question,
     String type,
   ) {
-    RealmObjectBase.set(this, 'input', input);
+    RealmObjectBase.set(this, 'question', question);
     RealmObjectBase.set(this, 'type', type);
   }
 
   Question._();
 
   @override
-  String get input => RealmObjectBase.get<String>(this, 'input') as String;
+  String get question =>
+      RealmObjectBase.get<String>(this, 'question') as String;
   @override
-  set input(String value) => RealmObjectBase.set(this, 'input', value);
+  set question(String value) => RealmObjectBase.set(this, 'question', value);
 
   @override
   String get type => RealmObjectBase.get<String>(this, 'type') as String;
@@ -157,7 +158,7 @@ class Question extends _Question
   static SchemaObject _initSchema() {
     RealmObjectBase.registerFactory(Question._);
     return const SchemaObject(ObjectType.embeddedObject, Question, 'Question', [
-      SchemaProperty('input', RealmPropertyType.string),
+      SchemaProperty('question', RealmPropertyType.string),
       SchemaProperty('type', RealmPropertyType.string),
     ]);
   }
