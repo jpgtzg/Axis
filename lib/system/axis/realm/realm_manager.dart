@@ -60,12 +60,10 @@ void updateMatchForm(MatchFormSettingsSchema matchFormSettings) async {
   var fullList = await getMatchFormSettings();
 
   if (fullList != null) {
-    var setting = fullList;
-
     realm!.write(() {
-      setting.questionNumber = matchFormSettings.questionNumber;
-      setting.questionsArray.clear();
-      setting.questionsArray.addAll(matchFormSettings.questionsArray);
+      fullList.questionNumber = matchFormSettings.questionNumber;
+      fullList.questionsArray.clear();
+      fullList.questionsArray.addAll(matchFormSettings.questionsArray);
     });
   }
 }
@@ -76,21 +74,6 @@ Future<MatchFormSettingsSchema> getMatchFormSettings() async {
   }
 
   return realm!.all<MatchFormSettingsSchema>().first;
-}
-
-Future<Object?> get(String schemaType) async {
-  if (realm == null) {
-    await setRealm();
-  }
-
-  switch (schemaType) {
-    case 'MatchSchema':
-      return realm!.all<MatchSchema>();
-    case 'MatchFormSettingsSchema':
-      return realm!.all<MatchFormSettingsSchema>().first;
-    default:
-      return null;
-  }
 }
 
 Future<bool> isDeviceOnline() async {

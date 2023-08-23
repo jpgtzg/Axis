@@ -4,10 +4,12 @@
 import 'dart:ffi';
 
 import 'package:axis/system/axis/realm/realm_manager.dart';
+import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:axis/widgets/forms/text_form.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
 import 'package:axis/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:realm/realm.dart';
 
 import '../../constants.dart';
 import '../../widgets/standart_spacer.dart';
@@ -16,6 +18,26 @@ class MatchFormScreen extends StatelessWidget {
   MatchFormScreen({super.key});
 
   final List<TextEditingController> controllers = [];
+  final _formKey = GlobalKey<FormState>();
+  late MatchFormSettingsSchema globalData;
+
+  void _submitForm() {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      MatchSchema matchSchema = MatchSchema(ObjectId());
+      globalData.questionsArray.forEach((element) {
+        matchSchema.questions.add(RealmValue.string(element.question));
+        matchSchema.answers.add(RealmValue.string(controllers
+            .elementAt(globalData.questionsArray.indexOf(element))
+            .text));
+      });
+
+      write(matchSchema);
+      
+      _formKey.currentState!.reset();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,30 +94,43 @@ class MatchFormScreen extends StatelessWidget {
                     for (var i = 0; i < data.questionNumber; i++) {
                       controllers.add(TextEditingController());
                     }
+                    globalData = data;
 
-                    return ListView.builder(
-                      itemCount: data.questionNumber,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            TextForm(
-                              text: data.questionsArray[index].question,
-                              inputText:
-                                  "Enter ${data.questionsArray[index].type}",
-                              padding: 5,
-                              controller: controllers.elementAt(index),
-                            ),
-                          ],
-                        );
-                      },
+                    return Form(
+                      key: _formKey,
+                      child: ListView.builder(
+                        itemCount: data.questionNumber,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: [
+                              TextForm(
+                                text: data.questionsArray[index].question,
+                                inputText:
+                                    "Enter ${data.questionsArray[index].type}",
+                                padding: 5,
+                                controller: controllers.elementAt(index),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
                     );
                   },
                 ),
               ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.send),
-                iconSize: 10,
+              ElevatedButton.icon(
+                onPressed: () {
+                  _submitForm();
+                },
+                icon: const Icon(Icons.send),
+                label: const Text("Send Info"),
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
