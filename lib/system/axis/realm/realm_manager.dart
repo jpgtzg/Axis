@@ -21,8 +21,7 @@ Future<bool> setRealm() async {
         Question.schema,
         MatchFormSettingsSchema.schema,
       ],
-      clientResetHandler:
-          ManualRecoveryHandler((clientResetError) => print(clientResetError)));
+      clientResetHandler: const DiscardUnsyncedChangesHandler());
 
   if (await isDeviceOnline()) {
     realm = await Realm.open(realmConfig);

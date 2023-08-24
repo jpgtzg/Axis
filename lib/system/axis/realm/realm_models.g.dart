@@ -127,13 +127,24 @@ class Question extends _Question
     with RealmEntity, RealmObjectBase, EmbeddedObject {
   Question(
     String question,
-    String type,
-  ) {
+    String type, {
+    Iterable<String> availableAnswers = const [],
+  }) {
     RealmObjectBase.set(this, 'question', question);
     RealmObjectBase.set(this, 'type', type);
+    RealmObjectBase.set<RealmList<String>>(
+        this, 'availableAnswers', RealmList<String>(availableAnswers));
   }
 
   Question._();
+
+  @override
+  RealmList<String> get availableAnswers =>
+      RealmObjectBase.get<String>(this, 'availableAnswers')
+          as RealmList<String>;
+  @override
+  set availableAnswers(covariant RealmList<String> value) =>
+      throw RealmUnsupportedSetError();
 
   @override
   String get question =>
@@ -158,6 +169,8 @@ class Question extends _Question
   static SchemaObject _initSchema() {
     RealmObjectBase.registerFactory(Question._);
     return const SchemaObject(ObjectType.embeddedObject, Question, 'Question', [
+      SchemaProperty('availableAnswers', RealmPropertyType.string,
+          collectionType: RealmCollectionType.list),
       SchemaProperty('question', RealmPropertyType.string),
       SchemaProperty('type', RealmPropertyType.string),
     ]);
