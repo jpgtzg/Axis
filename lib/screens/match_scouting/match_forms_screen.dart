@@ -34,7 +34,7 @@ class MatchFormScreen extends StatelessWidget {
       });
 
       write(matchSchema);
-      
+
       _formKey.currentState!.reset();
     }
   }
