@@ -5,6 +5,7 @@ import 'dart:ffi';
 
 import 'package:axis/system/axis/realm/realm_manager.dart';
 import 'package:axis/system/axis/realm/realm_models.dart';
+import 'package:axis/widgets/forms/multiple_form.dart';
 import 'package:axis/widgets/forms/text_form.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
 import 'package:axis/widgets/top_bar.dart';
@@ -12,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:realm/realm.dart';
 
 import '../../constants.dart';
+import '../../system/tba/system_constants.dart';
+import '../../widgets/forms/int_form.dart';
 import '../../widgets/standart_spacer.dart';
 
 class MatchFormScreen extends StatelessWidget {
@@ -36,6 +39,33 @@ class MatchFormScreen extends StatelessWidget {
       write(matchSchema);
 
       _formKey.currentState!.reset();
+    }
+  }
+
+  Widget getWidget(MatchFormSettingsSchema data, int index) {
+    switch (data.questionsArray[index].type) {
+      case "string":
+        return TextForm(
+          text: data.questionsArray[index].question,
+          inputText: "Enter ${data.questionsArray[index].type}",
+          padding: 5,
+          controller: controllers.elementAt(index),
+        );
+      case "int":
+        return IntForm(
+          text: data.questionsArray[index].question,
+          inputText: "Enter ${data.questionsArray[index].type}",
+          padding: 5,
+          controller: controllers.elementAt(index),
+        );
+      case "multiple":
+        return MultipleForm(
+          question: data.questionsArray[index],
+          padding: 10,
+          controller: controllers.elementAt(index),
+        );
+      default:
+        return const Text("Error");
     }
   }
 
@@ -101,17 +131,7 @@ class MatchFormScreen extends StatelessWidget {
                       child: ListView.builder(
                         itemCount: data.questionNumber,
                         itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              TextForm(
-                                text: data.questionsArray[index].question,
-                                inputText:
-                                    "Enter ${data.questionsArray[index].type}",
-                                padding: 5,
-                                controller: controllers.elementAt(index),
-                              ),
-                            ],
-                          );
+                          return getWidget(data, index);
                         },
                       ),
                     );
