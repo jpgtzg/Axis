@@ -67,7 +67,7 @@ void updateMatchForm(MatchFormSettingsSchema matchFormSettings) async {
   }
 }
 
-Future<MatchFormSettingsSchema> getMatchFormSettings() async {
+Future<MatchFormSettingsSchema>? getMatchFormSettings() async {
   if (realm == null) {
     await setRealm();
   }
