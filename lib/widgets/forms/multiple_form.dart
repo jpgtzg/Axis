@@ -27,7 +27,7 @@ class MultipleForm extends StatefulWidget {
 }
 
 class _MultipleFormState extends State<MultipleForm> {
-  List<String> _selectedQuestion = [];
+  final List<String> _selectedQuestion = [];
 
   @override
   Widget build(BuildContext context) {
