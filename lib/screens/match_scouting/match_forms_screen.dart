@@ -1,11 +1,10 @@
 /// Written by Juan Pablo Gutiérrez
 /// 8 - 08 - 2023
 
-import 'dart:ffi';
-
 import 'package:axis/system/axis/realm/realm_manager.dart';
 import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:axis/widgets/forms/multiple_form.dart';
+import 'package:axis/widgets/forms/single_form.dart';
 import 'package:axis/widgets/forms/text_form.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
 import 'package:axis/widgets/top_bar.dart';
@@ -13,20 +12,21 @@ import 'package:flutter/material.dart';
 import 'package:realm/realm.dart';
 
 import '../../constants.dart';
-import '../../system/tba/system_constants.dart';
 import '../../widgets/forms/int_form.dart';
 import '../../widgets/standart_spacer.dart';
 
+// ignore: must_be_immutable
 class MatchFormScreen extends StatelessWidget {
   MatchFormScreen({super.key});
 
   final List<TextEditingController> controllers = [];
   final _formKey = GlobalKey<FormState>();
-  late MatchFormSettingsSchema globalData;
+  late  MatchFormSettingsSchema globalData;
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+
 
       MatchSchema matchSchema = MatchSchema(ObjectId());
       globalData.questionsArray.forEach((element) {
@@ -61,7 +61,13 @@ class MatchFormScreen extends StatelessWidget {
       case "multiple":
         return MultipleForm(
           question: data.questionsArray[index],
-          padding: 10,
+          padding: 5,
+          controller: controllers.elementAt(index),
+        );
+      case "single":
+        return SingleFrom(
+          question: data.questionsArray[index],
+          padding: 5,
           controller: controllers.elementAt(index),
         );
       default:

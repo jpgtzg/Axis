@@ -54,7 +54,7 @@ class _MultipleFormState extends State<MultipleForm> {
         Padding(
           padding: const EdgeInsets.only(bottom: 10, right: 30, left: 30),
           child: Container(
-            padding: const EdgeInsets.only(bottom: 10.0, right: 12.5, left: 12.5),
+            padding: const EdgeInsets.only(bottom: 10.0, right: 15.5, left: 15.5),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(25)),
               border: Border.all(
