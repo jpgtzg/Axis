@@ -1,10 +1,10 @@
+/// Written by Juan Pablo Gutiérrez
+/// 24 - 08 - 2023
+
 import 'package:axis/constants.dart';
 import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
-
-/// Written by Juan Pablo Gutiérrez
-/// 24 - 08 - 2023
 
 class MultipleForm extends StatefulWidget {
   final Question question;
@@ -54,7 +54,8 @@ class _MultipleFormState extends State<MultipleForm> {
         Padding(
           padding: const EdgeInsets.only(bottom: 10, right: 30, left: 30),
           child: Container(
-            padding: const EdgeInsets.only(bottom: 10.0, right: 15.5, left: 15.5),
+            padding:
+                const EdgeInsets.only(bottom: 10.0, right: 15.5, left: 15.5),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(25)),
               border: Border.all(
@@ -69,7 +70,10 @@ class _MultipleFormState extends State<MultipleForm> {
               title: Text(widget.question.question),
               buttonText: Text(
                 widget.question.question,
-                style: substitleStyle,
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontFamily: "Poppins",
+                ),
               ),
               listType: MultiSelectListType.CHIP,
               onConfirm: (values) {
