@@ -1,11 +1,10 @@
 /// Written by Juan Pablo Gutiérrez
-/// 25 - 08 - 2023
+/// 24 - 08 - 2023
 
-import 'package:awesome_select/awesome_select.dart';
 import 'package:axis/constants.dart';
+import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:flutter/material.dart';
-
-import '../../system/axis/realm/realm_models.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class SingleFrom extends StatefulWidget {
   final Question question;
@@ -17,20 +16,19 @@ class SingleFrom extends StatefulWidget {
       required this.controller,
       super.key}) {
     items = question.availableAnswers
-        .map((question) => S2Choice<String>(value: question, title: question))
+        .map((question) => MultiSelectItem<String>(question, question))
         .toList();
   }
 
-  late final List<S2Choice<String>>? items;
-
-  /* _TypeError (type 'List<S2Choice<String>>' is not a subtype of type 'List<S2Choice<Null>>?') */
+  late final items;
 
   @override
-  State<SingleFrom> createState() => _SingleFromState();
+  State<SingleFrom> createState() => SingleFromState();
 }
 
-class _SingleFromState extends State<SingleFrom> {
-  String _selectedChoice = "";
+class SingleFromState extends State<SingleFrom> {
+  String _selectedQuestion = "";
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -56,11 +54,8 @@ class _SingleFromState extends State<SingleFrom> {
         Padding(
           padding: const EdgeInsets.only(bottom: 10, right: 30, left: 30),
           child: Container(
-            padding: const EdgeInsets.only(
-              bottom: 10.0,
-              right: 15.5,
-              left: 15.5,
-            ),
+            padding:
+                const EdgeInsets.only(bottom: 10.0, right: 15.5, left: 15.5),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(25)),
               border: Border.all(
@@ -68,46 +63,42 @@ class _SingleFromState extends State<SingleFrom> {
                 width: 0.7,
               ),
             ),
-            child: SmartSelect.single(
-              title: widget.question.question,
-              selectedValue: _selectedChoice,
-              choiceItems: widget.items,
-              onChange: (selected) =>
-                  setState(() => widget.controller.text = selected.value),
-              modalType: S2ModalType.bottomSheet,
-              choiceType: S2ChoiceType.chips,
-              choiceStyle: const S2ChoiceStyle(
-                color: paleteTeal,
-                raised: true,
+            child: MultiSelectBottomSheetField(
+              items: widget.items,
+              isDismissible: false,
+              searchable: true,
+              title: Text(widget.question.question),
+              buttonText: Text(
+                widget.question.question,
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontFamily: "Poppins",
+                ),
               ),
-              choiceActiveStyle: const S2ChoiceStyle(
-                color: paletePink,
-                raised: true,
-              ),
-              tileBuilder: (context, state) => S2Tile.fromState(
-                state,
-                isTwoLine: true,
-              ),
+              onSelectionChanged: (p0) {
+                final list = p0;
+                setState(() {
+                  
+                  for (var i = 0; i < list.length - 1; i++) {
+                    p0.remove(list[i]);
+                  }
+                });
+              },
+              listType: MultiSelectListType.CHIP,
+              onConfirm: (values) {
+                if (values.isNotEmpty) {
+                  _selectedQuestion = values.last.toString();
+                }
 
-              /*  modalTitle: 'Cars Option',
-              choiceDirection: Axis.horizontal,
-              title: widget.question.question,
-              placeholder: "Select one",
-              choiceType: S2ChoiceType.chips,
-              
-              choiceGrouped: true,
-              modalType: S2ModalType.bottomSheet,
-              selectedValue: _selectedChoice,
-              onChange: (selected) =>
-                  setState(() => _selectedChoice = selected.value),
-              tileBuilder: (context, state) => S2Tile<dynamic>(
-                title: const Text('Car'),
-                value: state.selected.toWidget(),
-                isTwoLine: true,
-                
-                onTap: state.showModal,
+                widget.controller.text = _selectedQuestion.toString();
+              },
+              chipDisplay: MultiSelectChipDisplay(
+                textStyle: smallerDefaultStyle,
+                chipColor: paletePink,
+                onTap: (p0) {
+                  print(p0);
+                },
               ),
-              choiceItems: widget.items, */
             ),
           ),
         ),
