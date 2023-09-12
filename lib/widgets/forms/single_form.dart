@@ -28,6 +28,7 @@ class SingleFrom extends StatefulWidget {
 
 class SingleFromState extends State<SingleFrom> {
   String _selectedQuestion = "";
+  late List selectedList;
 
   @override
   Widget build(BuildContext context) {
@@ -76,11 +77,10 @@ class SingleFromState extends State<SingleFrom> {
                 ),
               ),
               onSelectionChanged: (p0) {
-                final list = p0;
+                selectedList = p0;
                 setState(() {
-                  
-                  for (var i = 0; i < list.length - 1; i++) {
-                    p0.remove(list[i]);
+                  for (var i = 0; i < selectedList.length - 1; i++) {
+                    p0.remove(selectedList[i]);
                   }
                 });
               },
@@ -96,7 +96,9 @@ class SingleFromState extends State<SingleFrom> {
                 textStyle: smallerDefaultStyle,
                 chipColor: paletePink,
                 onTap: (p0) {
-                  print(p0);
+                  setState(() {
+                    selectedList.remove(p0);
+                  });
                 },
               ),
             ),
