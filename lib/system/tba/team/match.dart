@@ -3,21 +3,21 @@
 /// Represents a playable match by a Team
 
 class FRCMatch {
-  final String? winningAlliance;
-  final List<dynamic>? blueAlliance;
-  final List<dynamic>? redAlliance;
-  final int? blueScore;
-  final int? redScore;
+  final String winningAlliance;
+  final List<dynamic> blueAlliance;
+  final List<dynamic> redAlliance;
+  final int blueScore;
+  final int redScore;
   final String matchKey;
   late String matchNumType;
 
   FRCMatch({
     required this.matchKey,
-    this.winningAlliance,
-    this.blueAlliance,
-    this.redAlliance,
-    this.blueScore,
-    this.redScore,
+    required this.winningAlliance,
+    required this.blueAlliance,
+    required this.redAlliance,
+    required this.blueScore,
+    required this.redScore,
   }) {
     matchNumType = matchKey.substring(9);
     matchNumType = (matchNumType.startsWith("f"))
@@ -28,14 +28,14 @@ class FRCMatch {
                 ? "Semi ${matchNumType.substring(2).split("m")[0]}"
                 : matchNumType));
 
-    if (blueAlliance != null) {
-      for (var i = 0; i < blueAlliance!.length; i++) {
-        blueAlliance![i] = blueAlliance![i].toString().substring(3);
+    if (blueAlliance.isNotEmpty) {
+      for (var i = 0; i < blueAlliance.length; i++) {
+        blueAlliance[i] = blueAlliance[i].toString().substring(3);
       }
     }
-    if (redAlliance != null) {
-      for (var i = 0; i < redAlliance!.length; i++) {
-        redAlliance![i] = redAlliance![i].toString().substring(3);
+    if (redAlliance.isNotEmpty) {
+      for (var i = 0; i < redAlliance.length; i++) {
+        redAlliance[i] = redAlliance[i].toString().substring(3);
       }
     }
   }

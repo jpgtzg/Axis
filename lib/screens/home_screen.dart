@@ -116,7 +116,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
-/*
-width: MediaQuery.of(context).size.width /
-                                        (1 / 8),*/
