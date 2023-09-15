@@ -81,15 +81,15 @@ class MatchCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  match.redAlliance!
+                  match.redAlliance
                       .toString()
-                      .substring(1, match.redAlliance!.toString().length - 1),
+                      .substring(1, match.redAlliance.toString().length - 1),
                   style: redAllianceStyle,
                 ),
                 Text(
-                  match.blueAlliance!
+                  match.blueAlliance
                       .toString()
-                      .substring(1, match.blueAlliance!.toString().length - 1),
+                      .substring(1, match.blueAlliance.toString().length - 1),
                   style: blueAllianceStyle,
                 ),
               ],

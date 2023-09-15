@@ -1,6 +1,5 @@
 /// Written by Juan Pablo Gutiérrez
 /// 12 - 07 - 2import 'package:flutter/material.dart';
-///
 
 import 'package:axis/constants.dart';
 import 'package:axis/screens/team_screen.dart';
