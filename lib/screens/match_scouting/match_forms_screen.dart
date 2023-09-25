@@ -4,7 +4,7 @@
 import 'package:axis/system/axis/realm/realm_manager.dart';
 import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:axis/widgets/forms/multiple_form.dart';
-import 'package:axis/widgets/forms/testing_form.dart';
+import 'package:axis/widgets/forms/single_form.dart';
 import 'package:axis/widgets/forms/text_form.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
 import 'package:axis/widgets/top_bar.dart';
@@ -13,7 +13,6 @@ import 'package:realm/realm.dart';
 
 import '../../constants.dart';
 import '../../widgets/forms/int_form.dart';
-import '../../widgets/forms/single_form.dart';
 import '../../widgets/standart_spacer.dart';
 
 // ignore: must_be_immutable
@@ -68,17 +67,11 @@ class MatchFormScreen extends StatelessWidget {
           controller: controllers.elementAt(index),
         );
       case "single":
-        return SingleFormTest(
+        return SingleForm(
           question: data.questionsArray[index],
           padding: 5,
           controller: controllers.elementAt(index),
           formKey: _formKey,
-        );
-      case "single":
-        return SingleFrom(
-          question: data.questionsArray[index],
-          padding: 5,
-          controller: controllers.elementAt(index),
         );
       default:
         return const Text("Error");
