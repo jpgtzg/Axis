@@ -22,7 +22,7 @@ class SingleForm extends StatefulWidget {
         .toList();
   }
 
-  late final items;
+  late final List<DropdownMenuItem<String>> items;
 
   @override
   State<SingleForm> createState() => _SingleFormState();
@@ -36,7 +36,7 @@ class _SingleFormState extends State<SingleForm> {
     super.initState();
 
     if (widget.items.isNotEmpty) {
-      _selectedOption = widget.items.first.value;
+      _selectedOption = widget.items.first.value!;
     }
   }
 
@@ -106,7 +106,6 @@ class _SingleFormState extends State<SingleForm> {
               setState(() {
                 widget.controller.text = newValue ?? '';
                 _selectedOption = newValue ?? '';
-                print(widget.controller.text);
               });
             },
           ),

@@ -28,19 +28,19 @@ class MatchFormScreen extends StatelessWidget {
       _formKey.currentState!.save();
 
       MatchSchema matchSchema = MatchSchema(ObjectId());
-      globalData.questionsArray.forEach((element) {
+      for (var element in globalData.questionsArray) {
         matchSchema.questions.add(RealmValue.string(element.question));
         matchSchema.answers.add(RealmValue.string(controllers
             .elementAt(globalData.questionsArray.indexOf(element))
             .text));
-      });
+      }
 
       write(matchSchema);
 
       _formKey.currentState!.reset();
-      controllers.forEach((element) {
+      for (var element in controllers) {
         element.clear();
-      });
+      }
     }
   }
 

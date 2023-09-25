@@ -20,7 +20,7 @@ class MultipleForm extends StatefulWidget {
         .toList();
   }
 
-  late final items;
+  late final List<MultiSelectItem<String>> items;
 
   @override
   State<MultipleForm> createState() => _MultipleFormState();
