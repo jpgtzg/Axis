@@ -29,7 +29,7 @@ class SingleForm extends StatefulWidget {
 }
 
 class _SingleFormState extends State<SingleForm> {
-  late String _selectedOption;
+  late String _selectedOption = "";
 
   @override
   void initState() {

@@ -17,11 +17,11 @@ import '../../widgets/standart_spacer.dart';
 
 // ignore: must_be_immutable
 class MatchFormScreen extends StatelessWidget {
-  MatchFormScreen({super.key});
-
   final List<TextEditingController> controllers = [];
   final _formKey = GlobalKey<FormState>();
   late MatchFormSettingsSchema globalData;
+  
+  MatchFormScreen({super.key});
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {

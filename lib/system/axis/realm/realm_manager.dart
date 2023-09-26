@@ -18,8 +18,10 @@ Future<bool> setRealm() async {
       user,
       [
         MatchSchema.schema,
+        PitSchema.schema,
         Question.schema,
         MatchFormSettingsSchema.schema,
+        PitFormSettingsSchema.schema,
       ],
       clientResetHandler: const DiscardUnsyncedChangesHandler());
 
@@ -36,11 +38,26 @@ Future<bool> setRealm() async {
     });
   }
 
-  final userFormsSub = realm!.subscriptions.findByName('getFormsData');
-  if (userFormsSub == null) {
+  final userMatchFormSub = realm!.subscriptions.findByName('getMatchFormsData');
+  if (userMatchFormSub == null) {
     realm!.subscriptions.update((mutableSubscriptions) {
       mutableSubscriptions.add(realm!.all<MatchFormSettingsSchema>(),
-          name: 'getFormsData');
+          name: 'getMatchFormsData');
+    });
+  }
+
+  final userPitSub = realm!.subscriptions.findByName('getPitData');
+  if (userPitSub == null) {
+    realm!.subscriptions.update((mutableSubscriptions) {
+      mutableSubscriptions.add(realm!.all<PitSchema>(), name: 'getPitData');
+    });
+  }
+
+  final userPitFormSub = realm!.subscriptions.findByName('getPitFormsData');
+  if (userPitFormSub == null) {
+    realm!.subscriptions.update((mutableSubscriptions) {
+      mutableSubscriptions.add(realm!.all<PitFormSettingsSchema>(),
+          name: 'getPitFormsData');
     });
   }
   return realm == null;
@@ -55,7 +72,7 @@ void write(RealmObject schemaObject) async {
   });
 }
 
-void updateMatchForm(MatchFormSettingsSchema matchFormSettings) async {
+void updateMatchFormSettings(MatchFormSettingsSchema matchFormSettings) async {
   var fullList = await getMatchFormSettings();
 
   if (fullList != null) {
@@ -64,15 +81,50 @@ void updateMatchForm(MatchFormSettingsSchema matchFormSettings) async {
       fullList.questionsArray.clear();
       fullList.questionsArray.addAll(matchFormSettings.questionsArray);
     });
+  } else {
+    realm!.write(() {
+      realm!.add(matchFormSettings);
+    });
   }
 }
 
-Future<MatchFormSettingsSchema>? getMatchFormSettings() async {
+Future<MatchFormSettingsSchema?>? getMatchFormSettings() async {
+  if (realm == null) {
+    await setRealm();
+  }
+  try {
+    return realm!.all<MatchFormSettingsSchema>().first;
+  } catch (e) {
+    return null;
+  }
+}
+
+void updatePitFormSettings(PitFormSettingsSchema pitFormSettings) async {
+  var fullList = await getPitFormSettings();
+
+  if (fullList != null) {
+    realm!.write(() {
+      fullList.questionNumber = pitFormSettings.questionNumber;
+      fullList.questionsArray.clear();
+      fullList.questionsArray.addAll(pitFormSettings.questionsArray);
+    });
+  } else {
+    realm!.write(() {
+      realm!.add(pitFormSettings);
+    });
+  }
+}
+
+Future<PitFormSettingsSchema?>? getPitFormSettings() async {
   if (realm == null) {
     await setRealm();
   }
 
-  return realm!.all<MatchFormSettingsSchema>().first;
+  try {
+    return realm!.all<PitFormSettingsSchema>().first;
+  } catch (e) {
+    return null;
+  }
 }
 
 Future<bool> isDeviceOnline() async {

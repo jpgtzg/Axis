@@ -3,6 +3,7 @@
 
 import 'package:axis/constants.dart';
 import 'package:axis/screens/match_scouting/match_form_screen.dart';
+import 'package:axis/screens/pit_scouting/pit_forms_screen.dart';
 import 'package:axis/system/tba/team/team_getter.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
 import 'package:axis/widgets/logo.dart';
@@ -92,7 +93,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       SelectionButton(
                           titleText: "Pit Scouting",
-                          widgetScreen: MatchFormScreen()),
+                          widgetScreen: PitFormScreen()),
                       const StandardSpacer(
                         height: standartSpacerHeight,
                       ),
