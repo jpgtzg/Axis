@@ -1,7 +1,7 @@
 /// Written by Juan Pablo Gutiérrez
 /// 24 - 07 - 2023
 
-import 'package:axis/system/statbotics/statbotics_getter.dart';
+import 'package:axis/system/tba/team/team_getter.dart';
 import 'package:axis/widgets/copr/copr_chart.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
 import 'package:axis/widgets/top_bar.dart';
@@ -33,7 +33,7 @@ class TeamScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(left: 15.0, right: 15.0),
           child: FutureBuilder(
-              future: getEPA(team.teamNumber, event.eventKey),
+              future: getTeamData(team, event.eventKey),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return const Center(
@@ -54,8 +54,6 @@ class TeamScreen extends StatelessWidget {
                     ),
                   );
                 }
-
-                team.setEPA(data);
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

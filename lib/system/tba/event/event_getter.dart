@@ -7,7 +7,6 @@ import 'package:axis/system/tba/event/rank.dart';
 import 'package:axis/system/tba/system_constants.dart';
 import 'package:axis/system/api_manager.dart';
 import 'package:axis/system/tba/team/team.dart';
-import 'package:axis/system/tba/team/team_getter.dart';
 
 /// Gets the rankings for a specific event
 ///
@@ -45,35 +44,7 @@ Future<List<Team>?>? getEventTeams(Event event) async {
     teamsList.add(team);
   }
 
-  teamsList = await getListURL(teamsList);
-
-  teamsList = await getListCOPR(teamsList, event.eventKey);
-
   return teamsList;
-}
-
-Future<List<Team>> getListURL(List<Team> teamsLists) async {
-  final year = DateTime.now().year.toString();
-  for (var element in teamsLists) {
-    String teamURL = await getImageUrl(element.teamNumber, year);
-    element.setImgUrl(teamURL);
-  }
-
-  return teamsLists;
-}
-
-Future<List<Team>> getListCOPR(List<Team> teamsLists, String eventKey) async {
-  Map? coprList = await getEventCOPR(eventKey);
-
-  if (coprList == null) return teamsLists;
-
-  for (var team in teamsLists) {
-    team.setOpr(coprList["oprs"]["frc${team.teamNumber}"]);
-    team.setDpr(coprList["dprs"]["frc${team.teamNumber}"]);
-    team.setCcwm(coprList["ccwms"]["frc${team.teamNumber}"]);
-  }
-
-  return teamsLists;
 }
 
 Future<Map?> getEventCOPR(String eventKey) async {
@@ -84,4 +55,16 @@ Future<Map?> getEventCOPR(String eventKey) async {
   if (data == null) return null;
 
   return data;
+}
+
+Future<Team> getTeamCOPR(Team team, String eventKey) async {
+  Map? coprList = await getEventCOPR(eventKey);
+
+  if (coprList == null) return team;
+
+  team.setOpr(coprList["oprs"]["frc${team.teamNumber}"]);
+  team.setDpr(coprList["dprs"]["frc${team.teamNumber}"]);
+  team.setCcwm(coprList["ccwms"]["frc${team.teamNumber}"]);
+
+  return team;
 }

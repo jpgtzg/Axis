@@ -16,12 +16,3 @@ Future<EPA?> getEPA(String teamKey, String eventKey) async {
   return EPA.fromJson(data);
 }
 
-Future<EPA?> getFullEPA(String teamKey) async {
-  final url = "$baseSTABURL/team_year/$teamKey/2023";
-
-  final data = await getMapData(url);
-
-  if (data == null) return null;
-
-  return EPA.fromJson(data);
-}
