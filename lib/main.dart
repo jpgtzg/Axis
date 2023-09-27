@@ -16,18 +16,6 @@ void main() async {
   setClient();
   await setRealm();
 
-  PitFormSettingsSchema schema = PitFormSettingsSchema(ObjectId(), 0);
-  schema.questionsArray.add(Question("Numero de equipo", "int"));
-  schema.questionsArray.add(Question("Nombre de equipo", "string"));
-  schema.questionsArray.add(Question("Ciclos de equipo", "int"));
-  schema.questionsArray.add(Question("Colocaciones", "multiple")
-    ..availableAnswers.add("Middle Grid")
-    ..availableAnswers.add("Left Grid")
-    ..availableAnswers.add("Right grid"));
-
-  schema.questionNumber = schema.questionsArray.length;
-
-  updatePitFormSettings(schema);
   runApp(const AxisApp());
 }
 
