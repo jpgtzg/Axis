@@ -1,7 +1,11 @@
 /// Written by Juan Pablo Gutiérrez
 /// Gets team-related data
+import 'package:axis/system/statbotics/epa.dart';
+import 'package:axis/system/statbotics/statbotics_getter.dart';
 import 'package:axis/system/tba/event/event.dart';
+import 'package:axis/system/tba/event/event_getter.dart';
 import 'package:axis/system/tba/team/match.dart';
+import 'package:axis/system/tba/team/team.dart';
 
 import '../system_constants.dart';
 import '../../api_manager.dart';
@@ -167,8 +171,28 @@ Future<String> getImageUrl(String teamKey, String year) async {
       }
     }
   }
+  
 
-  imageUrl ??= 'https://4.bp.blogspot.com/-3uyUTVhvMuo/WjAGEF31DhI/AAAAAAAAAEU/6EurwWD_ebc8o5bFfWoclQuhjSm1Aj5sQCK4BGAYYCw/s1600/FRC_Logo.svgS.jpg';
+  imageUrl ??=
+      'https://4.bp.blogspot.com/-3uyUTVhvMuo/WjAGEF31DhI/AAAAAAAAAEU/6EurwWD_ebc8o5bFfWoclQuhjSm1Aj5sQCK4BGAYYCw/s1600/FRC_Logo.svgS.jpg';
 
   return imageUrl;
+}
+
+
+/// Gets a team's EPA and COPR
+///
+/// @param {Team} team Team to get data from
+/// @param {String} eventKey Event from which to retrieve data from
+///
+/// @return A team with EPA and COPR
+Future<Team> getTeamData(Team team, String eventKey) async {
+  EPA? epa = await getEPA(team.teamNumber, eventKey);
+  team = await getTeamCOPR(team, eventKey);
+
+  if (epa == null) return team;
+
+  team.setEPA(epa);
+
+  return team;
 }

@@ -1,8 +1,10 @@
-import '../../statbotics/epa.dart';
-
 /// Written by Juan Pablo Gutiérrez
 /// 12 - 07 - 2023
 /// Represents a single team
+
+import 'package:axis/system/tba/team/team_getter.dart';
+
+import '../../statbotics/epa.dart';
 
 class Team {
   final String teamNumber;
@@ -38,7 +40,7 @@ class Team {
     this.ccwm = ccwm;
   }
 
-  void setEPA(var epa){
+  void setEPA(EPA epa) {
     this.epa = epa;
   }
 
@@ -47,5 +49,11 @@ class Team {
       teamNumber: jsonTeam["key"].substring(3),
       teamName: jsonTeam["nickname"],
     );
+  }
+
+  Future<void> loadImage() async {
+    var value = await getImageUrl(teamNumber, DateTime.now().year.toString());
+
+    setImgUrl(value);
   }
 }
