@@ -70,6 +70,8 @@ Future<List<FRCMatch>?> getTeamMatches(Event event) async {
   final url =
       "$baseTBAURL/team/frc$teamNum/event/${event.eventKey}/matches$authURL";
 
+  print(url);
+
   final data = await getListData(url);
 
   if (data == null) return null;
@@ -171,14 +173,12 @@ Future<String> getImageUrl(String teamKey, String year) async {
       }
     }
   }
-  
 
   imageUrl ??=
       'https://4.bp.blogspot.com/-3uyUTVhvMuo/WjAGEF31DhI/AAAAAAAAAEU/6EurwWD_ebc8o5bFfWoclQuhjSm1Aj5sQCK4BGAYYCw/s1600/FRC_Logo.svgS.jpg';
 
   return imageUrl;
 }
-
 
 /// Gets a team's EPA and COPR
 ///
@@ -193,6 +193,18 @@ Future<Team> getTeamData(Team team, String eventKey) async {
   if (epa == null) return team;
 
   team.setEPA(epa);
+
+  return team;
+}
+
+Future<Team> getTeamCOPR(Team team, String eventKey) async {
+  Map? coprList = await getEventCOPR(eventKey);
+
+  if (coprList == null) return team;
+
+  team.setOpr(coprList["oprs"]["frc${team.teamNumber}"]);
+  team.setDpr(coprList["dprs"]["frc${team.teamNumber}"]);
+  team.setCcwm(coprList["ccwms"]["frc${team.teamNumber}"]);
 
   return team;
 }

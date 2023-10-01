@@ -1,6 +1,8 @@
 /// Written by Juan Pablo Gutiérrez
 /// 24 - 07 - 2023
 
+import 'package:axis/screens/match_scouting/match_dashboard_screen.dart';
+import 'package:axis/screens/pit_scouting/pit_dashboard_screen.dart';
 import 'package:axis/system/tba/team/team_getter.dart';
 import 'package:axis/widgets/copr/copr_chart.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
@@ -82,6 +84,9 @@ class TeamScreen extends StatelessWidget {
                       team: team,
                       eventKey: event.eventKey,
                     ),
+                    const StandardSpacer(height: standartSpacerHeight),
+                    const MatchDashboardScreen(),
+                    const PitDashboardScreen()
                   ],
                 );
               }),
