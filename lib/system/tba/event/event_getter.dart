@@ -57,14 +57,3 @@ Future<Map?> getEventCOPR(String eventKey) async {
   return data;
 }
 
-Future<Team> getTeamCOPR(Team team, String eventKey) async {
-  Map? coprList = await getEventCOPR(eventKey);
-
-  if (coprList == null) return team;
-
-  team.setOpr(coprList["oprs"]["frc${team.teamNumber}"]);
-  team.setDpr(coprList["dprs"]["frc${team.teamNumber}"]);
-  team.setCcwm(coprList["ccwms"]["frc${team.teamNumber}"]);
-
-  return team;
-}

@@ -34,62 +34,70 @@ class TeamScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-          child: FutureBuilder(
-              future: getTeamData(team, event.eventKey),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (snapshot.hasError) {
-                  return Text("${snapshot.error}");
-                }
-
-                final data = snapshot.data;
-
-                if (data == null) {
-                  return const Center(
-                    child: Text(
-                      "No data available",
-                      style: smallerDefaultStyle,
-                      textAlign: TextAlign.center,
-                    ),
-                  );
-                }
-
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TopBar(topText: team.teamNumber),
-                    const StandardSpacer(height: smallerSpacerHeight),
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Flexible(
-                            child: Text(
-                              team.teamName,
-                              style: defaultStyle,
-                              overflow: TextOverflow.visible,
-                            ),
+          child: Column(
+            children: [
+              TopBar(topText: team.teamNumber),
+              const StandardSpacer(height: smallerSpacerHeight),
+              Flexible(
+                child: FutureBuilder(
+                    future: getTeamData(team, event.eventKey),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+              
+                      final data = snapshot.data;
+              
+                      if (data == null) {
+                        return const Center(
+                          child: Text(
+                            "No data available",
+                            style: smallerDefaultStyle,
+                            textAlign: TextAlign.center,
                           ),
-                          WinrateText(
-                            team: team,
-                          )
-                        ],
-                      ),
-                    ),
-                    COPRRadarChart(
-                      team: team,
-                      eventKey: event.eventKey,
-                    ),
-                    const StandardSpacer(height: standartSpacerHeight),
-                    const MatchDashboardScreen(),
-                    const PitDashboardScreen()
-                  ],
-                );
-              }),
+                        );
+                      }
+              
+                      return SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      team.teamName,
+                                      style: defaultStyle,
+                                      overflow: TextOverflow.visible,
+                                    ),
+                                  ),
+                                  WinrateText(
+                                    team: team,
+                                  )
+                                ],
+                              ),
+                            ),
+                            COPRRadarChart(
+                              team: team,
+                              eventKey: event.eventKey,
+                            ),
+                            const StandardSpacer(height: standartSpacerHeight),
+                            const MatchDashboardScreen(),
+                            const PitDashboardScreen()
+                          ],
+                        ),
+                      );
+                    }),
+              ),
+            ],
+          ),
         ),
       ),
     );

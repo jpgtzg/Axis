@@ -31,25 +31,25 @@ class _COPRRadarChartState extends State<COPRRadarChart> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'OPR: ${widget.team.opr.toString()}',
+                  'OPR: ${widget.team.opr ?? "No data"}',
                   style: smallerDefaultStyle,
                   overflow: TextOverflow.fade,
                   softWrap: false,
                 ),
                 Text(
-                  'DPR: ${widget.team.dpr.toString()}',
+                  'DPR: ${widget.team.dpr ?? "No data"}',
                   style: smallerDefaultStyle,
                   overflow: TextOverflow.fade,
                   softWrap: false,
                 ),
                 Text(
-                  'CCWM: ${widget.team.ccwm.toString()}',
+                  'CCWM: ${widget.team.ccwm ?? "No data"}',
                   style: smallerDefaultStyle,
                   overflow: TextOverflow.fade,
                   softWrap: false,
                 ),
                 Text(
-                  'EPA: ${widget.team.epa!.mean.toString()}',
+                  'EPA: ${widget.team.epa?.mean.toString() ?? "No data"}',
                   style: smallerDefaultStyle,
                   overflow: TextOverflow.fade,
                   softWrap: false,
@@ -123,7 +123,7 @@ class _COPRRadarChartState extends State<COPRRadarChart> {
           widget.team.opr ?? 0,
           widget.team.dpr ?? 0,
           widget.team.ccwm ?? 0,
-          widget.team.epa!.mean,
+          widget.team.epa?.mean ?? 0,
         ],
       ),
     ];
