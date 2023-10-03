@@ -99,6 +99,11 @@ List? getAsList(http.Response response) {
   return contentJson;
 }
 
+/// Gets a Response as a Map
+/// 
+/// @param {Response} response Response to be casted as a Map
+/// 
+/// @returns Null if response is null, Map if true
 Map? getAsMap(http.Response response) {
   final content = processResponse(response);
 
