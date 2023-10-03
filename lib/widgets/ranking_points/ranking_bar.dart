@@ -26,7 +26,7 @@ class RankingBarState extends State<RankingBar> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 8 / 1,
+      aspectRatio: (widget.data.length / 6) / 1,
       child: Stack(
         children: <Widget>[
           Padding(
