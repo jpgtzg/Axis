@@ -19,7 +19,7 @@ class FRCMatch {
     required this.blueScore,
     required this.redScore,
   }) {
-    matchNumType = matchKey.substring(9);
+    matchNumType = matchKey.split("_")[1];
     matchNumType = (matchNumType.startsWith("f"))
         ? "Final ${matchNumType[1]} Match ${matchNumType[3]}"
         : ((matchNumType.startsWith("q"))
