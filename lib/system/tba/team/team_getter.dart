@@ -70,8 +70,6 @@ Future<List<FRCMatch>?> getTeamMatches(Event event) async {
   final url =
       "$baseTBAURL/team/frc$teamNum/event/${event.eventKey}/matches$authURL";
 
-  print(url);
-
   final data = await getListData(url);
 
   if (data == null) return null;
@@ -96,13 +94,12 @@ Future<List<FRCMatch>?> getTeamMatches(Event event) async {
       qualsList.add(element);
     } else if (element.matchNumType.startsWith("S")) {
       semisList.add(element);
-    }
+    } else {}
   }
 
   matchlist.clear();
   matchlist.addAll(matchSelectionSort(qualsList, false));
   matchlist.addAll(matchSelectionSort(semisList, false));
-  matchlist.addAll(matchSelectionSort(finalList, true));
 
   return matchlist;
 }
