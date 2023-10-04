@@ -6,7 +6,7 @@ import 'package:axis/screens/match_scouting/match_form_screen.dart';
 import 'package:axis/screens/pit_scouting/pit_forms_screen.dart';
 import 'package:axis/widgets/event_carousel.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
-import 'package:axis/widgets/logo.dart';
+import 'package:axis/widgets/menu_button.dart';
 import 'package:axis/widgets/selection_button.dart';
 import 'package:flutter/material.dart';
 
@@ -25,19 +25,7 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const AxisLogo(),
-                    IconButton(
-                      onPressed: () => print("PRESSED"),
-                      icon: menuIcon,
-                    ),
-                  ],
-                ),
-              ),
+              const MenuButton(),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
