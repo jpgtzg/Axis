@@ -4,24 +4,25 @@ part 'realm_models.g.dart';
 
 @RealmModel()
 class _MatchFormSettingsSchema {
+
   @PrimaryKey()
   @MapTo('_id')
+  
   late ObjectId id;
-
+  
   late int questionNumber;
-
+  
   late List<_Question> questionsArray;
 }
-
 @RealmModel()
 class _MatchSchema {
   @PrimaryKey()
   @MapTo('_id')
   late ObjectId id;
-
   late List<RealmValue> answers;
-
+  late String eventKey;
   late List<RealmValue> questions;
+  late int teamNumber;
 }
 
 @RealmModel(ObjectType.embeddedObject)
@@ -35,10 +36,13 @@ class _Question {
 
 @RealmModel()
 class _PitFormSettingsSchema {
+ 
   @PrimaryKey()
   @MapTo('_id')
   late ObjectId id;
+
   late int questionNumber;
+
   late List<_Question> questionsArray;
 }
 
@@ -50,5 +54,9 @@ class _PitSchema {
 
   late List<RealmValue> answers;
 
+  late String eventKey;
+
   late List<RealmValue> questions;
+
+  late int teamNumber;
 }

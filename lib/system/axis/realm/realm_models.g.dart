@@ -67,11 +67,15 @@ class MatchFormSettingsSchema extends _MatchFormSettingsSchema
 class MatchSchema extends _MatchSchema
     with RealmEntity, RealmObjectBase, RealmObject {
   MatchSchema(
-    ObjectId id, {
+    ObjectId id,
+    String eventKey,
+    int teamNumber, {
     Iterable<RealmValue> answers = const [],
     Iterable<RealmValue> questions = const [],
   }) {
     RealmObjectBase.set(this, '_id', id);
+    RealmObjectBase.set(this, 'eventKey', eventKey);
+    RealmObjectBase.set(this, 'teamNumber', teamNumber);
     RealmObjectBase.set<RealmList<RealmValue>>(
         this, 'answers', RealmList<RealmValue>(answers));
     RealmObjectBase.set<RealmList<RealmValue>>(
@@ -93,12 +97,23 @@ class MatchSchema extends _MatchSchema
       throw RealmUnsupportedSetError();
 
   @override
+  String get eventKey =>
+      RealmObjectBase.get<String>(this, 'eventKey') as String;
+  @override
+  set eventKey(String value) => RealmObjectBase.set(this, 'eventKey', value);
+
+  @override
   RealmList<RealmValue> get questions =>
       RealmObjectBase.get<RealmValue>(this, 'questions')
           as RealmList<RealmValue>;
   @override
   set questions(covariant RealmList<RealmValue> value) =>
       throw RealmUnsupportedSetError();
+
+  @override
+  int get teamNumber => RealmObjectBase.get<int>(this, 'teamNumber') as int;
+  @override
+  set teamNumber(int value) => RealmObjectBase.set(this, 'teamNumber', value);
 
   @override
   Stream<RealmObjectChanges<MatchSchema>> get changes =>
@@ -117,8 +132,10 @@ class MatchSchema extends _MatchSchema
           mapTo: '_id', primaryKey: true),
       SchemaProperty('answers', RealmPropertyType.mixed,
           optional: true, collectionType: RealmCollectionType.list),
+      SchemaProperty('eventKey', RealmPropertyType.string),
       SchemaProperty('questions', RealmPropertyType.mixed,
           optional: true, collectionType: RealmCollectionType.list),
+      SchemaProperty('teamNumber', RealmPropertyType.int),
     ]);
   }
 }
@@ -238,11 +255,15 @@ class PitFormSettingsSchema extends _PitFormSettingsSchema
 class PitSchema extends _PitSchema
     with RealmEntity, RealmObjectBase, RealmObject {
   PitSchema(
-    ObjectId id, {
+    ObjectId id,
+    String eventKey,
+    int teamNumber, {
     Iterable<RealmValue> answers = const [],
     Iterable<RealmValue> questions = const [],
   }) {
     RealmObjectBase.set(this, '_id', id);
+    RealmObjectBase.set(this, 'eventKey', eventKey);
+    RealmObjectBase.set(this, 'teamNumber', teamNumber);
     RealmObjectBase.set<RealmList<RealmValue>>(
         this, 'answers', RealmList<RealmValue>(answers));
     RealmObjectBase.set<RealmList<RealmValue>>(
@@ -264,12 +285,23 @@ class PitSchema extends _PitSchema
       throw RealmUnsupportedSetError();
 
   @override
+  String get eventKey =>
+      RealmObjectBase.get<String>(this, 'eventKey') as String;
+  @override
+  set eventKey(String value) => RealmObjectBase.set(this, 'eventKey', value);
+
+  @override
   RealmList<RealmValue> get questions =>
       RealmObjectBase.get<RealmValue>(this, 'questions')
           as RealmList<RealmValue>;
   @override
   set questions(covariant RealmList<RealmValue> value) =>
       throw RealmUnsupportedSetError();
+
+  @override
+  int get teamNumber => RealmObjectBase.get<int>(this, 'teamNumber') as int;
+  @override
+  set teamNumber(int value) => RealmObjectBase.set(this, 'teamNumber', value);
 
   @override
   Stream<RealmObjectChanges<PitSchema>> get changes =>
@@ -287,8 +319,10 @@ class PitSchema extends _PitSchema
           mapTo: '_id', primaryKey: true),
       SchemaProperty('answers', RealmPropertyType.mixed,
           optional: true, collectionType: RealmCollectionType.list),
+      SchemaProperty('eventKey', RealmPropertyType.string),
       SchemaProperty('questions', RealmPropertyType.mixed,
           optional: true, collectionType: RealmCollectionType.list),
+      SchemaProperty('teamNumber', RealmPropertyType.int),
     ]);
   }
 }
