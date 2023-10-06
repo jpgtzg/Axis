@@ -4,6 +4,7 @@
 import 'package:axis/constants.dart';
 import 'package:axis/system/axis/realm/realm_manager.dart';
 import 'package:axis/system/axis/realm/realm_models.dart';
+import 'package:axis/system/tba/event/event.dart';
 import 'package:axis/widgets/forms/int_form.dart';
 import 'package:axis/widgets/forms/multiple_form.dart';
 import 'package:axis/widgets/forms/single_form.dart';
@@ -19,22 +20,25 @@ class PitFormScreen extends StatelessWidget {
   final List<TextEditingController> controllers = [];
   final _formKey = GlobalKey<FormState>();
   late PitFormSettingsSchema globalData;
+  final Event event;
 
-  PitFormScreen({super.key});
+  PitFormScreen({required this.event, super.key});
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      PitSchema matchSchema = PitSchema(ObjectId());
+      PitSchema pitSchema = PitSchema(
+          ObjectId(), event.eventKey, int.parse(controllers.first.text));
+
       for (var element in globalData.questionsArray) {
-        matchSchema.questions.add(RealmValue.string(element.question));
-        matchSchema.answers.add(RealmValue.string(controllers
+        pitSchema.questions.add(RealmValue.string(element.question));
+        pitSchema.answers.add(RealmValue.string(controllers
             .elementAt(globalData.questionsArray.indexOf(element))
             .text));
       }
 
-      write(matchSchema);
+      write(pitSchema);
 
       _formKey.currentState!.reset();
       for (var element in controllers) {

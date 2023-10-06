@@ -3,6 +3,7 @@
 
 import 'package:axis/system/axis/realm/realm_manager.dart';
 import 'package:axis/system/axis/realm/realm_models.dart';
+import 'package:axis/system/tba/event/event.dart';
 import 'package:axis/widgets/forms/multiple_form.dart';
 import 'package:axis/widgets/forms/single_form.dart';
 import 'package:axis/widgets/forms/text_form.dart';
@@ -20,14 +21,17 @@ class MatchFormScreen extends StatelessWidget {
   final List<TextEditingController> controllers = [];
   final _formKey = GlobalKey<FormState>();
   late MatchFormSettingsSchema globalData;
-  
-  MatchFormScreen({super.key});
+  final Event event;
+
+  MatchFormScreen({required this.event, super.key});
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      MatchSchema matchSchema = MatchSchema(ObjectId());
+      MatchSchema matchSchema = MatchSchema(
+          ObjectId(), event.eventKey, int.parse(controllers.first.text));
+
       for (var element in globalData.questionsArray) {
         matchSchema.questions.add(RealmValue.string(element.question));
         matchSchema.answers.add(RealmValue.string(controllers
@@ -74,7 +78,7 @@ class MatchFormScreen extends StatelessWidget {
           formKey: _formKey,
         );
       default:
-        return const Text("Error");
+        return Text(data.questionsArray[index].type);
     }
   }
 
