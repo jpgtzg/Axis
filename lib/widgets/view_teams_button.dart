@@ -21,7 +21,7 @@ class ViewTeamsButton extends StatelessWidget {
         ),
       ),
       child: AspectRatio(
-        aspectRatio: 16 / 9,
+        aspectRatio: 13 / 4,
         child: Container(
           decoration: BoxDecoration(
               gradient: const LinearGradient(
@@ -33,7 +33,7 @@ class ViewTeamsButton extends StatelessWidget {
                 ],
               ),
               color: Colors.red,
-              borderRadius: BorderRadius.circular(30)),
+              borderRadius: BorderRadius.circular(25)),
           child: const Center(
             child: Text(
               "View Teams",

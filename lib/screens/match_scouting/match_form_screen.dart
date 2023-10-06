@@ -4,6 +4,7 @@
 import 'package:axis/system/axis/realm/realm_manager.dart';
 import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:axis/system/tba/event/event.dart';
+import 'package:axis/widgets/event_name_text.dart';
 import 'package:axis/widgets/forms/multiple_form.dart';
 import 'package:axis/widgets/forms/single_form.dart';
 import 'package:axis/widgets/forms/text_form.dart';
@@ -21,7 +22,7 @@ class MatchFormScreen extends StatelessWidget {
   final List<TextEditingController> controllers = [];
   final _formKey = GlobalKey<FormState>();
   late MatchFormSettingsSchema globalData;
-  final Event event;
+  late final Event event;
 
   MatchFormScreen({required this.event, super.key});
 
@@ -99,6 +100,7 @@ class MatchFormScreen extends StatelessWidget {
           child: Column(
             children: [
               const TopBar(topText: "Match Scouting"),
+              EventNameText(event: event),
               const StandardSpacer(height: standartSpacerHeight),
               Expanded(
                 child: FutureBuilder(

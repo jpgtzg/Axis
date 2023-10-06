@@ -5,6 +5,7 @@ import 'package:axis/constants.dart';
 import 'package:axis/system/axis/realm/realm_manager.dart';
 import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:axis/system/tba/event/event.dart';
+import 'package:axis/widgets/event_name_text.dart';
 import 'package:axis/widgets/forms/int_form.dart';
 import 'package:axis/widgets/forms/multiple_form.dart';
 import 'package:axis/widgets/forms/single_form.dart';
@@ -97,7 +98,8 @@ class PitFormScreen extends StatelessWidget {
           padding: const EdgeInsets.only(left: 15.0, right: 15.0),
           child: Column(
             children: [
-              const TopBar(topText: "Match Scouting"),
+              const TopBar(topText: "Pit Scouting"),
+              EventNameText(event: event),
               const StandardSpacer(height: standartSpacerHeight),
               Expanded(
                 child: FutureBuilder(

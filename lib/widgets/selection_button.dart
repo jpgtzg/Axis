@@ -8,7 +8,16 @@ import '../constants.dart';
 class SelectionButton extends StatelessWidget {
   final String titleText;
   final Widget widgetScreen;
-  const SelectionButton({required this.titleText, required this.widgetScreen, super.key});
+  final Color primaryColor;
+  final Color? secondaryColor;
+  final Color buttonColor;
+  const SelectionButton(
+      {required this.titleText,
+      required this.widgetScreen,
+      required this.primaryColor,
+      this.secondaryColor,
+      required this.buttonColor,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +34,22 @@ class SelectionButton extends StatelessWidget {
             bottom: 25,
             left: 25,
           ),
-          decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
-            borderRadius: BorderRadius.circular(25),
-          ),
+          decoration: (secondaryColor != null)
+              ? BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    colors: [
+                      primaryColor,
+                      secondaryColor!,
+                    ],
+                  ),
+                )
+              : BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.circular(25),
+                ),
           child: Stack(
             children: [
               Positioned(
@@ -48,7 +69,7 @@ class SelectionButton extends StatelessWidget {
                   width: 120,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    color: Colors.lightBlue,
+                    color: buttonColor,
                   ),
                   child: const Center(
                     child: Text(

@@ -2,8 +2,7 @@
 /// 02 - 07 - 2023
 
 import 'package:axis/constants.dart';
-import 'package:axis/screens/match_scouting/match_form_screen.dart';
-import 'package:axis/screens/pit_scouting/pit_forms_screen.dart';
+import 'package:axis/screens/event_selector_screen.dart';
 import 'package:axis/widgets/event_carousel.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
 import 'package:axis/widgets/menu_button.dart';
@@ -38,26 +37,41 @@ class HomeScreen extends StatelessWidget {
                         height: standartSpacerHeight,
                       ),
                       SelectionButton(
-                          titleText: "Match Scouting",
-                          widgetScreen: MatchFormScreen()),
+                        titleText: "Match Scouting",
+                        widgetScreen: const EventSelectorScreen(
+                            selector: EventSelector.match),
+                        primaryColor: Theme.of(context).primaryColor,
+                        buttonColor: Colors.lightBlue,
+                      ),
                       const StandardSpacer(
                         height: standartSpacerHeight,
                       ),
                       SelectionButton(
-                          titleText: "Pit Scouting",
-                          widgetScreen: PitFormScreen()),
+                        titleText: "Pit Scouting",
+                        widgetScreen: const EventSelectorScreen(
+                          selector: EventSelector.pit,
+                        ),
+                        primaryColor: Theme.of(context).primaryColor,
+                        buttonColor: Colors.lightBlue,
+                      ),
                       const StandardSpacer(
                         height: standartSpacerHeight,
                       ),
                       SelectionButton(
-                          titleText: "View Data",
-                          widgetScreen: MatchFormScreen()),
+                        titleText: "View Data",
+                        widgetScreen: const Placeholder(),
+                        primaryColor: Theme.of(context).primaryColor,
+                        buttonColor: Colors.lightBlue,
+                      ),
                       const StandardSpacer(
                         height: standartSpacerHeight,
                       ),
                       SelectionButton(
-                          titleText: "titleText",
-                          widgetScreen: MatchFormScreen()),
+                        titleText: "titleText",
+                        widgetScreen: const Placeholder(),
+                        primaryColor: Theme.of(context).primaryColor,
+                        buttonColor: Colors.lightBlue,
+                      ),
                     ],
                   ),
                 ),
