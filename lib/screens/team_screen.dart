@@ -89,8 +89,8 @@ class TeamScreen extends StatelessWidget {
                               eventKey: event.eventKey,
                             ),
                             const StandardSpacer(height: standartSpacerHeight),
-                            const MatchDashboardScreen(),
-                            const PitDashboardScreen()
+                            MatchDashboardScreen(team: team, event:  event,),
+                            PitDashboardScreen(team: team, event:  event,)
                           ],
                         ),
                       );
