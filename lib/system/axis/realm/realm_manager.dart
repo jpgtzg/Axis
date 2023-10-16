@@ -2,6 +2,8 @@
 /// 3 - 08 - 2023
 
 import 'package:axis/system/axis/realm/realm_models.dart';
+import 'package:axis/system/tba/event/event.dart';
+import 'package:axis/system/tba/team/team.dart';
 import 'package:realm/realm.dart';
 
 import '../../tba/system_constants.dart';
@@ -131,4 +133,25 @@ Future<bool> isDeviceOnline() async {
   //TODO ADD LOGIC
 
   return true;
+}
+
+Future<List<MatchSchema>> getMatchData(Team team, Event event) async {
+  if (realm == null) {
+    await setRealm();
+  }
+
+  final results = realm!.query<MatchSchema>(
+      'teamNumber == "${team.teamNumber}" AND eventKey == "${event.eventKey}"');
+
+  return List.from(results);
+}
+
+Future<List<PitSchema>> getPitData(Team team, Event event) async {
+  if (realm == null) {
+    await setRealm();
+  }
+  final results = realm!.query<PitSchema>(
+      'teamNumber == "${team.teamNumber}" AND eventKey == "${event.eventKey}"');
+
+  return List.from(results);
 }
