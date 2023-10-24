@@ -15,7 +15,7 @@ class _PresetLineChartState extends State<PresetLineChart> {
     paleteBlue,
   ];
 
-  bool showAvg = false;
+  bool showAvg = true;
 
   @override
   Widget build(BuildContext context) {
