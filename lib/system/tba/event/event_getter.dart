@@ -16,6 +16,8 @@ import 'package:axis/system/tba/team/team.dart';
 Future<List<Rank>?>? getEventRankings(Event event) async {
   final url = "$baseTBAURL/event/${event.eventKey}/rankings$authURL";
 
+
+  print(url);
   final data = await getMapData(url);
 
   if (data == null) return null;
@@ -30,6 +32,11 @@ Future<List<Rank>?>? getEventRankings(Event event) async {
   return rankingList;
 }
 
+/// Gets all of the teams attending a certain event
+///
+/// @param {Event} event Event from which to retrieve teams
+///
+/// @return a List of teams
 Future<List<Team>?>? getEventTeams(Event event) async {
   final url = "$baseTBAURL/event/${event.eventKey}/teams$authURL";
 
@@ -47,6 +54,11 @@ Future<List<Team>?>? getEventTeams(Event event) async {
   return teamsList;
 }
 
+/// Gets the OPRs for a specific event
+///
+/// @param {String} eventKey Event key from which to retrieve OPRs
+///
+/// @return a Map of OPRs
 Future<Map?> getEventCOPR(String eventKey) async {
   final url = "$baseTBAURL/event/$eventKey/oprs$authURL";
 
@@ -56,4 +68,3 @@ Future<Map?> getEventCOPR(String eventKey) async {
 
   return data;
 }
-
