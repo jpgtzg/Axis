@@ -19,9 +19,9 @@ void closeClient() {
 }
 
 /// Configures the API key for TheBlueAlliance
-/// 
+///
 /// @param {String} tbaKey The API key for TheBlueAlliance
-void setTBAkey(String tbaKey){
+void setTBAkey(String tbaKey) {
   authKey = tbaKey;
 }
 
@@ -100,9 +100,9 @@ List? getAsList(http.Response response) {
 }
 
 /// Gets a Response as a Map
-/// 
+///
 /// @param {Response} response Response to be casted as a Map
-/// 
+///
 /// @returns Null if response is null, Map if true
 Map? getAsMap(http.Response response) {
   final content = processResponse(response);
@@ -115,4 +115,22 @@ Map? getAsMap(http.Response response) {
   }
 
   return contentJson;
+}
+
+/// Gets a team number from a team key
+///
+/// @param {String} teamKey Team key from which to retrieve the number
+///
+/// @return The team number (WILL REMOVE ALL STRING VALUES, ONLY RETURNS NUMBERS)
+int getTeamNumber(String teamKey) {
+  String numericPart = teamKey.replaceAll(
+      RegExp(r'[^0-9]'), ''); // Remove non-numeric characters
+  int number = 0;
+
+  try {
+    number = int.parse(numericPart);
+    // ignore: empty_catches
+  } catch (e) {}
+
+  return number;
 }
