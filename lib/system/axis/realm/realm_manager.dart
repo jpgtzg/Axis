@@ -24,6 +24,9 @@ Future<bool> setRealm() async {
         Question.schema,
         MatchFormSettingsSchema.schema,
         PitFormSettingsSchema.schema,
+        MatchDashboardSchema.schema,
+        PitDashboardSchema.schema,
+        DashboardWidget.schema
       ],
       clientResetHandler: const DiscardUnsyncedChangesHandler());
 
@@ -48,6 +51,15 @@ Future<bool> setRealm() async {
     });
   }
 
+  final userMatchDashboardSub =
+      realm!.subscriptions.findByName('getMatchDashboardData');
+  if (userMatchDashboardSub == null) {
+    realm!.subscriptions.update((mutableSubscriptions) {
+      mutableSubscriptions.add(realm!.all<MatchDashboardSchema>(),
+          name: 'getMatchDashboardData');
+    });
+  }
+
   final userPitSub = realm!.subscriptions.findByName('getPitData');
   if (userPitSub == null) {
     realm!.subscriptions.update((mutableSubscriptions) {
@@ -62,6 +74,16 @@ Future<bool> setRealm() async {
           name: 'getPitFormsData');
     });
   }
+
+  final userPitDashboardSub =
+      realm!.subscriptions.findByName('getPitDashboardData');
+  if (userPitDashboardSub == null) {
+    realm!.subscriptions.update((mutableSubscriptions) {
+      mutableSubscriptions.add(realm!.all<PitDashboardSchema>(),
+          name: 'getPitDashboardData');
+    });
+  }
+
   return realm == null;
 }
 
@@ -135,6 +157,13 @@ Future<bool> isDeviceOnline() async {
   return true;
 }
 
+/// Returns the match data for a given team and event
+///
+/// @param team The team to get the data for
+///
+/// @param event The event to get the data for
+///
+/// @return A list of match data for the given team and event
 Future<List<MatchSchema>> getMatchData(Team team, Event event) async {
   if (realm == null) {
     await setRealm();
@@ -146,6 +175,12 @@ Future<List<MatchSchema>> getMatchData(Team team, Event event) async {
   return List.from(results);
 }
 
+/// Returns the pit data for a given team and event
+///
+/// @param team The team to get the data for
+/// @param event The event to get the data for
+///
+/// @return A list of pit data for the given team and event
 Future<List<PitSchema>> getPitData(Team team, Event event) async {
   if (realm == null) {
     await setRealm();
@@ -154,4 +189,47 @@ Future<List<PitSchema>> getPitData(Team team, Event event) async {
       'teamNumber == "${team.teamNumber}" AND eventKey == "${event.eventKey}"');
 
   return List.from(results);
+}
+
+/// Returns the match dashboard data for a given team and event
+
+Future<MatchDashboardSchema?>? getMatchDashboardSettings() async {
+  if (realm == null) {
+    await setRealm();
+  }
+
+  try {
+    return realm!.all<MatchDashboardSchema>().first;
+  } catch (e) {
+    return null;
+  }
+}
+
+Future<PitDashboardSchema?>? getPitDashboardSettings() async {
+  if (realm == null) {
+    await setRealm();
+  }
+
+  try {
+    return realm!.all<PitDashboardSchema>().first;
+  } catch (e) {
+    return null;
+  }
+}
+
+
+void updateMatchDashboardSetting(MatchDashboardSchema matchDashboardSettings) async {
+  var fullList = await getMatchDashboardSettings();
+
+  if (fullList != null) {
+    realm!.write(() {
+      fullList.widgetNumber = matchDashboardSettings.widgetNumber;
+      fullList.dashboardWidgets.clear();
+      fullList.dashboardWidgets.addAll(matchDashboardSettings.dashboardWidgets);
+    });
+  } else {
+    realm!.write(() {
+      realm!.add(matchDashboardSettings);
+    });
+  }
 }
