@@ -2,15 +2,15 @@
 /// 24 - 07 - 2023
 
 import 'package:axis/constants.dart';
+import 'package:axis/system/api_manager.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../../system/tba/event/rank.dart';
 
-
 class RankingBar extends StatefulWidget {
   final List<Rank> data;
-  const   RankingBar({required this.data, super.key});
+  const RankingBar({required this.data, super.key});
 
   @override
   State<StatefulWidget> createState() => RankingBarState();
@@ -67,7 +67,7 @@ class RankingBarState extends State<RankingBar> {
       barRods: [
         BarChartRodData(
           toY: y,
-          color: isTouched ? Colors.blue : paletePink ,
+          color: isTouched ? Colors.blue : paletePink,
           width: width,
           borderSide: isTouched
               ? const BorderSide(color: Colors.yellow)
@@ -147,8 +147,10 @@ class RankingBarState extends State<RankingBar> {
         show: false,
       ),
       barGroups: widget.data.asMap().entries.map((e) {
+        /// Error handling for non-int team numbers (Special cases only)
+        int number = getTeamNumber(e.value.team);
         return makeGroupData(
-          int.parse(e.value.team),
+          number,
           e.value.rankingPoints,
           isTouched: e.key == touchedIndex,
         );
