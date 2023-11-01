@@ -64,9 +64,9 @@ class MatchFormSettingsSchema extends _MatchFormSettingsSchema
   }
 }
 
-class MatchSchema extends _MatchSchema
+class MatchDataSchema extends _MatchDataSchema
     with RealmEntity, RealmObjectBase, RealmObject {
-  MatchSchema(
+  MatchDataSchema(
     ObjectId id,
     String eventKey,
     int teamNumber, {
@@ -82,7 +82,7 @@ class MatchSchema extends _MatchSchema
         this, 'questions', RealmList<RealmValue>(questions));
   }
 
-  MatchSchema._();
+  MatchDataSchema._();
 
   @override
   ObjectId get id => RealmObjectBase.get<ObjectId>(this, '_id') as ObjectId;
@@ -116,18 +116,19 @@ class MatchSchema extends _MatchSchema
   set teamNumber(int value) => RealmObjectBase.set(this, 'teamNumber', value);
 
   @override
-  Stream<RealmObjectChanges<MatchSchema>> get changes =>
-      RealmObjectBase.getChanges<MatchSchema>(this);
+  Stream<RealmObjectChanges<MatchDataSchema>> get changes =>
+      RealmObjectBase.getChanges<MatchDataSchema>(this);
 
   @override
-  MatchSchema freeze() => RealmObjectBase.freezeObject<MatchSchema>(this);
+  MatchDataSchema freeze() =>
+      RealmObjectBase.freezeObject<MatchDataSchema>(this);
 
   static SchemaObject get schema => _schema ??= _initSchema();
   static SchemaObject? _schema;
   static SchemaObject _initSchema() {
-    RealmObjectBase.registerFactory(MatchSchema._);
+    RealmObjectBase.registerFactory(MatchDataSchema._);
     return const SchemaObject(
-        ObjectType.realmObject, MatchSchema, 'MatchSchema', [
+        ObjectType.realmObject, MatchDataSchema, 'MatchDataSchema', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
       SchemaProperty('answers', RealmPropertyType.mixed,
@@ -252,9 +253,9 @@ class PitFormSettingsSchema extends _PitFormSettingsSchema
   }
 }
 
-class PitSchema extends _PitSchema
+class PitDataSchema extends _PitDataSchema
     with RealmEntity, RealmObjectBase, RealmObject {
-  PitSchema(
+  PitDataSchema(
     ObjectId id,
     String eventKey,
     int teamNumber, {
@@ -270,7 +271,7 @@ class PitSchema extends _PitSchema
         this, 'questions', RealmList<RealmValue>(questions));
   }
 
-  PitSchema._();
+  PitDataSchema._();
 
   @override
   ObjectId get id => RealmObjectBase.get<ObjectId>(this, '_id') as ObjectId;
@@ -304,17 +305,18 @@ class PitSchema extends _PitSchema
   set teamNumber(int value) => RealmObjectBase.set(this, 'teamNumber', value);
 
   @override
-  Stream<RealmObjectChanges<PitSchema>> get changes =>
-      RealmObjectBase.getChanges<PitSchema>(this);
+  Stream<RealmObjectChanges<PitDataSchema>> get changes =>
+      RealmObjectBase.getChanges<PitDataSchema>(this);
 
   @override
-  PitSchema freeze() => RealmObjectBase.freezeObject<PitSchema>(this);
+  PitDataSchema freeze() => RealmObjectBase.freezeObject<PitDataSchema>(this);
 
   static SchemaObject get schema => _schema ??= _initSchema();
   static SchemaObject? _schema;
   static SchemaObject _initSchema() {
-    RealmObjectBase.registerFactory(PitSchema._);
-    return const SchemaObject(ObjectType.realmObject, PitSchema, 'PitSchema', [
+    RealmObjectBase.registerFactory(PitDataSchema._);
+    return const SchemaObject(
+        ObjectType.realmObject, PitDataSchema, 'PitDataSchema', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
       SchemaProperty('answers', RealmPropertyType.mixed,
@@ -446,23 +448,18 @@ class PitDashboardSchema extends _PitDashboardSchema
 class DashboardWidget extends _DashboardWidget
     with RealmEntity, RealmObjectBase, EmbeddedObject {
   DashboardWidget(
-    int questionIndex,
     String title,
-    String type,
-  ) {
-    RealmObjectBase.set(this, 'questionIndex', questionIndex);
+    String type, {
+    LineTableWidgetData? lineTableData,
+    PieGraphWidgetData? pieGraphData,
+  }) {
     RealmObjectBase.set(this, 'title', title);
     RealmObjectBase.set(this, 'type', type);
+    RealmObjectBase.set(this, 'lineTableData', lineTableData);
+    RealmObjectBase.set(this, 'pieGraphData', pieGraphData);
   }
 
   DashboardWidget._();
-
-  @override
-  int get questionIndex =>
-      RealmObjectBase.get<int>(this, 'questionIndex') as int;
-  @override
-  set questionIndex(int value) =>
-      RealmObjectBase.set(this, 'questionIndex', value);
 
   @override
   String get title => RealmObjectBase.get<String>(this, 'title') as String;
@@ -473,6 +470,22 @@ class DashboardWidget extends _DashboardWidget
   String get type => RealmObjectBase.get<String>(this, 'type') as String;
   @override
   set type(String value) => RealmObjectBase.set(this, 'type', value);
+
+  @override
+  LineTableWidgetData? get lineTableData =>
+      RealmObjectBase.get<LineTableWidgetData>(this, 'lineTableData')
+          as LineTableWidgetData?;
+  @override
+  set lineTableData(covariant LineTableWidgetData? value) =>
+      RealmObjectBase.set(this, 'lineTableData', value);
+
+  @override
+  PieGraphWidgetData? get pieGraphData =>
+      RealmObjectBase.get<PieGraphWidgetData>(this, 'pieGraphData')
+          as PieGraphWidgetData?;
+  @override
+  set pieGraphData(covariant PieGraphWidgetData? value) =>
+      RealmObjectBase.set(this, 'pieGraphData', value);
 
   @override
   Stream<RealmObjectChanges<DashboardWidget>> get changes =>
@@ -488,9 +501,116 @@ class DashboardWidget extends _DashboardWidget
     RealmObjectBase.registerFactory(DashboardWidget._);
     return const SchemaObject(
         ObjectType.embeddedObject, DashboardWidget, 'DashboardWidget', [
-      SchemaProperty('questionIndex', RealmPropertyType.int),
       SchemaProperty('title', RealmPropertyType.string),
       SchemaProperty('type', RealmPropertyType.string),
+      SchemaProperty('lineTableData', RealmPropertyType.object,
+          optional: true, linkTarget: 'LineTableWidgetData'),
+      SchemaProperty('pieGraphData', RealmPropertyType.object,
+          optional: true, linkTarget: 'PieGraphWidgetData'),
+    ]);
+  }
+}
+
+class LineTableWidgetData extends _LineTableWidgetData
+    with RealmEntity, RealmObjectBase, EmbeddedObject {
+  LineTableWidgetData(
+    int columnIndex,
+    String columnTitle,
+    int rowIndex,
+  ) {
+    RealmObjectBase.set(this, 'columnIndex', columnIndex);
+    RealmObjectBase.set(this, 'columnTitle', columnTitle);
+    RealmObjectBase.set(this, 'rowIndex', rowIndex);
+  }
+
+  LineTableWidgetData._();
+
+  @override
+  int get columnIndex => RealmObjectBase.get<int>(this, 'columnIndex') as int;
+  @override
+  set columnIndex(int value) => RealmObjectBase.set(this, 'columnIndex', value);
+
+  @override
+  String get columnTitle =>
+      RealmObjectBase.get<String>(this, 'columnTitle') as String;
+  @override
+  set columnTitle(String value) =>
+      RealmObjectBase.set(this, 'columnTitle', value);
+
+  @override
+  int get rowIndex => RealmObjectBase.get<int>(this, 'rowIndex') as int;
+  @override
+  set rowIndex(int value) => RealmObjectBase.set(this, 'rowIndex', value);
+
+  @override
+  Stream<RealmObjectChanges<LineTableWidgetData>> get changes =>
+      RealmObjectBase.getChanges<LineTableWidgetData>(this);
+
+  @override
+  LineTableWidgetData freeze() =>
+      RealmObjectBase.freezeObject<LineTableWidgetData>(this);
+
+  static SchemaObject get schema => _schema ??= _initSchema();
+  static SchemaObject? _schema;
+  static SchemaObject _initSchema() {
+    RealmObjectBase.registerFactory(LineTableWidgetData._);
+    return const SchemaObject(
+        ObjectType.embeddedObject, LineTableWidgetData, 'LineTableWidgetData', [
+      SchemaProperty('columnIndex', RealmPropertyType.int),
+      SchemaProperty('columnTitle', RealmPropertyType.string),
+      SchemaProperty('rowIndex', RealmPropertyType.int),
+    ]);
+  }
+}
+
+class PieGraphWidgetData extends _PieGraphWidgetData
+    with RealmEntity, RealmObjectBase, EmbeddedObject {
+  PieGraphWidgetData(
+    int percentageIndex,
+    int titleIndex,
+    String title,
+  ) {
+    RealmObjectBase.set(this, 'percentageIndex', percentageIndex);
+    RealmObjectBase.set(this, 'titleIndex', titleIndex);
+    RealmObjectBase.set(this, 'title', title);
+  }
+
+  PieGraphWidgetData._();
+
+  @override
+  int get percentageIndex =>
+      RealmObjectBase.get<int>(this, 'percentageIndex') as int;
+  @override
+  set percentageIndex(int value) =>
+      RealmObjectBase.set(this, 'percentageIndex', value);
+
+  @override
+  int get titleIndex => RealmObjectBase.get<int>(this, 'titleIndex') as int;
+  @override
+  set titleIndex(int value) => RealmObjectBase.set(this, 'titleIndex', value);
+
+  @override
+  String get title => RealmObjectBase.get<String>(this, 'title') as String;
+  @override
+  set title(String value) => RealmObjectBase.set(this, 'title', value);
+
+  @override
+  Stream<RealmObjectChanges<PieGraphWidgetData>> get changes =>
+      RealmObjectBase.getChanges<PieGraphWidgetData>(this);
+
+  @override
+  PieGraphWidgetData freeze() =>
+      RealmObjectBase.freezeObject<PieGraphWidgetData>(this);
+
+  static SchemaObject get schema => _schema ??= _initSchema();
+  static SchemaObject? _schema;
+  static SchemaObject _initSchema() {
+    RealmObjectBase.registerFactory(PieGraphWidgetData._);
+    return const SchemaObject(
+        ObjectType.embeddedObject, PieGraphWidgetData, 'PieGraphWidgetData', [
+      SchemaProperty('percentageIndex', RealmPropertyType.int),
+      SchemaProperty('titleIndex', RealmPropertyType.int),
+      SchemaProperty('title', RealmPropertyType.string),
     ]);
   }
 }
