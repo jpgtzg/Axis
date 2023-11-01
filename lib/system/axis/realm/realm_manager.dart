@@ -19,14 +19,16 @@ Future<bool> setRealm() async {
   final realmConfig = Configuration.flexibleSync(
       user,
       [
-        MatchSchema.schema,
-        PitSchema.schema,
+        MatchDataSchema.schema,
+        PitDataSchema.schema,
         Question.schema,
         MatchFormSettingsSchema.schema,
         PitFormSettingsSchema.schema,
         MatchDashboardSchema.schema,
         PitDashboardSchema.schema,
-        DashboardWidget.schema
+        DashboardWidget.schema,
+        LineTableWidgetData.schema,
+        PieGraphWidgetData.schema
       ],
       clientResetHandler: const DiscardUnsyncedChangesHandler());
 
@@ -39,7 +41,7 @@ Future<bool> setRealm() async {
   final userMatchSub = realm!.subscriptions.findByName('getMatchData');
   if (userMatchSub == null) {
     realm!.subscriptions.update((mutableSubscriptions) {
-      mutableSubscriptions.add(realm!.all<MatchSchema>(), name: 'getMatchData');
+      mutableSubscriptions.add(realm!.all<MatchDataSchema>(), name: 'getMatchData');
     });
   }
 
@@ -63,7 +65,7 @@ Future<bool> setRealm() async {
   final userPitSub = realm!.subscriptions.findByName('getPitData');
   if (userPitSub == null) {
     realm!.subscriptions.update((mutableSubscriptions) {
-      mutableSubscriptions.add(realm!.all<PitSchema>(), name: 'getPitData');
+      mutableSubscriptions.add(realm!.all<PitDataSchema>(), name: 'getPitData');
     });
   }
 
@@ -164,12 +166,12 @@ Future<bool> isDeviceOnline() async {
 /// @param event The event to get the data for
 ///
 /// @return A list of match data for the given team and event
-Future<List<MatchSchema>> getMatchData(Team team, Event event) async {
+Future<List<MatchDataSchema>> getMatchData(Team team, Event event) async {
   if (realm == null) {
     await setRealm();
   }
 
-  final results = realm!.query<MatchSchema>(
+  final results = realm!.query<MatchDataSchema>(
       'teamNumber == "${team.teamNumber}" AND eventKey == "${event.eventKey}"');
 
   return List.from(results);
@@ -181,11 +183,11 @@ Future<List<MatchSchema>> getMatchData(Team team, Event event) async {
 /// @param event The event to get the data for
 ///
 /// @return A list of pit data for the given team and event
-Future<List<PitSchema>> getPitData(Team team, Event event) async {
+Future<List<PitDataSchema>> getPitData(Team team, Event event) async {
   if (realm == null) {
     await setRealm();
   }
-  final results = realm!.query<PitSchema>(
+  final results = realm!.query<PitDataSchema>(
       'teamNumber == "${team.teamNumber}" AND eventKey == "${event.eventKey}"');
 
   return List.from(results);
