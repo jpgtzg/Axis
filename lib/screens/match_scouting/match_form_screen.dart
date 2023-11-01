@@ -9,6 +9,7 @@ import 'package:axis/widgets/forms/multiple_form.dart';
 import 'package:axis/widgets/forms/single_form.dart';
 import 'package:axis/widgets/forms/text_form.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
+import 'package:axis/widgets/submit_button.dart';
 import 'package:axis/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:realm/realm.dart';
@@ -30,7 +31,7 @@ class MatchFormScreen extends StatelessWidget {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      MatchSchema matchSchema = MatchSchema(
+      MatchDataSchema matchSchema = MatchDataSchema(
           ObjectId(), event.eventKey, int.parse(controllers.first.text));
 
       for (var element in globalData.questionsArray) {
@@ -153,20 +154,7 @@ class MatchFormScreen extends StatelessWidget {
                   },
                 ),
               ),
-              ElevatedButton.icon(
-                onPressed: () {
-                  _submitForm();
-                },
-                icon: const Icon(Icons.send),
-                label: const Text("Send Info"),
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                  ),
-                ),
-              ),
+              SubmitButton(onPressed: _submitForm),
             ],
           ),
         ),
