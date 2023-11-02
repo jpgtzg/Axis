@@ -1,8 +1,8 @@
 /// Written by Juan Pablo Gutierrez
 /// 02 10 2023
 
-import 'package:axis/system/axis/Data.dart';
 import 'package:axis/system/axis/realm/realm_manager.dart';
+import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:axis/system/tba/event/event.dart';
 import 'package:axis/system/tba/team/team.dart';
 import 'package:axis/widgets/graph/line_graph.dart';
@@ -10,81 +10,95 @@ import 'package:flutter/material.dart';
 
 import '../../constants.dart';
 
-class MatchDashboardScreen extends StatelessWidget {
+class MatchDashboardScreen extends StatefulWidget {
   final Event event;
   final Team team;
-  MatchDashboardScreen({required this.event, required this.team, super.key});
+  const MatchDashboardScreen(
+      {required this.event, required this.team, super.key});
 
-  Widget getWidget() {
-    return Text("");
+  @override
+  State<MatchDashboardScreen> createState() => _MatchDashboardScreenState();
+}
+
+class _MatchDashboardScreenState extends State<MatchDashboardScreen> {
+  late Future<MatchDashboardSchema?>? dashboardDataFuture;
+  late Future<List<MatchDataSchema>> matchDataFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    dashboardDataFuture = getMatchDashboardSettings();
+    dashboardDataFuture!.then((dashboardData) {
+      if (dashboardData != null) {
+        matchDataFuture = getMatchData(widget.team, widget.event);
+      }
+    });
   }
-
-  final List<Data> data = List.empty();
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: getMatchDashboardSettings(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          }
+      future: dashboardDataFuture,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
 
-          final data = snapshot.data;
+        final dashboardData = snapshot.data;
 
-          if (data == null) {
-            return const Center(
-              child: Text(
-                "No data available",
-                style: smallerDefaultStyle,
-                textAlign: TextAlign.center,
+        if (dashboardData == null) {
+          return const Center(
+            child: Text(
+              "No data available",
+              style: smallerDefaultStyle,
+              textAlign: TextAlign.center,
+            ),
+          );
+        }
+
+        return FutureBuilder(
+          future: matchDataFuture,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            }
+
+            final matchData = snapshot.data;
+
+            if (matchData == null) {
+              return const Center(
+                child: Text(
+                  "No data available",
+                  style: smallerDefaultStyle,
+                  textAlign: TextAlign.center,
+                ),
+              );
+            }
+
+            return SizedBox(
+              height: 300,
+              child: ListView.builder(
+                itemCount: dashboardData.widgetNumber,
+                itemBuilder: (context, index) {
+                  return PresetLineChart(
+                    matchData: matchData,
+                    tableData:
+                        dashboardData.dashboardWidgets[index].lineTableData!,
+                  );
+                },
               ),
             );
-          }
-
-          /// Map the data to the Data class.
-          return FutureBuilder(
-            future: getMatchData(team, event),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
-
-              final matchData = snapshot.data;
-
-              if (matchData == null) {
-                return const Center(
-                  child: Text(
-                    "No data available",
-                    style: smallerDefaultStyle,
-                    textAlign: TextAlign.center,
-                  ),
-                );
-              }
-
-             /*  return ListView.builder(
-                itemCount: data.widgetNumber,
-                itemBuilder: (context, index) {
-                  return Text("");
-                },
-              ); */
-
-              return Text(matchData[0]
-                  .answers[data.dashboardWidgets[0].questionIndex]
-                  .toString());
-
-              //return PresetLineChart();
-              return Text(matchData.first.answers.toString());
-            },
-          );
-        });
+          },
+        );
+      },
+    );
   }
 }
