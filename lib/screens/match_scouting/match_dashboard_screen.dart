@@ -6,6 +6,7 @@ import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:axis/system/tba/event/event.dart';
 import 'package:axis/system/tba/team/team.dart';
 import 'package:axis/widgets/graph/line_graph.dart';
+import 'package:axis/widgets/standart_spacer.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
@@ -84,14 +85,20 @@ class _MatchDashboardScreenState extends State<MatchDashboardScreen> {
             }
 
             return SizedBox(
-              height: 300,
+              height: 600,
               child: ListView.builder(
                 itemCount: dashboardData.widgetNumber,
                 itemBuilder: (context, index) {
-                  return PresetLineChart(
-                    matchData: matchData,
-                    tableData:
-                        dashboardData.dashboardWidgets[index].lineTableData!,
+                  return Column(
+                    children: [
+                      PresetLineChart(
+                        matchData: matchData,
+                        tableData:
+                            dashboardData.dashboardWidgets[index].lineTableData!,
+                        title: dashboardData.dashboardWidgets[index].title,
+                      ),
+                      const StandardSpacer(height: standartSpacerHeight)
+                    ],
                   );
                 },
               ),
