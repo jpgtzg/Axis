@@ -16,8 +16,6 @@ import 'package:axis/system/tba/team/team.dart';
 Future<List<Rank>?>? getEventRankings(Event event) async {
   final url = "$baseTBAURL/event/${event.eventKey}/rankings$authURL";
 
-
-  print(url);
   final data = await getMapData(url);
 
   if (data == null) return null;
