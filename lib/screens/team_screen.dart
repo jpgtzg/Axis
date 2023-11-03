@@ -3,7 +3,6 @@
 
 import 'package:axis/screens/match_scouting/match_dashboard_screen.dart';
 import 'package:axis/screens/pit_scouting/pit_dashboard_screen.dart';
-import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:axis/system/tba/team/team_getter.dart';
 import 'package:axis/widgets/copr/copr_chart.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
@@ -91,14 +90,8 @@ class TeamScreen extends StatelessWidget {
                               eventKey: event.eventKey,
                             ),
                             const StandardSpacer(height: standartSpacerHeight),
-                            MatchDashboardScreen(
-                              team: team,
-                              event: event,
-                            ),
-                            PitDashboardScreen(
-                              team: team,
-                              event: event,
-                            ),
+                            MatchDashboardScreen(team: team, event: event),
+                            PitDashboardScreen(team: team, event: event),
                           ],
                         ),
                       );
