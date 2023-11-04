@@ -28,7 +28,8 @@ Future<bool> setRealm() async {
         PitDashboardSchema.schema,
         DashboardWidget.schema,
         LineTableWidgetData.schema,
-        PieGraphWidgetData.schema
+        PieGraphWidgetData.schema,
+        TextWidgetData.schema
       ],
       clientResetHandler: const DiscardUnsyncedChangesHandler());
 
@@ -232,6 +233,22 @@ void updateMatchDashboardSetting(MatchDashboardSchema matchDashboardSettings) as
   } else {
     realm!.write(() {
       realm!.add(matchDashboardSettings);
+    });
+  }
+}
+
+void updatePitDashboardSetting(PitDashboardSchema pitDashboardSettings) async {
+  var fullList = await getPitDashboardSettings();
+
+  if (fullList != null) {
+    realm!.write(() {
+      fullList.widgetNumber = pitDashboardSettings.widgetNumber;
+      fullList.dashboardWidgets.clear();
+      fullList.dashboardWidgets.addAll(pitDashboardSettings.dashboardWidgets);
+    });
+  } else {
+    realm!.write(() {
+      realm!.add(pitDashboardSettings);
     });
   }
 }

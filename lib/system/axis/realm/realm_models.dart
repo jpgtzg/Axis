@@ -88,6 +88,7 @@ class _DashboardWidget {
 
   late _LineTableWidgetData? lineTableData;
   late _PieGraphWidgetData? pieGraphData;
+  late _TextWidgetData? textData;
 }
 /// Represents data for a table widget
 @RealmModel(ObjectType.embeddedObject)
@@ -108,3 +109,11 @@ class _PieGraphWidgetData {
   late int titleIndex;
   late String title;
 }
+
+/// Represents data for a text widget
+@RealmModel(ObjectType.embeddedObject)
+class _TextWidgetData {
+  late int dataIndex;
+  late String title;
+}
+

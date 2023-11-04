@@ -452,11 +452,13 @@ class DashboardWidget extends _DashboardWidget
     String type, {
     LineTableWidgetData? lineTableData,
     PieGraphWidgetData? pieGraphData,
+    TextWidgetData? textData,
   }) {
     RealmObjectBase.set(this, 'title', title);
     RealmObjectBase.set(this, 'type', type);
     RealmObjectBase.set(this, 'lineTableData', lineTableData);
     RealmObjectBase.set(this, 'pieGraphData', pieGraphData);
+    RealmObjectBase.set(this, 'textData', textData);
   }
 
   DashboardWidget._();
@@ -488,6 +490,13 @@ class DashboardWidget extends _DashboardWidget
       RealmObjectBase.set(this, 'pieGraphData', value);
 
   @override
+  TextWidgetData? get textData =>
+      RealmObjectBase.get<TextWidgetData>(this, 'textData') as TextWidgetData?;
+  @override
+  set textData(covariant TextWidgetData? value) =>
+      RealmObjectBase.set(this, 'textData', value);
+
+  @override
   Stream<RealmObjectChanges<DashboardWidget>> get changes =>
       RealmObjectBase.getChanges<DashboardWidget>(this);
 
@@ -507,6 +516,8 @@ class DashboardWidget extends _DashboardWidget
           optional: true, linkTarget: 'LineTableWidgetData'),
       SchemaProperty('pieGraphData', RealmPropertyType.object,
           optional: true, linkTarget: 'PieGraphWidgetData'),
+      SchemaProperty('textData', RealmPropertyType.object,
+          optional: true, linkTarget: 'TextWidgetData'),
     ]);
   }
 }
@@ -610,6 +621,47 @@ class PieGraphWidgetData extends _PieGraphWidgetData
         ObjectType.embeddedObject, PieGraphWidgetData, 'PieGraphWidgetData', [
       SchemaProperty('percentageIndex', RealmPropertyType.int),
       SchemaProperty('titleIndex', RealmPropertyType.int),
+      SchemaProperty('title', RealmPropertyType.string),
+    ]);
+  }
+}
+
+class TextWidgetData extends _TextWidgetData
+    with RealmEntity, RealmObjectBase, EmbeddedObject {
+  TextWidgetData(
+    int dataIndex,
+    String title,
+  ) {
+    RealmObjectBase.set(this, 'dataIndex', dataIndex);
+    RealmObjectBase.set(this, 'title', title);
+  }
+
+  TextWidgetData._();
+
+  @override
+  int get dataIndex => RealmObjectBase.get<int>(this, 'dataIndex') as int;
+  @override
+  set dataIndex(int value) => RealmObjectBase.set(this, 'dataIndex', value);
+
+  @override
+  String get title => RealmObjectBase.get<String>(this, 'title') as String;
+  @override
+  set title(String value) => RealmObjectBase.set(this, 'title', value);
+
+  @override
+  Stream<RealmObjectChanges<TextWidgetData>> get changes =>
+      RealmObjectBase.getChanges<TextWidgetData>(this);
+
+  @override
+  TextWidgetData freeze() => RealmObjectBase.freezeObject<TextWidgetData>(this);
+
+  static SchemaObject get schema => _schema ??= _initSchema();
+  static SchemaObject? _schema;
+  static SchemaObject _initSchema() {
+    RealmObjectBase.registerFactory(TextWidgetData._);
+    return const SchemaObject(
+        ObjectType.embeddedObject, TextWidgetData, 'TextWidgetData', [
+      SchemaProperty('dataIndex', RealmPropertyType.int),
       SchemaProperty('title', RealmPropertyType.string),
     ]);
   }
