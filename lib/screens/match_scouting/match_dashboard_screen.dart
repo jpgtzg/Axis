@@ -74,10 +74,10 @@ class _MatchDashboardScreenState extends State<MatchDashboardScreen> {
 
             final matchData = snapshot.data;
 
-            if (matchData == null) {
+            if (matchData == null || matchData.isEmpty) {
               return const Center(
                 child: Text(
-                  "No data available",
+                  "No data available yet",
                   style: smallerDefaultStyle,
                   textAlign: TextAlign.center,
                 ),
@@ -87,14 +87,15 @@ class _MatchDashboardScreenState extends State<MatchDashboardScreen> {
             return SizedBox(
               height: 600,
               child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: dashboardData.widgetNumber,
                 itemBuilder: (context, index) {
                   return Column(
                     children: [
                       PresetLineChart(
                         matchData: matchData,
-                        tableData:
-                            dashboardData.dashboardWidgets[index].lineTableData!,
+                        tableData: dashboardData
+                            .dashboardWidgets[index].lineTableData!,
                         title: dashboardData.dashboardWidgets[index].title,
                       ),
                       const StandardSpacer(height: standartSpacerHeight)
