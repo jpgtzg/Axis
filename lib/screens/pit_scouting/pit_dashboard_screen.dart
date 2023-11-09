@@ -92,11 +92,8 @@ class _PitDashboardScreenState extends State<PitDashboardScreen> {
                     return Column(
                       children: [
                         TextBox(
-                          value: pitData[0]
-                              .answers[dashboardData
-                                  .dashboardWidgets[index].textData!.dataIndex]
-                              .value
-                              .toString(),
+                          pitData: pitData,
+                          dataIndex: dashboardData.dashboardWidgets[index].textData!.dataIndex,
                           title: dashboardData.dashboardWidgets[index].title,
                         ),
                         const StandardSpacer(height: standartSpacerHeight)

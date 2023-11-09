@@ -18,7 +18,6 @@ class PresetLineChart extends StatefulWidget {
 }
 
 class _PresetLineChartState extends State<PresetLineChart> {
-  List<Color> gradientColors = [paleteLightBlue, paleteLighGreen];
   List<FlSpot> mainDataList = [];
 
   @override
@@ -154,8 +153,8 @@ class _PresetLineChartState extends State<PresetLineChart> {
         LineChartBarData(
           spots: mainDataList,
           isCurved: false,
-          gradient: LinearGradient(
-            colors: gradientColors,
+          gradient: const LinearGradient(
+            colors: [paleteLightBlue, paleteLighGreen],
           ),
           barWidth: 5,
           isStrokeCapRound: true,

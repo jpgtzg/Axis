@@ -2,13 +2,15 @@
 /// 08 11 2023
 
 import 'package:axis/constants.dart';
+import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:axis/widgets/standart_spacer.dart';
 import 'package:flutter/material.dart';
 
 class TextBox extends StatelessWidget {
-  final String value;
+  final List<PitDataSchema> pitData;
+  final int dataIndex;
   final String title;
-  const TextBox({required this.value, required this.title, super.key});
+  const TextBox({required this.pitData, required this.dataIndex, required this.title, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,23 +26,30 @@ class TextBox extends StatelessWidget {
         bottom: 24,
       ),
       child: Column(
-        children: <Widget>[
-          Align(
-            alignment: Alignment.center,
-            child: Text(
-              title,
-              style: smallerDefaultStyle,
-            ),
-          ),
-          const StandardSpacer(height: standartSpacerHeight),
-          Align(
-            alignment: Alignment.center,
-            child: Text(
-              value,
-              style: smallerDefaultStyle,
-            ),
-          ),
-        ],
+        children: List.generate(
+          pitData.length,
+          (index) {
+            return Column(
+              children: [
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    title,
+                    style: smallerDefaultStyle,
+                  ),
+                ),
+                const StandardSpacer(height: standartSpacerHeight),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    pitData[index].answers[dataIndex].value.toString(),
+                    style: smallerDefaultStyle,
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
