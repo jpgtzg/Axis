@@ -74,7 +74,10 @@ class RobotListScreen extends StatelessWidget {
                         return Column(
                           children: [
                             const StandardSpacer(height: standartSpacerHeight),
-                            TeamCard(team: data[index], event: event,),
+                            TeamCard(
+                              team: data[index],
+                              event: event,
+                            ),
                           ],
                         );
                       },
