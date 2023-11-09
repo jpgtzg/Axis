@@ -104,11 +104,10 @@ class _LineTableWidgetData {
 /// Represents data for a graph widget
 @RealmModel(ObjectType.embeddedObject)
 class _PieGraphWidgetData {
-  // Add properties specific to graph widgets here.
-  // You can define the schema for graph data as needed.
-  late int percentageIndex;
-  late int titleIndex;
+  late List<int> percentageIndex;
   late String title;
+  late String graphTitle;
+  late int graphTitleIndex;
 }
 
 /// Represents data for a text widget

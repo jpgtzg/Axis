@@ -577,33 +577,45 @@ class LineTableWidgetData extends _LineTableWidgetData
 class PieGraphWidgetData extends _PieGraphWidgetData
     with RealmEntity, RealmObjectBase, EmbeddedObject {
   PieGraphWidgetData(
-    int percentageIndex,
-    int titleIndex,
     String title,
-  ) {
-    RealmObjectBase.set(this, 'percentageIndex', percentageIndex);
-    RealmObjectBase.set(this, 'titleIndex', titleIndex);
+    String graphTitle,
+    int graphTitleIndex, {
+    Iterable<int> percentageIndex = const [],
+  }) {
     RealmObjectBase.set(this, 'title', title);
+    RealmObjectBase.set(this, 'graphTitle', graphTitle);
+    RealmObjectBase.set(this, 'graphTitleIndex', graphTitleIndex);
+    RealmObjectBase.set<RealmList<int>>(
+        this, 'percentageIndex', RealmList<int>(percentageIndex));
   }
 
   PieGraphWidgetData._();
 
   @override
-  int get percentageIndex =>
-      RealmObjectBase.get<int>(this, 'percentageIndex') as int;
+  RealmList<int> get percentageIndex =>
+      RealmObjectBase.get<int>(this, 'percentageIndex') as RealmList<int>;
   @override
-  set percentageIndex(int value) =>
-      RealmObjectBase.set(this, 'percentageIndex', value);
-
-  @override
-  int get titleIndex => RealmObjectBase.get<int>(this, 'titleIndex') as int;
-  @override
-  set titleIndex(int value) => RealmObjectBase.set(this, 'titleIndex', value);
+  set percentageIndex(covariant RealmList<int> value) =>
+      throw RealmUnsupportedSetError();
 
   @override
   String get title => RealmObjectBase.get<String>(this, 'title') as String;
   @override
   set title(String value) => RealmObjectBase.set(this, 'title', value);
+
+  @override
+  String get graphTitle =>
+      RealmObjectBase.get<String>(this, 'graphTitle') as String;
+  @override
+  set graphTitle(String value) =>
+      RealmObjectBase.set(this, 'graphTitle', value);
+
+  @override
+  int get graphTitleIndex =>
+      RealmObjectBase.get<int>(this, 'graphTitleIndex') as int;
+  @override
+  set graphTitleIndex(int value) =>
+      RealmObjectBase.set(this, 'graphTitleIndex', value);
 
   @override
   Stream<RealmObjectChanges<PieGraphWidgetData>> get changes =>
@@ -619,9 +631,11 @@ class PieGraphWidgetData extends _PieGraphWidgetData
     RealmObjectBase.registerFactory(PieGraphWidgetData._);
     return const SchemaObject(
         ObjectType.embeddedObject, PieGraphWidgetData, 'PieGraphWidgetData', [
-      SchemaProperty('percentageIndex', RealmPropertyType.int),
-      SchemaProperty('titleIndex', RealmPropertyType.int),
+      SchemaProperty('percentageIndex', RealmPropertyType.int,
+          collectionType: RealmCollectionType.list),
       SchemaProperty('title', RealmPropertyType.string),
+      SchemaProperty('graphTitle', RealmPropertyType.string),
+      SchemaProperty('graphTitleIndex', RealmPropertyType.int),
     ]);
   }
 }
