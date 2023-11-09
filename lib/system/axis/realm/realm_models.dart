@@ -90,6 +90,7 @@ class _DashboardWidget {
   late _PieGraphWidgetData? pieGraphData;
   late _TextWidgetData? textData;
 }
+
 /// Represents data for a table widget
 @RealmModel(ObjectType.embeddedObject)
 class _LineTableWidgetData {

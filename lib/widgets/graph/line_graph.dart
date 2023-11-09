@@ -36,6 +36,7 @@ class _PresetLineChartState extends State<PresetLineChart> {
         );
       },
     );
+    mainDataList.sort((a, b) => a.x.compareTo(b.x));
   }
 
   @override
@@ -67,6 +68,13 @@ class _PresetLineChartState extends State<PresetLineChart> {
               child: LineChart(
                 mainData(),
               ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Text(
+              widget.tableData.columnTitle,
+              style: smallerDefaultStyle,
             ),
           ),
         ],
