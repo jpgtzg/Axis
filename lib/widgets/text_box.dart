@@ -2,15 +2,18 @@
 /// 08 11 2023
 
 import 'package:axis/constants.dart';
-import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:axis/widgets/standart_spacer.dart';
 import 'package:flutter/material.dart';
 
 class TextBox extends StatelessWidget {
-  final List<PitDataSchema> pitData;
+  final List data;
   final int dataIndex;
   final String title;
-  const TextBox({required this.pitData, required this.dataIndex, required this.title, super.key});
+  const TextBox(
+      {required this.data,
+      required this.dataIndex,
+      required this.title,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,30 +29,28 @@ class TextBox extends StatelessWidget {
         bottom: 24,
       ),
       child: Column(
-        children: List.generate(
-          pitData.length,
-          (index) {
-            return Column(
-              children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    title,
-                    style: smallerDefaultStyle,
-                  ),
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Text(
+              title,
+              style: smallerDefaultStyle,
+            ),
+          ),
+          const StandardSpacer(height: standartSpacerHeight),
+          ...List.generate(
+            data.length,
+            (index) {
+              return Align(
+                alignment: Alignment.center,
+                child: Text(
+                  data[index].answers[dataIndex].value.toString(),
+                  style: smallerDefaultStyle,
                 ),
-                const StandardSpacer(height: standartSpacerHeight),
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    pitData[index].answers[dataIndex].value.toString(),
-                    style: smallerDefaultStyle,
-                  ),
-                ),
-              ],
-            );
-          },
-        ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
