@@ -6,7 +6,9 @@ import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:axis/system/tba/event/event.dart';
 import 'package:axis/system/tba/team/team.dart';
 import 'package:axis/widgets/graph/line_graph.dart';
+import 'package:axis/widgets/graph/pie_graph.dart';
 import 'package:axis/widgets/standart_spacer.dart';
+import 'package:axis/widgets/text_box.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
@@ -34,6 +36,33 @@ class _MatchDashboardScreenState extends State<MatchDashboardScreen> {
         matchDataFuture = getMatchData(widget.team, widget.event);
       }
     });
+  }
+
+  Widget getWidget(String type, List<MatchDataSchema> matchData,
+      MatchDashboardSchema dashboardData, int index) {
+    switch (type) {
+      case "line":
+        return PresetLineChart(
+          matchData: matchData,
+          tableData: dashboardData.dashboardWidgets[index].lineTableData!,
+          title: dashboardData.dashboardWidgets[index].title,
+        );
+      case "text":
+        return TextBox(
+            data: matchData,
+            dataIndex:
+                dashboardData.dashboardWidgets[index].textData!.dataIndex,
+            title: dashboardData.dashboardWidgets[index].title);
+      case "pie":
+        return PieGraph(
+          matchData: matchData,
+          pieGraphWidgetData:
+              dashboardData.dashboardWidgets[index].pieGraphData!,
+          widgetTitle: dashboardData.dashboardWidgets[index].title,
+        );
+      default:
+        return Container();
+    }
   }
 
   @override
@@ -92,12 +121,8 @@ class _MatchDashboardScreenState extends State<MatchDashboardScreen> {
                   (index) {
                     return Column(
                       children: [
-                        PresetLineChart(
-                          matchData: matchData,
-                          tableData: dashboardData
-                              .dashboardWidgets[index].lineTableData!,
-                          title: dashboardData.dashboardWidgets[index].title,
-                        ),
+                        getWidget(dashboardData.dashboardWidgets[index].type,
+                            matchData, dashboardData, index),
                         const StandardSpacer(height: standartSpacerHeight)
                       ],
                     );
