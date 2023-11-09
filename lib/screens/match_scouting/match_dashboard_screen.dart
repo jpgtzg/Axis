@@ -84,24 +84,25 @@ class _MatchDashboardScreenState extends State<MatchDashboardScreen> {
               );
             }
 
-            return SizedBox(
-              height: 600,
-              child: ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: dashboardData.widgetNumber,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      PresetLineChart(
-                        matchData: matchData,
-                        tableData: dashboardData
-                            .dashboardWidgets[index].lineTableData!,
-                        title: dashboardData.dashboardWidgets[index].title,
-                      ),
-                      const StandardSpacer(height: standartSpacerHeight)
-                    ],
-                  );
-                },
+            return SingleChildScrollView(
+              physics: const NeverScrollableScrollPhysics(),
+              child: Column(
+                children: List.generate(
+                  dashboardData.widgetNumber,
+                  (index) {
+                    return Column(
+                      children: [
+                        PresetLineChart(
+                          matchData: matchData,
+                          tableData: dashboardData
+                              .dashboardWidgets[index].lineTableData!,
+                          title: dashboardData.dashboardWidgets[index].title,
+                        ),
+                        const StandardSpacer(height: standartSpacerHeight)
+                      ],
+                    );
+                  },
+                ),
               ),
             );
           },

@@ -6,6 +6,8 @@ import 'package:axis/system/axis/realm/realm_manager.dart';
 import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:axis/system/tba/event/event.dart';
 import 'package:axis/system/tba/team/team.dart';
+import 'package:axis/widgets/standart_spacer.dart';
+import 'package:axis/widgets/text_box.dart';
 import 'package:flutter/material.dart';
 
 class PitDashboardScreen extends StatefulWidget {
@@ -81,23 +83,27 @@ class _PitDashboardScreenState extends State<PitDashboardScreen> {
               );
             }
 
-            return SizedBox(
-              height: 600,
-              child: ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: dashboardData.widgetNumber,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      Text(dashboardData.dashboardWidgets[index].title),
-                      Text(pitData[0]
-                          .answers[dashboardData
-                              .dashboardWidgets[index].textData!.dataIndex]
-                          .value
-                          .toString()),
-                    ],
-                  );
-                },
+            return SingleChildScrollView(
+              physics: const NeverScrollableScrollPhysics(),
+              child: Column(
+                children: List.generate(
+                  dashboardData.widgetNumber,
+                  (index) {
+                    return Column(
+                      children: [
+                        TextBox(
+                          value: pitData[0]
+                              .answers[dashboardData
+                                  .dashboardWidgets[index].textData!.dataIndex]
+                              .value
+                              .toString(),
+                          title: dashboardData.dashboardWidgets[index].title,
+                        ),
+                        const StandardSpacer(height: standartSpacerHeight)
+                      ],
+                    );
+                  },
+                ),
               ),
             );
           },
