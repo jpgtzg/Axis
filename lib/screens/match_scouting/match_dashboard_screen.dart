@@ -38,24 +38,24 @@ class _MatchDashboardScreenState extends State<MatchDashboardScreen> {
     });
   }
 
-  Widget getWidget(String type, List<MatchDataSchema> matchData,
-      MatchDashboardSchema dashboardData, int index) {
+  Widget getWidget(
+      String type, List data, MatchDashboardSchema dashboardData, int index) {
     switch (type) {
       case "line":
         return PresetLineChart(
-          matchData: matchData,
+          matchData: data,
           tableData: dashboardData.dashboardWidgets[index].lineTableData!,
           title: dashboardData.dashboardWidgets[index].title,
         );
       case "text":
         return TextBox(
-            data: matchData,
+            data: data,
             dataIndex:
                 dashboardData.dashboardWidgets[index].textData!.dataIndex,
             title: dashboardData.dashboardWidgets[index].title);
       case "pie":
         return PieGraph(
-          matchData: matchData,
+          matchData: data,
           pieGraphWidgetData:
               dashboardData.dashboardWidgets[index].pieGraphData!,
           widgetTitle: dashboardData.dashboardWidgets[index].title,

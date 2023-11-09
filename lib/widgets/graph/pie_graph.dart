@@ -6,7 +6,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class PieGraph extends StatefulWidget {
-  final List<MatchDataSchema> matchData;
+  final List matchData;
   final PieGraphWidgetData pieGraphWidgetData;
   final String widgetTitle;
   const PieGraph(

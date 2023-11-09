@@ -4,7 +4,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class PresetLineChart extends StatefulWidget {
-  final List<MatchDataSchema> matchData;
+  final List matchData;
   final LineTableWidgetData tableData;
   final String title;
   const PresetLineChart(

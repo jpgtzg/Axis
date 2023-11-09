@@ -6,6 +6,8 @@ import 'package:axis/system/axis/realm/realm_manager.dart';
 import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:axis/system/tba/event/event.dart';
 import 'package:axis/system/tba/team/team.dart';
+import 'package:axis/widgets/graph/line_graph.dart';
+import 'package:axis/widgets/graph/pie_graph.dart';
 import 'package:axis/widgets/standart_spacer.dart';
 import 'package:axis/widgets/text_box.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +35,33 @@ class _PitDashboardScreenState extends State<PitDashboardScreen> {
         pitDataFuture = getPitData(widget.team, widget.event);
       }
     });
+  }
+
+  Widget getWidget(
+      String type, List data, MatchDashboardSchema dashboardData, int index) {
+    switch (type) {
+      case "line":
+        return PresetLineChart(
+          matchData: data,
+          tableData: dashboardData.dashboardWidgets[index].lineTableData!,
+          title: dashboardData.dashboardWidgets[index].title,
+        );
+      case "text":
+        return TextBox(
+            data: data,
+            dataIndex:
+                dashboardData.dashboardWidgets[index].textData!.dataIndex,
+            title: dashboardData.dashboardWidgets[index].title);
+      case "pie":
+        return PieGraph(
+          matchData: data,
+          pieGraphWidgetData:
+              dashboardData.dashboardWidgets[index].pieGraphData!,
+          widgetTitle: dashboardData.dashboardWidgets[index].title,
+        );
+      default:
+        return Container();
+    }
   }
 
   @override
@@ -93,7 +122,8 @@ class _PitDashboardScreenState extends State<PitDashboardScreen> {
                       children: [
                         TextBox(
                           data: pitData,
-                          dataIndex: dashboardData.dashboardWidgets[index].textData!.dataIndex,
+                          dataIndex: dashboardData
+                              .dashboardWidgets[index].textData!.dataIndex,
                           title: dashboardData.dashboardWidgets[index].title,
                         ),
                         const StandardSpacer(height: standartSpacerHeight)
