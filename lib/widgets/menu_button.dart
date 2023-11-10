@@ -2,6 +2,7 @@
 /// 04 10 2023
 
 import 'package:axis/constants.dart';
+import 'package:axis/screens/settings_selector_screen.dart';
 import 'package:axis/widgets/logo.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class MenuButton extends StatelessWidget {
         children: [
           const AxisLogo(),
           IconButton(
-            onPressed: () => print("PRESSED"),
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder:(context) => const SettingsSelectorScreen(),)),
             icon: menuIcon,
           ),
         ],
