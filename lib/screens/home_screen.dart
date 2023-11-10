@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                       SelectionButton(
                         titleText: "Match Scouting",
                         widgetScreen: const EventSelectorScreen(
-                            selector: EventSelector.match),
+                            selector: Origin.match),
                         primaryColor: Theme.of(context).primaryColor,
                         buttonColor: Colors.lightBlue,
                       ),
@@ -49,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                       SelectionButton(
                         titleText: "Pit Scouting",
                         widgetScreen: const EventSelectorScreen(
-                          selector: EventSelector.pit,
+                          selector: Origin.pit,
                         ),
                         primaryColor: Theme.of(context).primaryColor,
                         buttonColor: Colors.lightBlue,
