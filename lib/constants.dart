@@ -3,6 +3,8 @@
 
 import 'package:flutter/material.dart';
 
+enum Origin { match, pit }
+
 /* Widget configuration */
 const double standartSpacerHeight = 30;
 
@@ -27,7 +29,7 @@ const TextStyle smallerDefaultStyle = TextStyle(
 const TextStyle substitleStyle = TextStyle(
   fontFamily: fontFamily,
   fontWeight: FontWeight.w700,
-  color: Colors.white,  
+  color: Colors.white,
   fontSize: 15,
 );
 
@@ -41,17 +43,16 @@ const TextStyle bigTextStyle = TextStyle(
 const TextStyle blueAllianceStyle = TextStyle(
   fontFamily: fontFamily,
   fontWeight: FontWeight.w700,
-  color: Colors.blue,  
+  color: Colors.blue,
   fontSize: 15,
 );
 
 const TextStyle redAllianceStyle = TextStyle(
   fontFamily: fontFamily,
   fontWeight: FontWeight.w700,
-  color: Colors.red,  
+  color: Colors.red,
   fontSize: 15,
 );
-
 
 /* Color configuration */
 const Color paletePink = Color(0xffFF128E);
