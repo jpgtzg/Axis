@@ -52,13 +52,10 @@ class SelectionButton extends StatelessWidget {
                 ),
           child: Stack(
             children: [
-              Positioned(
-                left: 2,
-                child: Text(
-                  titleText,
-                  textAlign: TextAlign.center,
-                  style: defaultStyle,
-                ),
+              Text(
+                titleText,
+                textAlign: TextAlign.center,
+                style: defaultStyle,
               ),
               Positioned(
                 right: 30,
