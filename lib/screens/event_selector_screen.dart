@@ -11,13 +11,8 @@ import 'package:axis/widgets/standart_spacer.dart';
 import 'package:axis/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
 
-enum EventSelector {
-  match,
-  pit,
-}
-
 class EventSelectorScreen extends StatelessWidget {
-  final EventSelector selector;
+  final Origin selector;
   const EventSelectorScreen({required this.selector, super.key});
 
   @override
@@ -37,7 +32,7 @@ class EventSelectorScreen extends StatelessWidget {
           child: Column(
             children: [
               TopBar(
-                topText: (selector == EventSelector.match)
+                topText: (selector == Origin.match)
                     ? "Match Scouting"
                     : "Pit Scouting",
               ),
@@ -71,11 +66,13 @@ class EventSelectorScreen extends StatelessWidget {
                           children: [
                             const StandardSpacer(height: standartSpacerHeight),
                             SelectionButton(
-                                titleText: data[index].name,
-                                widgetScreen: (selector == EventSelector.match)
-                                    ? MatchFormScreen(event: data[index])
-                                    : PitFormScreen(event: data[index]),
-                                primaryColor: paletePurple, buttonColor: paletePink,),
+                              titleText: data[index].name,
+                              widgetScreen: (selector == Origin.match)
+                                  ? MatchFormScreen(event: data[index])
+                                  : PitFormScreen(event: data[index]),
+                              primaryColor: paletePurple,
+                              buttonColor: paletePink,
+                            ),
                           ],
                         );
                       },
