@@ -1,6 +1,7 @@
 /// Written by Juan Pablo Gutiérrez
 /// 3 - 08 - 2023
 
+import 'package:axis/constants.dart';
 import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:axis/system/tba/event/event.dart';
 import 'package:axis/system/tba/team/team.dart';
@@ -42,7 +43,8 @@ Future<bool> setRealm() async {
   final userMatchSub = realm!.subscriptions.findByName('getMatchData');
   if (userMatchSub == null) {
     realm!.subscriptions.update((mutableSubscriptions) {
-      mutableSubscriptions.add(realm!.all<MatchDataSchema>(), name: 'getMatchData');
+      mutableSubscriptions.add(realm!.all<MatchDataSchema>(),
+          name: 'getMatchData');
     });
   }
 
@@ -154,6 +156,36 @@ Future<PitFormSettingsSchema?>? getPitFormSettings() async {
   }
 }
 
+void updateQuestion(Question updatedQuestion, int index, Origin origin) async {
+  switch (origin) {
+    case Origin.match:
+      var fullList = await getMatchFormSettings();
+
+      if (fullList != null) {
+        realm!.write(() {
+          fullList.questionsArray[index].question = updatedQuestion.question;
+          fullList.questionsArray[index].type = updatedQuestion.type;
+          fullList.questionsArray[index].availableAnswers.clear();
+          fullList.questionsArray[index].availableAnswers.addAll(updatedQuestion.availableAnswers);
+        });
+      }
+      break;
+    case Origin.pit:
+      var fullList = await getPitFormSettings();
+
+      if (fullList != null) {
+        realm!.write(() {
+          fullList.questionsArray[index].question = updatedQuestion.question;
+          fullList.questionsArray[index].type = updatedQuestion.type;
+          fullList.questionsArray[index].availableAnswers =
+              updatedQuestion.availableAnswers;
+        });
+      }
+      break;
+    default:
+  }
+}
+
 Future<bool> isDeviceOnline() async {
   //TODO ADD LOGIC
 
@@ -220,8 +252,8 @@ Future<PitDashboardSchema?>? getPitDashboardSettings() async {
   }
 }
 
-
-void updateMatchDashboardSetting(MatchDashboardSchema matchDashboardSettings) async {
+void updateMatchDashboardSetting(
+    MatchDashboardSchema matchDashboardSettings) async {
   var fullList = await getMatchDashboardSettings();
 
   if (fullList != null) {
