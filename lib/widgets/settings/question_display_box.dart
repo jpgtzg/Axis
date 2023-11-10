@@ -84,9 +84,9 @@ class QuestionDisplayBox extends StatelessWidget {
                           style: substitleStyle,
                         ),
                         Text(
-                          question.availableAnswers!.isEmpty
+                          question.availableAnswers.isEmpty
                               ? ""
-                              : "Available answers: ${question.availableAnswers!}",
+                              : "Available answers: ${question.availableAnswers}",
                           textAlign: TextAlign.center,
                           style: substitleStyle,
                         ),
