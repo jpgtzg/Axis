@@ -36,7 +36,7 @@ class SettingsSelectorScreen extends StatelessWidget {
                 StandardSpacer(height: standartSpacerHeight),
                 SelectionButton(
                   titleText: "Match Forms Setting",
-                  widgetScreen: MatchFormSettingsScreen(),
+                  widgetScreen: MatchFormsSettingsScreen(),
                   primaryColor: paleteCoral,
                   buttonColor: paleteLightBlue,
                 ),

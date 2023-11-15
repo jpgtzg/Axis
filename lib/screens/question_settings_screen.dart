@@ -43,10 +43,6 @@ class QuestionSettingsScreen extends StatelessWidget {
       updateQuestion(updatedQuestion, index, origin);
 
       _formKey.currentState!.reset();
-
-      questionController.clear();
-      typeController.clear();
-      availableAnswersController.clear();
     }
   }
 
@@ -56,7 +52,10 @@ class QuestionSettingsScreen extends StatelessWidget {
       gradient: const LinearGradient(
         begin: Alignment.topRight,
         end: Alignment.bottomLeft,
-        colors: [paleteLighGreen, paleteLightBlue],
+        colors: [
+          paleteLightBlue,
+          paletePurple,
+        ],
       ),
       body: SafeArea(
         child: Padding(
@@ -64,7 +63,6 @@ class QuestionSettingsScreen extends StatelessWidget {
           child: Column(
             children: [
               const TopBar(topText: "   Match Forms settings"),
-              const StandardSpacer(height: standartSpacerHeight),
               Expanded(
                 child: SingleChildScrollView(
                   child: Form(
@@ -90,16 +88,21 @@ class QuestionSettingsScreen extends StatelessWidget {
                               text: question.type.toString(),
                             ),
                         ),
-                        TextForm(
-                          text: "Available Answers (if applicable))",
-                          inputText: "Enter available answers",
-                          padding: 20,
-                          controller: availableAnswersController
-                            ..value = TextEditingValue(
-                              text: question.availableAnswers.join(', '),
-                            ),
+                        question.availableAnswers.isNotEmpty
+                            ? TextForm(
+                                text: "Available Answers)",
+                                inputText: "Enter available answers",
+                                padding: 20,
+                                controller: availableAnswersController
+                                  ..value = TextEditingValue(
+                                    text: question.availableAnswers.join(', '),
+                                  ),
+                              )
+                            : const SizedBox(),
+                        const StandardSpacer(height: mediumSpacerHeight),
+                        Center(
+                          child: SubmitButton(onPressed: _submitForm),
                         ),
-                        SubmitButton(onPressed: _submitForm),
                       ],
                     ),
                   ),
