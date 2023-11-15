@@ -157,17 +157,29 @@ Future<PitFormSettingsSchema?>? getPitFormSettings() async {
 }
 
 void updateQuestion(Question updatedQuestion, int index, Origin origin) async {
+  if (realm == null) {
+    await setRealm();
+  }
+
   switch (origin) {
     case Origin.match:
       var fullList = await getMatchFormSettings();
 
       if (fullList != null) {
-        realm!.write(() {
-          fullList.questionsArray[index].question = updatedQuestion.question;
-          fullList.questionsArray[index].type = updatedQuestion.type;
-          fullList.questionsArray[index].availableAnswers.clear();
-          fullList.questionsArray[index].availableAnswers.addAll(updatedQuestion.availableAnswers);
-        });
+        try {
+          realm!.write(() {
+            fullList.questionsArray[index].question = updatedQuestion.question;
+            fullList.questionsArray[index].type = updatedQuestion.type;
+            fullList.questionsArray[index].availableAnswers.clear();
+            fullList.questionsArray[index].availableAnswers
+                .addAll(updatedQuestion.availableAnswers);
+          });
+        } catch (e) {
+          realm!.write(() {
+            fullList.questionsArray.add(updatedQuestion);
+            fullList.questionNumber = fullList.questionsArray.length;
+          });
+        }
       }
       break;
     case Origin.pit:
