@@ -8,6 +8,8 @@ enum Origin { match, pit }
 /* Widget configuration */
 const double standartSpacerHeight = 30;
 
+const double mediumSpacerHeight = 20;
+
 const double smallerSpacerHeight = 10;
 
 /* Text Configuration */
