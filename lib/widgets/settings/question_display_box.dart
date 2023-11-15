@@ -68,6 +68,7 @@ class QuestionDisplayBox extends StatelessWidget {
                 child: Stack(
                   children: [
                     Column(
+                      mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
@@ -83,34 +84,53 @@ class QuestionDisplayBox extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: substitleStyle,
                         ),
-                        Text(
-                          question.availableAnswers.isEmpty
-                              ? ""
-                              : "Available answers: ${question.availableAnswers}",
-                          textAlign: TextAlign.center,
-                          style: substitleStyle,
-                        ),
-                      ],
-                    ),
-                    Positioned(
-                      right: 30,
-                      bottom: 0,
-                      child: Container(
-                        padding: const EdgeInsets.all(2),
-                        height: 40,
-                        width: 120,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: buttonColor,
-                        ),
-                        child: const Center(
-                          child: Text(
-                            "Modificar",
-                            textAlign: TextAlign.center,
-                            style: substitleStyle,
+                        Flexible(
+                                fit: FlexFit.loose,
+                                child: Text(
+                                  question.availableAnswers.isEmpty
+                                      ? ""
+                                      : "Available answers:",
+                                  textAlign: TextAlign.center,
+                                  style: substitleStyle,
+                                  overflow: TextOverflow.visible,
+                                ),
+                              ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 30.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                fit: FlexFit.loose,
+                                child: Text(
+                                  question.availableAnswers.isEmpty
+                                      ? ""
+                                      : "${question.availableAnswers}",
+                                  textAlign: TextAlign.left,
+                                  style: substitleStyle,
+                                  overflow: TextOverflow.visible,
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(2),
+                                height: 40,
+                                width: 120,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: buttonColor,
+                                ),
+                                child: const Center(
+                                  child: Text(
+                                    "Modificar",
+                                    textAlign: TextAlign.center,
+                                    style: substitleStyle,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
+                      ],
                     ),
                   ],
                 ),
