@@ -4,13 +4,13 @@
 import 'package:flutter/material.dart';
 
 class TextForm extends StatelessWidget {
-  const TextForm(
-      {Key? key,
-      required this.text,
-      required this.inputText,
-      required this.padding,
-      required this.controller})
-      : super(key: key);
+  const TextForm({
+    Key? key,
+    required this.text,
+    required this.inputText,
+    required this.padding,
+    required this.controller,
+  }) : super(key: key);
 
   final String inputText;
   final String text;
