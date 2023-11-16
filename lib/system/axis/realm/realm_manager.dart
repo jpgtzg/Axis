@@ -186,12 +186,20 @@ void updateQuestion(Question updatedQuestion, int index, Origin origin) async {
       var fullList = await getPitFormSettings();
 
       if (fullList != null) {
-        realm!.write(() {
-          fullList.questionsArray[index].question = updatedQuestion.question;
-          fullList.questionsArray[index].type = updatedQuestion.type;
-          fullList.questionsArray[index].availableAnswers =
-              updatedQuestion.availableAnswers;
-        });
+        try {
+          realm!.write(() {
+            fullList.questionsArray[index].question = updatedQuestion.question;
+            fullList.questionsArray[index].type = updatedQuestion.type;
+            fullList.questionsArray[index].availableAnswers.clear();
+            fullList.questionsArray[index].availableAnswers
+                .addAll(updatedQuestion.availableAnswers);
+          });
+        } catch (e) {
+          realm!.write(() {
+            fullList.questionsArray.add(updatedQuestion);
+            fullList.questionNumber = fullList.questionsArray.length;
+          });
+        }
       }
       break;
     default:
