@@ -8,17 +8,10 @@ import 'package:axis/widgets/submit_button.dart';
 import 'package:axis/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
 
-class QuestionSettingsScreen extends StatelessWidget {
+class QuestionSettingsScreen extends StatefulWidget {
   final int index;
   final Question question;
   final Origin origin;
-
-  final TextEditingController questionController = TextEditingController();
-  final TextEditingController typeController = TextEditingController();
-  final TextEditingController availableAnswersController =
-      TextEditingController();
-
-  final _formKey = GlobalKey<FormState>();
 
   QuestionSettingsScreen(
       {Question? question,
@@ -26,6 +19,30 @@ class QuestionSettingsScreen extends StatelessWidget {
       required this.origin,
       super.key})
       : question = question ?? Question("", "");
+
+  @override
+  State<QuestionSettingsScreen> createState() => _QuestionSettingsScreenState();
+}
+
+class _QuestionSettingsScreenState extends State<QuestionSettingsScreen> {
+  final TextEditingController questionController = TextEditingController();
+  final TextEditingController typeController = TextEditingController();
+  final TextEditingController availableAnswersController =
+      TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
+  late final ValueNotifier<String> _typeNotifier;
+
+  @override
+  void initState() {
+    super.initState();
+    _typeNotifier = ValueNotifier<String>(widget.question.type);
+
+    typeController.addListener(() {
+      _typeNotifier.value = typeController.text;
+    });
+  }
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
@@ -40,9 +57,7 @@ class QuestionSettingsScreen extends StatelessWidget {
         }
       }
 
-      updateQuestion(updatedQuestion, index, origin);
-
-      _formKey.currentState!.reset();
+      updateQuestion(updatedQuestion, widget.index, widget.origin);
     }
   }
 
@@ -62,7 +77,10 @@ class QuestionSettingsScreen extends StatelessWidget {
           padding: const EdgeInsets.only(left: 15.0, right: 15.0),
           child: Column(
             children: [
-              const TopBar(topText: "   Match Forms settings"),
+              TopBar(
+                  topText: widget.origin == Origin.match
+                      ? "Match Forms settings"
+                      : "Pit Forms settings"),
               Expanded(
                 child: SingleChildScrollView(
                   child: Form(
@@ -76,7 +94,7 @@ class QuestionSettingsScreen extends StatelessWidget {
                           padding: 20,
                           controller: questionController
                             ..value = TextEditingValue(
-                              text: question.question.toString(),
+                              text: widget.question.question.toString(),
                             ),
                         ),
                         TextForm(
@@ -85,20 +103,28 @@ class QuestionSettingsScreen extends StatelessWidget {
                           padding: 20,
                           controller: typeController
                             ..value = TextEditingValue(
-                              text: question.type.toString(),
+                              text: widget.question.type.toString(),
                             ),
                         ),
-                        question.availableAnswers.isNotEmpty
-                            ? TextForm(
-                                text: "Available Answers)",
+                        ValueListenableBuilder(
+                          valueListenable: _typeNotifier,
+                          builder: (context, value, child) {
+                            if (value == "multiple" || value == "single") {
+                              return TextForm(
+                                text: "Available Answers",
                                 inputText: "Enter available answers",
                                 padding: 20,
                                 controller: availableAnswersController
                                   ..value = TextEditingValue(
-                                    text: question.availableAnswers.join(', '),
+                                    text: widget.question.availableAnswers
+                                        .join(', '),
                                   ),
-                              )
-                            : const SizedBox(),
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
+                          },
+                        ),
                         const StandardSpacer(height: mediumSpacerHeight),
                         Center(
                           child: SubmitButton(onPressed: _submitForm),

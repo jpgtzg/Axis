@@ -3,9 +3,7 @@
 /// 09 11 2023
 
 import 'package:axis/constants.dart';
-import 'package:axis/screens/question_settings_screen.dart';
 import 'package:axis/system/axis/realm/realm_manager.dart';
-import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
 import 'package:axis/widgets/settings/add_button.dart';
 import 'package:axis/widgets/settings/question_display_box.dart';
@@ -13,20 +11,8 @@ import 'package:axis/widgets/standart_spacer.dart';
 import 'package:axis/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
 
-class MatchFormsSettingsScreen extends StatefulWidget {
+class MatchFormsSettingsScreen extends StatelessWidget {
   const MatchFormsSettingsScreen({super.key});
-
-  @override
-  State<MatchFormsSettingsScreen> createState() =>
-      _MatchFormsSettingsScreenState();
-}
-
-class _MatchFormsSettingsScreenState extends State<MatchFormsSettingsScreen> {
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +66,6 @@ class _MatchFormsSettingsScreenState extends State<MatchFormsSettingsScreen> {
                         ),
                       );
                     }
-
                     return Column(
                       children: [
                         Expanded(
