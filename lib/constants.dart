@@ -5,6 +5,19 @@ import 'package:flutter/material.dart';
 
 enum Origin { match, pit }
 
+enum Purpose { forms, dashboard }
+
+/* Widget Types */
+const String lineValue = "line";
+const String pieValue = "pie";
+const String textValue = "text";
+
+/* Question Types */
+const String stringValue = "string";
+const String intValue = "int";
+const String multipleValue = "multiple";
+const String singleValue = "single";
+
 /* Widget configuration */
 const double standartSpacerHeight = 30;
 
