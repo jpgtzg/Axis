@@ -23,14 +23,16 @@ class PitDashboardScreen extends StatefulWidget {
 }
 
 class _PitDashboardScreenState extends State<PitDashboardScreen> {
-  late Future<PitDashboardSchema?>? dashboardDataFuture;
+  late Future<PitDashboardSchema?>? pitDashboardSettingsFuture;
   late Future<List<PitDataSchema>> pitDataFuture;
+  late Future<PitFormSettingsSchema?>? pitFormSettingsFuture;
 
   @override
   void initState() {
     super.initState();
-    dashboardDataFuture = getPitDashboardSettings();
-    dashboardDataFuture!.then((dashboardData) {
+    pitDashboardSettingsFuture = getPitDashboardSettings();
+    pitFormSettingsFuture = getPitFormSettings();
+    pitDashboardSettingsFuture!.then((dashboardData) {
       if (dashboardData != null) {
         pitDataFuture = getPitData(widget.team, widget.event);
       }
@@ -38,26 +40,28 @@ class _PitDashboardScreenState extends State<PitDashboardScreen> {
   }
 
   Widget getWidget(
-      String type, List data, MatchDashboardSchema dashboardData, int index) {
+      String type, List data, PitDashboardSchema dashboardData, int index) {
     switch (type) {
       case "line":
         return PresetLineChart(
-          matchData: data,
+          data: data,
           tableData: dashboardData.dashboardWidgets[index].lineTableData!,
           title: dashboardData.dashboardWidgets[index].title,
+          formsFuture: pitFormSettingsFuture,
         );
       case "text":
         return TextBox(
             data: data,
-            dataIndex:
-                dashboardData.dashboardWidgets[index].textData!.dataIndex,
-            title: dashboardData.dashboardWidgets[index].title);
+            textWidgetData: dashboardData.dashboardWidgets[index].textData!,
+            title: dashboardData.dashboardWidgets[index].title,
+            formsFuture: pitFormSettingsFuture);
       case "pie":
         return PieGraph(
-          matchData: data,
+          data: data,
           pieGraphWidgetData:
               dashboardData.dashboardWidgets[index].pieGraphData!,
           widgetTitle: dashboardData.dashboardWidgets[index].title,
+          dashboardDataFuture: pitFormSettingsFuture ,
         );
       default:
         return Container();
@@ -67,7 +71,7 @@ class _PitDashboardScreenState extends State<PitDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: dashboardDataFuture,
+      future: pitDashboardSettingsFuture,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return const Center(
@@ -120,12 +124,8 @@ class _PitDashboardScreenState extends State<PitDashboardScreen> {
                   (index) {
                     return Column(
                       children: [
-                        TextBox(
-                          data: pitData,
-                          dataIndex: dashboardData
-                              .dashboardWidgets[index].textData!.dataIndex,
-                          title: dashboardData.dashboardWidgets[index].title,
-                        ),
+                        getWidget(dashboardData.dashboardWidgets[index].type,
+                            pitData, dashboardData, index),
                         const StandardSpacer(height: standartSpacerHeight)
                       ],
                     );
