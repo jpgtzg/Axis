@@ -1,6 +1,7 @@
 /// Written by Juan Pablo Gutierrez
 /// 02 10 2023
 
+import 'package:axis/screens/match_scouting/match_forms_settings_screen.dart';
 import 'package:axis/system/axis/realm/realm_manager.dart';
 import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:axis/system/tba/event/event.dart';
@@ -26,11 +27,13 @@ class MatchDashboardScreen extends StatefulWidget {
 class _MatchDashboardScreenState extends State<MatchDashboardScreen> {
   late Future<MatchDashboardSchema?>? dashboardDataFuture;
   late Future<List<MatchDataSchema>> matchDataFuture;
+  late Future<MatchFormSettingsSchema?>? matchFormSettingsFuture;
 
   @override
   void initState() {
     super.initState();
     dashboardDataFuture = getMatchDashboardSettings();
+    matchFormSettingsFuture = getMatchFormSettings();
     dashboardDataFuture!.then((dashboardData) {
       if (dashboardData != null) {
         matchDataFuture = getMatchData(widget.team, widget.event);
@@ -43,22 +46,24 @@ class _MatchDashboardScreenState extends State<MatchDashboardScreen> {
     switch (type) {
       case "line":
         return PresetLineChart(
-          matchData: data,
+          data: data,
           tableData: dashboardData.dashboardWidgets[index].lineTableData!,
           title: dashboardData.dashboardWidgets[index].title,
+          formsFuture: matchFormSettingsFuture,
         );
       case "text":
         return TextBox(
             data: data,
-            dataIndex:
-                dashboardData.dashboardWidgets[index].textData!.dataIndex,
-            title: dashboardData.dashboardWidgets[index].title);
+            textWidgetData: dashboardData.dashboardWidgets[index].textData!,
+            title: dashboardData.dashboardWidgets[index].title,
+            formsFuture: matchFormSettingsFuture);
       case "pie":
         return PieGraph(
-          matchData: data,
+          data: data,
           pieGraphWidgetData:
               dashboardData.dashboardWidgets[index].pieGraphData!,
           widgetTitle: dashboardData.dashboardWidgets[index].title,
+          dashboardDataFuture: matchFormSettingsFuture,
         );
       default:
         return Container();
