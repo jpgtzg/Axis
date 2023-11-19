@@ -52,32 +52,31 @@ class MatchFormScreen extends StatelessWidget {
 
   Widget getWidget(MatchFormSettingsSchema data, int index) {
     switch (data.questionsArray[index].type) {
-      case "string":
+      case stringValue:
         return TextForm(
           text: data.questionsArray[index].question,
           inputText: "Enter ${data.questionsArray[index].type}",
           padding: 5,
           controller: controllers.elementAt(index),
         );
-      case "int":
+      case intValue:
         return IntForm(
           text: data.questionsArray[index].question,
           inputText: "Enter ${data.questionsArray[index].type}",
           padding: 5,
           controller: controllers.elementAt(index),
         );
-      case "multiple":
+      case multipleValue:
         return MultipleForm(
           question: data.questionsArray[index],
           padding: 5,
           controller: controllers.elementAt(index),
         );
-      case "single":
+      case singleValue:
         return SingleForm(
           question: data.questionsArray[index],
           padding: 5,
           controller: controllers.elementAt(index),
-          formKey: _formKey,
         );
       default:
         return Text(data.questionsArray[index].type);
