@@ -4,13 +4,15 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class PresetLineChart extends StatefulWidget {
-  final List matchData;
+  final List data;
   final LineTableWidgetData tableData;
   final String title;
+  final Future? formsFuture;
   const PresetLineChart(
-      {required this.matchData,
+      {required this.data,
       required this.tableData,
       required this.title,
+      required this.formsFuture,
       super.key});
 
   @override
@@ -23,19 +25,28 @@ class _PresetLineChartState extends State<PresetLineChart> {
   @override
   void initState() {
     super.initState();
-    mainDataList = List.generate(
-      widget.matchData.length,
-      (index) {
-        var element = widget.matchData[index];
-        return FlSpot(
-          double.parse(
-              element.answers[widget.tableData.columnIndex].value.toString()),
-          double.parse(
-              element.answers[widget.tableData.rowIndex].value.toString()),
-        );
-      },
-    );
+    generateMainDataList();
+  }
+
+  Future<void> generateMainDataList() async {
+    mainDataList = [];
+    for (var i = 0; i < widget.data.length; i++) {
+      var element = widget.data[i];
+      var settings = await widget.formsFuture as MatchFormSettingsSchema;
+      int columnIndex = settings.questionsArray.indexWhere(
+          (element) => element.questionID == widget.tableData.columnIndex);
+      int rowIndex = settings.questionsArray.indexWhere(
+          (element) {
+            return  element.questionID == widget.tableData.rowIndex;
+          });
+
+      mainDataList.add(FlSpot(
+        double.parse(element.answers[columnIndex].value.toString()),
+        double.parse(element.answers[rowIndex].value.toString()),
+      ));
+    }
     mainDataList.sort((a, b) => a.x.compareTo(b.x));
+    setState(() {}); // Call setState to trigger a rebuild
   }
 
   @override
