@@ -1,6 +1,5 @@
 import 'package:axis/constants.dart';
 import 'package:axis/screens/dashboard_settings_screen.dart';
-import 'package:axis/screens/question_settings_screen.dart';
 import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:flutter/material.dart';
 

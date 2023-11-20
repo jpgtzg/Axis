@@ -6,9 +6,7 @@
 import 'package:axis/screens/home_screen.dart';
 import 'package:axis/system/api_manager.dart';
 import 'package:axis/system/axis/realm/realm_manager.dart';
-import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:flutter/material.dart';
-import 'package:realm/realm.dart';
 
 import 'constants.dart';
 

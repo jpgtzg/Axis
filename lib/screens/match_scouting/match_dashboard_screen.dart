@@ -1,7 +1,6 @@
 /// Written by Juan Pablo Gutierrez
 /// 02 10 2023
 
-import 'package:axis/screens/match_scouting/match_forms_settings_screen.dart';
 import 'package:axis/system/axis/realm/realm_manager.dart';
 import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:axis/system/tba/event/event.dart';

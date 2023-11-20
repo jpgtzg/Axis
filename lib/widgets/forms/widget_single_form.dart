@@ -14,7 +14,7 @@ class WidgetSingleForm extends StatefulWidget {
   late final List<DropdownMenuItem<Question>> items;
 
   WidgetSingleForm({
-    Key? key,
+    super.key,
     required this.title,
     required this.labelText,
     required this.padding,
@@ -125,7 +125,6 @@ class _WidgetSingleFormState extends State<WidgetSingleForm> {
                   widget.controller.text =
                       newValue?.questionID.toString() ?? '';
                   _selectedOption = newValue?.questionID.toString() ?? '';
-                  print(widget.controller.text);
                 },
               );
             },

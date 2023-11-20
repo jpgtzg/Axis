@@ -67,17 +67,14 @@ class _DashboardSettingsScreenState extends State<DashboardSettingsScreen> {
     }
 
     if (widget.dashboardWidget.pieGraphData == null) {
-      _dashboardWidget.pieGraphData =
-          PieGraphWidgetData("", ObjectId(), "", ObjectId());
+      _dashboardWidget.pieGraphData = PieGraphWidgetData("", ObjectId());
     } else {
       PieGraphWidgetData updatedPieGraphData = PieGraphWidgetData(
         widget.dashboardWidget.pieGraphData!.graphTitle,
-        widget.dashboardWidget.pieGraphData!.graphTitleIndex,
-        widget.dashboardWidget.pieGraphData!.title,
         widget.dashboardWidget.pieGraphData!.titleIndex,
       );
       for (var element
-          in widget.dashboardWidget!.pieGraphData!.percentageIndex) {
+          in widget.dashboardWidget.pieGraphData!.percentageIndex) {
         updatedPieGraphData.percentageIndex.add(element);
       }
 
@@ -115,8 +112,6 @@ class _DashboardSettingsScreenState extends State<DashboardSettingsScreen> {
         case pieValue:
           PieGraphWidgetData updatedPieGraphData = PieGraphWidgetData(
             _dashboardWidget.pieGraphData!.graphTitle,
-            _dashboardWidget.pieGraphData!.graphTitleIndex,
-            _dashboardWidget.pieGraphData!.title,
             _dashboardWidget.pieGraphData!.titleIndex,
           );
 

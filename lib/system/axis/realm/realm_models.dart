@@ -105,9 +105,7 @@ class _LineTableWidgetData {
 @RealmModel(ObjectType.embeddedObject)
 class _PieGraphWidgetData {
   late String graphTitle;
-  late ObjectId graphTitleIndex; //UNUSED TODO REMOVE
   late List<ObjectId> percentageIndex;
-  late String title; //UNUSED TODO REMOVE
   late ObjectId titleIndex;
 }
 

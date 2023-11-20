@@ -591,14 +591,10 @@ class PieGraphWidgetData extends _PieGraphWidgetData
     with RealmEntity, RealmObjectBase, EmbeddedObject {
   PieGraphWidgetData(
     String graphTitle,
-    ObjectId graphTitleIndex,
-    String title,
     ObjectId titleIndex, {
     Iterable<ObjectId> percentageIndex = const [],
   }) {
     RealmObjectBase.set(this, 'graphTitle', graphTitle);
-    RealmObjectBase.set(this, 'graphTitleIndex', graphTitleIndex);
-    RealmObjectBase.set(this, 'title', title);
     RealmObjectBase.set(this, 'titleIndex', titleIndex);
     RealmObjectBase.set<RealmList<ObjectId>>(
         this, 'percentageIndex', RealmList<ObjectId>(percentageIndex));
@@ -614,24 +610,12 @@ class PieGraphWidgetData extends _PieGraphWidgetData
       RealmObjectBase.set(this, 'graphTitle', value);
 
   @override
-  ObjectId get graphTitleIndex =>
-      RealmObjectBase.get<ObjectId>(this, 'graphTitleIndex') as ObjectId;
-  @override
-  set graphTitleIndex(ObjectId value) =>
-      RealmObjectBase.set(this, 'graphTitleIndex', value);
-
-  @override
   RealmList<ObjectId> get percentageIndex =>
       RealmObjectBase.get<ObjectId>(this, 'percentageIndex')
           as RealmList<ObjectId>;
   @override
   set percentageIndex(covariant RealmList<ObjectId> value) =>
       throw RealmUnsupportedSetError();
-
-  @override
-  String get title => RealmObjectBase.get<String>(this, 'title') as String;
-  @override
-  set title(String value) => RealmObjectBase.set(this, 'title', value);
 
   @override
   ObjectId get titleIndex =>
@@ -655,10 +639,8 @@ class PieGraphWidgetData extends _PieGraphWidgetData
     return const SchemaObject(
         ObjectType.embeddedObject, PieGraphWidgetData, 'PieGraphWidgetData', [
       SchemaProperty('graphTitle', RealmPropertyType.string),
-      SchemaProperty('graphTitleIndex', RealmPropertyType.objectid),
       SchemaProperty('percentageIndex', RealmPropertyType.objectid,
           collectionType: RealmCollectionType.list),
-      SchemaProperty('title', RealmPropertyType.string),
       SchemaProperty('titleIndex', RealmPropertyType.objectid),
     ]);
   }

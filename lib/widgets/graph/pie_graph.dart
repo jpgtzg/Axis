@@ -77,8 +77,7 @@ class _IndividualPieGraph extends StatefulWidget {
   const _IndividualPieGraph(
       {required this.matchData,
       required this.pieGraphWidgetData,
-      required this.dataFuture,
-      super.key});
+      required this.dataFuture});
 
   @override
   State<_IndividualPieGraph> createState() => _IndividualPieGraphState();

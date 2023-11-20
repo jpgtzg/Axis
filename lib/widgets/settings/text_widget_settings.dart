@@ -70,12 +70,6 @@ class TextWidgetSettings extends StatelessWidget {
             if (origin == Origin.match) {
               final data = snapshot.data as MatchFormSettingsSchema;
 
-              if (data == null) {
-                return const Center(
-                  child: Text("No data"),
-                );
-              }
-
               return Column(
                 children: [
                   WidgetSingleForm(
@@ -89,12 +83,6 @@ class TextWidgetSettings extends StatelessWidget {
             }
 
             final data = snapshot.data as PitFormSettingsSchema;
-
-            if (data == null) {
-              return const Center(
-                child: Text("No data"),
-              );
-            }
 
             return Column(
               children: [

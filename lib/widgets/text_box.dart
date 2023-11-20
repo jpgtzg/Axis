@@ -5,7 +5,6 @@ import 'package:axis/constants.dart';
 import 'package:axis/system/axis/realm/realm_models.dart';
 import 'package:axis/widgets/standart_spacer.dart';
 import 'package:flutter/material.dart';
-import 'package:realm/realm.dart';
 
 class TextBox extends StatelessWidget {
   final List data;
@@ -13,7 +12,7 @@ class TextBox extends StatelessWidget {
   final String title;
   final Future? formsFuture;
 
-  TextBox({
+  const TextBox({
     required this.data,
     required this.textWidgetData,
     required this.title,
@@ -39,7 +38,7 @@ class TextBox extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
-        
+
         final dataIndex = snapshot.data;
 
         return Container(

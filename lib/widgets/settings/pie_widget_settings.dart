@@ -27,8 +27,8 @@ class PieWidgetSettings extends StatelessWidget {
         percentageIndexController = TextEditingController(
             text: dashboardWidget.pieGraphData?.percentageIndex.toString() ??
                 '') {
-    pieGraphWidgetData = dashboardWidget.pieGraphData ??
-        PieGraphWidgetData("", ObjectId(), "", ObjectId());
+    pieGraphWidgetData =
+        dashboardWidget.pieGraphData ?? PieGraphWidgetData("", ObjectId());
 
     titleController.addListener(() {
       pieGraphWidgetData.graphTitle = titleController.text;
@@ -87,12 +87,6 @@ class PieWidgetSettings extends StatelessWidget {
             if (origin == Origin.match) {
               final data = snapshot.data as MatchFormSettingsSchema;
 
-              if (data == null) {
-                return const Center(
-                  child: Text("No data"),
-                );
-              }
-
               return Column(
                 children: [
                   WidgetSingleForm(
@@ -121,15 +115,9 @@ class PieWidgetSettings extends StatelessWidget {
                   ),
                 ],
               );
-            } 
+            }
 
             final data = snapshot.data as PitFormSettingsSchema;
-
-            if (data == null) {
-              return const Center(
-                child: Text("No data"),
-              );
-            }
 
             return Column(
               children: [
