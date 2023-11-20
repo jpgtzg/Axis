@@ -76,6 +76,7 @@ class MatchFormsSettingsScreen extends StatelessWidget {
                                 return AddButton(
                                   index: index,
                                   origin: Origin.match,
+                                  purpose: Purpose.forms,
                                 );
                               } else {
                                 return Column(

@@ -1,12 +1,14 @@
 import 'package:axis/constants.dart';
 import 'package:axis/system/axis/realm/realm_manager.dart';
 import 'package:axis/system/axis/realm/realm_models.dart';
+import 'package:axis/widgets/forms/single_form.dart';
 import 'package:axis/widgets/forms/text_form.dart';
 import 'package:axis/widgets/gradient_scaffold.dart';
 import 'package:axis/widgets/standart_spacer.dart';
 import 'package:axis/widgets/submit_button.dart';
 import 'package:axis/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:realm/realm.dart';
 
 class QuestionSettingsScreen extends StatefulWidget {
   final int index;
@@ -18,7 +20,7 @@ class QuestionSettingsScreen extends StatefulWidget {
       required this.index,
       required this.origin,
       super.key})
-      : question = question ?? Question("", "");
+      : question = question ?? Question(ObjectId(), "", "");
 
   @override
   State<QuestionSettingsScreen> createState() => _QuestionSettingsScreenState();
@@ -49,7 +51,7 @@ class _QuestionSettingsScreenState extends State<QuestionSettingsScreen> {
       _formKey.currentState!.save();
 
       final Question updatedQuestion =
-          Question(questionController.text, typeController.text);
+          Question(ObjectId(), questionController.text, typeController.text);
 
       if (availableAnswersController.text.isNotEmpty) {
         for (var element in availableAnswersController.text.split(", ")) {
@@ -97,19 +99,21 @@ class _QuestionSettingsScreenState extends State<QuestionSettingsScreen> {
                               text: widget.question.question.toString(),
                             ),
                         ),
-                        TextForm(
-                          text: "Type",
-                          inputText: "Enter type",
+                        SingleForm(
                           padding: 20,
                           controller: typeController
                             ..value = TextEditingValue(
                               text: widget.question.type.toString(),
                             ),
+                          title: "Enter Type",
+                          availableAnswers:
+                              "$intValue,$stringValue,$singleValue,$multipleValue,",
                         ),
                         ValueListenableBuilder(
                           valueListenable: _typeNotifier,
                           builder: (context, value, child) {
-                            if (value == "multiple" || value == "single") {
+                            if (value == multipleValue ||
+                                value == singleValue) {
                               return TextForm(
                                 text: "Available Answers",
                                 inputText: "Enter available answers",
