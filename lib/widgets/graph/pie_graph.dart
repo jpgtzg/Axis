@@ -6,13 +6,15 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class PieGraph extends StatefulWidget {
-  final List matchData;
+  final List data;
   final PieGraphWidgetData pieGraphWidgetData;
   final String widgetTitle;
+  final Future? dashboardDataFuture;
   const PieGraph(
-      {required this.matchData,
+      {required this.data,
       required this.pieGraphWidgetData,
       required this.widgetTitle,
+      required this.dashboardDataFuture,
       super.key});
 
   @override
@@ -54,11 +56,12 @@ class PieGraphState extends State<PieGraph> {
               itemBuilder: (context, index) {
                 return _IndividualPieGraph(
                   pieGraphWidgetData: widget.pieGraphWidgetData,
-                  matchData: widget.matchData[index],
+                  matchData: widget.data[index],
+                  dataFuture: widget.dashboardDataFuture,
                 );
               },
               shrinkWrap: true,
-              itemCount: widget.matchData.length,
+              itemCount: widget.data.length,
             ),
           ],
         ),
@@ -70,8 +73,12 @@ class PieGraphState extends State<PieGraph> {
 class _IndividualPieGraph extends StatefulWidget {
   final MatchDataSchema matchData;
   final PieGraphWidgetData pieGraphWidgetData;
+  final Future? dataFuture;
   const _IndividualPieGraph(
-      {required this.matchData, required this.pieGraphWidgetData, super.key});
+      {required this.matchData,
+      required this.pieGraphWidgetData,
+      required this.dataFuture,
+      super.key});
 
   @override
   State<_IndividualPieGraph> createState() => _IndividualPieGraphState();
@@ -80,13 +87,17 @@ class _IndividualPieGraph extends StatefulWidget {
 class _IndividualPieGraphState extends State<_IndividualPieGraph> {
   List<PieChartSectionData> _mainDataSections = [];
   List<Color> _sectionColors = [];
+  List<Widget> _children = [];
+
   int touchedIndex = -1;
+  int graphTitleIndex = 0;
 
   @override
   void initState() {
     super.initState();
     _generateSectionColors();
     _updatePieChartSections();
+    _generateChildren();
   }
 
   void _generateSectionColors() {
@@ -95,9 +106,9 @@ class _IndividualPieGraphState extends State<_IndividualPieGraph> {
       widget.pieGraphWidgetData.percentageIndex.length,
       (index) {
         final baseColor = Color.fromRGBO(
-          random.nextInt(256) + 40,
-          random.nextInt(256) + 40,
-          random.nextInt(256) + 130, // Blue
+          random.nextInt(206), // Ensure value is between 0-255
+          random.nextInt(206), // Ensure value is between 0-255
+          random.nextInt(126), // Ensure value is between 0-255
           1, // Alpha
         );
 
@@ -106,28 +117,73 @@ class _IndividualPieGraphState extends State<_IndividualPieGraph> {
     );
   }
 
-  void _updatePieChartSections() {
-    _mainDataSections = List.generate(
-      widget.pieGraphWidgetData.percentageIndex.length,
-      (index) {
-        var element = widget.matchData
-            .answers[widget.pieGraphWidgetData.percentageIndex[index]];
+  Future<void> _updatePieChartSections() async {
+    var value = await widget.dataFuture as MatchFormSettingsSchema;
+    _mainDataSections =
+        widget.pieGraphWidgetData.percentageIndex.asMap().entries.map((entry) {
+      int i = entry.key;
+      var dataObjectID = entry.value;
 
-        final isTouched = index == touchedIndex;
-        final radius = isTouched ? 60.0 : 50.0;
+      int trueIndex = value.questionsArray
+          .indexWhere((element) => element.questionID == dataObjectID);
 
-        return PieChartSectionData(
-          color: _sectionColors[index],
-          value: double.parse(element.value.toString()),
-          title: element.value.toString(),
-          radius: radius,
-          titleStyle: smallerDefaultStyle,
-          borderSide: isTouched
-              ? const BorderSide(color: Colors.white, width: 6)
-              : BorderSide(color: Colors.white.withOpacity(0)),
-        );
-      },
-    );
+      graphTitleIndex = value.questionsArray.indexWhere((element) =>
+          element.questionID == widget.pieGraphWidgetData.titleIndex);
+
+      var element = widget.matchData.answers[trueIndex];
+
+      final isTouched = i == touchedIndex;
+      final radius = isTouched ? 60.0 : 50.0;
+
+      return PieChartSectionData(
+        color: _sectionColors[i],
+        value: double.parse(element.value.toString()),
+        title: element.value.toString(),
+        radius: radius,
+        titleStyle: smallerDefaultStyle,
+        borderSide: isTouched
+            ? const BorderSide(color: Colors.white, width: 6)
+            : BorderSide(color: Colors.white.withOpacity(0)),
+      );
+    }).toList();
+
+    setState(() {}); // Call setState to trigger a rebuild
+  }
+
+  Future<void> _generateChildren() async {
+    var value = await widget.dataFuture as MatchFormSettingsSchema;
+    _children =
+        widget.pieGraphWidgetData.percentageIndex.asMap().entries.map((entry) {
+      int i = entry.key;
+      var dataObjectID = entry.value;
+
+      int trueIndex = value.questionsArray
+          .indexWhere((element) => element.questionID == dataObjectID);
+
+      var element = widget.matchData.questions[trueIndex];
+
+      return Row(
+        children: [
+          Container(
+            width: touchedIndex == i ? 20 : 16,
+            height: touchedIndex == i ? 20 : 16,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.red,
+            ),
+          ),
+          Expanded(
+            child: Text(
+              "${element.value}: ${element.value.toString()}",
+              style: substitleStyle,
+              overflow: TextOverflow.clip,
+            ),
+          ),
+        ],
+      );
+    }).toList();
+
+    setState(() {}); // Call setState to trigger a rebuild
   }
 
   @override
@@ -136,34 +192,11 @@ class _IndividualPieGraphState extends State<_IndividualPieGraph> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-            "${widget.pieGraphWidgetData.graphTitle} ${widget.matchData.answers[widget.pieGraphWidgetData.graphTitleIndex].value.toString()}",
+            "${widget.pieGraphWidgetData.graphTitle} ${widget.matchData.answers[graphTitleIndex].value.toString()}",
             style: smallerDefaultStyle),
         Column(
           mainAxisSize: MainAxisSize.min,
-          children: List.generate(
-              widget.pieGraphWidgetData.percentageIndex.length, (secondIndex) {
-            var element = widget.matchData.questions[
-                widget.pieGraphWidgetData.percentageIndex[secondIndex]];
-            return Row(
-              children: [
-                Container(
-                  width: touchedIndex == secondIndex ? 20 : 16,
-                  height: touchedIndex == secondIndex ? 20 : 16,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: _mainDataSections[secondIndex].color,
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    "${element.value}: ${element.value.toString()}",
-                    style: substitleStyle,
-                    overflow: TextOverflow.clip,
-                  ),
-                ),
-              ],
-            );
-          }),
+          children: _children,
         ),
         AspectRatio(
           aspectRatio: 1,
