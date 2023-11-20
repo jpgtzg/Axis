@@ -27,11 +27,12 @@ class QuestionDisplayBox extends StatelessWidget {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => QuestionSettingsScreen(
-                  question: question,
-                  index: index,
-                  origin: origin,
-                )),
+          builder: (context) => QuestionSettingsScreen(
+            question: question,
+            index: index,
+            origin: origin,
+          ),
+        ),
       ),
       child: LayoutBuilder(
         builder: (context, constraints) {
@@ -85,16 +86,16 @@ class QuestionDisplayBox extends StatelessWidget {
                           style: substitleStyle,
                         ),
                         Flexible(
-                                fit: FlexFit.loose,
-                                child: Text(
-                                  question.availableAnswers.isEmpty
-                                      ? ""
-                                      : "Available answers:",
-                                  textAlign: TextAlign.center,
-                                  style: substitleStyle,
-                                  overflow: TextOverflow.visible,
-                                ),
-                              ),
+                          fit: FlexFit.loose,
+                          child: Text(
+                            question.availableAnswers.isEmpty
+                                ? ""
+                                : "Available answers:",
+                            textAlign: TextAlign.center,
+                            style: substitleStyle,
+                            overflow: TextOverflow.visible,
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(right: 30.0),
                           child: Row(
