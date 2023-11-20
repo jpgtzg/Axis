@@ -206,6 +206,63 @@ void updateQuestion(Question updatedQuestion, int index, Origin origin) async {
   }
 }
 
+void updateDashboardWidget(
+    DashboardWidget dashboardWidget, int index, Origin origin) async {
+  if (realm == null) {
+    await setRealm();
+  }
+
+  switch (origin) {
+    case Origin.match:
+      var fullList = await getMatchDashboardSettings();
+
+      if (fullList != null) {
+        try {
+          realm!.write(() {
+            fullList.dashboardWidgets[index].title = dashboardWidget.title;
+            fullList.dashboardWidgets[index].type = dashboardWidget.type;
+            fullList.dashboardWidgets[index].lineTableData =
+                dashboardWidget.lineTableData;
+            fullList.dashboardWidgets[index].pieGraphData =
+                dashboardWidget.pieGraphData;
+            fullList.dashboardWidgets[index].textData =
+                dashboardWidget.textData;
+          });
+        } catch (e) {
+          realm!.write(() {
+            fullList.dashboardWidgets.add(dashboardWidget);
+            fullList.widgetNumber = fullList.dashboardWidgets.length;
+          });
+        }
+      }
+      break;
+    case Origin.pit:
+      var fullList = await getPitDashboardSettings();
+
+      if (fullList != null) {
+        try {
+          realm!.write(() {
+            fullList.dashboardWidgets[index].title = dashboardWidget.title;
+            fullList.dashboardWidgets[index].type = dashboardWidget.type;
+            fullList.dashboardWidgets[index].lineTableData =
+                dashboardWidget.lineTableData;
+            fullList.dashboardWidgets[index].pieGraphData =
+                dashboardWidget.pieGraphData;
+            fullList.dashboardWidgets[index].textData =
+                dashboardWidget.textData;
+          });
+        } catch (e) {
+          realm!.write(() {
+            fullList.dashboardWidgets.add(dashboardWidget);
+            fullList.widgetNumber = fullList.dashboardWidgets.length;
+          });
+        }
+      }
+      break;
+    default:
+  }
+}
+
 Future<bool> isDeviceOnline() async {
   //TODO ADD LOGIC
 

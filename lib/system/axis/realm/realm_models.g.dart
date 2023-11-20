@@ -144,10 +144,12 @@ class MatchDataSchema extends _MatchDataSchema
 class Question extends _Question
     with RealmEntity, RealmObjectBase, EmbeddedObject {
   Question(
+    ObjectId questionID,
     String question,
     String type, {
     Iterable<String> availableAnswers = const [],
   }) {
+    RealmObjectBase.set(this, 'questionID', questionID);
     RealmObjectBase.set(this, 'question', question);
     RealmObjectBase.set(this, 'type', type);
     RealmObjectBase.set<RealmList<String>>(
@@ -155,6 +157,13 @@ class Question extends _Question
   }
 
   Question._();
+
+  @override
+  ObjectId get questionID =>
+      RealmObjectBase.get<ObjectId>(this, 'questionID') as ObjectId;
+  @override
+  set questionID(ObjectId value) =>
+      RealmObjectBase.set(this, 'questionID', value);
 
   @override
   RealmList<String> get availableAnswers =>
@@ -187,6 +196,7 @@ class Question extends _Question
   static SchemaObject _initSchema() {
     RealmObjectBase.registerFactory(Question._);
     return const SchemaObject(ObjectType.embeddedObject, Question, 'Question', [
+      SchemaProperty('questionID', RealmPropertyType.objectid),
       SchemaProperty('availableAnswers', RealmPropertyType.string,
           collectionType: RealmCollectionType.list),
       SchemaProperty('question', RealmPropertyType.string),
@@ -525,9 +535,9 @@ class DashboardWidget extends _DashboardWidget
 class LineTableWidgetData extends _LineTableWidgetData
     with RealmEntity, RealmObjectBase, EmbeddedObject {
   LineTableWidgetData(
-    int columnIndex,
+    ObjectId columnIndex,
     String columnTitle,
-    int rowIndex,
+    ObjectId rowIndex,
   ) {
     RealmObjectBase.set(this, 'columnIndex', columnIndex);
     RealmObjectBase.set(this, 'columnTitle', columnTitle);
@@ -537,9 +547,11 @@ class LineTableWidgetData extends _LineTableWidgetData
   LineTableWidgetData._();
 
   @override
-  int get columnIndex => RealmObjectBase.get<int>(this, 'columnIndex') as int;
+  ObjectId get columnIndex =>
+      RealmObjectBase.get<ObjectId>(this, 'columnIndex') as ObjectId;
   @override
-  set columnIndex(int value) => RealmObjectBase.set(this, 'columnIndex', value);
+  set columnIndex(ObjectId value) =>
+      RealmObjectBase.set(this, 'columnIndex', value);
 
   @override
   String get columnTitle =>
@@ -549,9 +561,10 @@ class LineTableWidgetData extends _LineTableWidgetData
       RealmObjectBase.set(this, 'columnTitle', value);
 
   @override
-  int get rowIndex => RealmObjectBase.get<int>(this, 'rowIndex') as int;
+  ObjectId get rowIndex =>
+      RealmObjectBase.get<ObjectId>(this, 'rowIndex') as ObjectId;
   @override
-  set rowIndex(int value) => RealmObjectBase.set(this, 'rowIndex', value);
+  set rowIndex(ObjectId value) => RealmObjectBase.set(this, 'rowIndex', value);
 
   @override
   Stream<RealmObjectChanges<LineTableWidgetData>> get changes =>
@@ -567,9 +580,9 @@ class LineTableWidgetData extends _LineTableWidgetData
     RealmObjectBase.registerFactory(LineTableWidgetData._);
     return const SchemaObject(
         ObjectType.embeddedObject, LineTableWidgetData, 'LineTableWidgetData', [
-      SchemaProperty('columnIndex', RealmPropertyType.int),
+      SchemaProperty('columnIndex', RealmPropertyType.objectid),
       SchemaProperty('columnTitle', RealmPropertyType.string),
-      SchemaProperty('rowIndex', RealmPropertyType.int),
+      SchemaProperty('rowIndex', RealmPropertyType.objectid),
     ]);
   }
 }
@@ -577,31 +590,21 @@ class LineTableWidgetData extends _LineTableWidgetData
 class PieGraphWidgetData extends _PieGraphWidgetData
     with RealmEntity, RealmObjectBase, EmbeddedObject {
   PieGraphWidgetData(
-    String title,
     String graphTitle,
-    int graphTitleIndex, {
-    Iterable<int> percentageIndex = const [],
+    ObjectId graphTitleIndex,
+    String title,
+    ObjectId titleIndex, {
+    Iterable<ObjectId> percentageIndex = const [],
   }) {
-    RealmObjectBase.set(this, 'title', title);
     RealmObjectBase.set(this, 'graphTitle', graphTitle);
     RealmObjectBase.set(this, 'graphTitleIndex', graphTitleIndex);
-    RealmObjectBase.set<RealmList<int>>(
-        this, 'percentageIndex', RealmList<int>(percentageIndex));
+    RealmObjectBase.set(this, 'title', title);
+    RealmObjectBase.set(this, 'titleIndex', titleIndex);
+    RealmObjectBase.set<RealmList<ObjectId>>(
+        this, 'percentageIndex', RealmList<ObjectId>(percentageIndex));
   }
 
   PieGraphWidgetData._();
-
-  @override
-  RealmList<int> get percentageIndex =>
-      RealmObjectBase.get<int>(this, 'percentageIndex') as RealmList<int>;
-  @override
-  set percentageIndex(covariant RealmList<int> value) =>
-      throw RealmUnsupportedSetError();
-
-  @override
-  String get title => RealmObjectBase.get<String>(this, 'title') as String;
-  @override
-  set title(String value) => RealmObjectBase.set(this, 'title', value);
 
   @override
   String get graphTitle =>
@@ -611,11 +614,31 @@ class PieGraphWidgetData extends _PieGraphWidgetData
       RealmObjectBase.set(this, 'graphTitle', value);
 
   @override
-  int get graphTitleIndex =>
-      RealmObjectBase.get<int>(this, 'graphTitleIndex') as int;
+  ObjectId get graphTitleIndex =>
+      RealmObjectBase.get<ObjectId>(this, 'graphTitleIndex') as ObjectId;
   @override
-  set graphTitleIndex(int value) =>
+  set graphTitleIndex(ObjectId value) =>
       RealmObjectBase.set(this, 'graphTitleIndex', value);
+
+  @override
+  RealmList<ObjectId> get percentageIndex =>
+      RealmObjectBase.get<ObjectId>(this, 'percentageIndex')
+          as RealmList<ObjectId>;
+  @override
+  set percentageIndex(covariant RealmList<ObjectId> value) =>
+      throw RealmUnsupportedSetError();
+
+  @override
+  String get title => RealmObjectBase.get<String>(this, 'title') as String;
+  @override
+  set title(String value) => RealmObjectBase.set(this, 'title', value);
+
+  @override
+  ObjectId get titleIndex =>
+      RealmObjectBase.get<ObjectId>(this, 'titleIndex') as ObjectId;
+  @override
+  set titleIndex(ObjectId value) =>
+      RealmObjectBase.set(this, 'titleIndex', value);
 
   @override
   Stream<RealmObjectChanges<PieGraphWidgetData>> get changes =>
@@ -631,11 +654,12 @@ class PieGraphWidgetData extends _PieGraphWidgetData
     RealmObjectBase.registerFactory(PieGraphWidgetData._);
     return const SchemaObject(
         ObjectType.embeddedObject, PieGraphWidgetData, 'PieGraphWidgetData', [
-      SchemaProperty('percentageIndex', RealmPropertyType.int,
+      SchemaProperty('graphTitle', RealmPropertyType.string),
+      SchemaProperty('graphTitleIndex', RealmPropertyType.objectid),
+      SchemaProperty('percentageIndex', RealmPropertyType.objectid,
           collectionType: RealmCollectionType.list),
       SchemaProperty('title', RealmPropertyType.string),
-      SchemaProperty('graphTitle', RealmPropertyType.string),
-      SchemaProperty('graphTitleIndex', RealmPropertyType.int),
+      SchemaProperty('titleIndex', RealmPropertyType.objectid),
     ]);
   }
 }
@@ -643,7 +667,7 @@ class PieGraphWidgetData extends _PieGraphWidgetData
 class TextWidgetData extends _TextWidgetData
     with RealmEntity, RealmObjectBase, EmbeddedObject {
   TextWidgetData(
-    int dataIndex,
+    ObjectId dataIndex,
     String title,
   ) {
     RealmObjectBase.set(this, 'dataIndex', dataIndex);
@@ -653,9 +677,11 @@ class TextWidgetData extends _TextWidgetData
   TextWidgetData._();
 
   @override
-  int get dataIndex => RealmObjectBase.get<int>(this, 'dataIndex') as int;
+  ObjectId get dataIndex =>
+      RealmObjectBase.get<ObjectId>(this, 'dataIndex') as ObjectId;
   @override
-  set dataIndex(int value) => RealmObjectBase.set(this, 'dataIndex', value);
+  set dataIndex(ObjectId value) =>
+      RealmObjectBase.set(this, 'dataIndex', value);
 
   @override
   String get title => RealmObjectBase.get<String>(this, 'title') as String;
@@ -675,7 +701,7 @@ class TextWidgetData extends _TextWidgetData
     RealmObjectBase.registerFactory(TextWidgetData._);
     return const SchemaObject(
         ObjectType.embeddedObject, TextWidgetData, 'TextWidgetData', [
-      SchemaProperty('dataIndex', RealmPropertyType.int),
+      SchemaProperty('dataIndex', RealmPropertyType.objectid),
       SchemaProperty('title', RealmPropertyType.string),
     ]);
   }

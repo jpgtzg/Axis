@@ -29,6 +29,8 @@ class _MatchDataSchema {
 /// Represents a question in the form
 @RealmModel(ObjectType.embeddedObject)
 class _Question {
+  late ObjectId questionID;
+
   late List<String> availableAnswers;
 
   late String question;
@@ -94,26 +96,24 @@ class _DashboardWidget {
 /// Represents data for a table widget
 @RealmModel(ObjectType.embeddedObject)
 class _LineTableWidgetData {
-  // Add properties specific to table widgets here.
-  // You can define the schema for table data as needed.
-  late int columnIndex;
+  late ObjectId columnIndex;
   late String columnTitle;
-  late int rowIndex;
+  late ObjectId rowIndex;
 }
 
 /// Represents data for a graph widget
 @RealmModel(ObjectType.embeddedObject)
 class _PieGraphWidgetData {
-  late List<int> percentageIndex;
-  late String title;
   late String graphTitle;
-  late int graphTitleIndex;
+  late ObjectId graphTitleIndex; //UNUSED TODO REMOVE
+  late List<ObjectId> percentageIndex;
+  late String title; //UNUSED TODO REMOVE
+  late ObjectId titleIndex;
 }
 
 /// Represents data for a text widget
 @RealmModel(ObjectType.embeddedObject)
 class _TextWidgetData {
-  late int dataIndex;
+  late ObjectId dataIndex;
   late String title;
 }
-
