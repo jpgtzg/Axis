@@ -1,5 +1,7 @@
+import 'package:axis/constants.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:realm/realm.dart';
 
 import '../../system/axis/realm/realm_models.dart';
 
@@ -7,22 +9,30 @@ class SingleForm extends StatefulWidget {
   final Question question;
   final double padding;
   final TextEditingController controller;
-  final GlobalKey<FormState> formKey;
+  late final List<DropdownMenuItem<String>> items;
 
   SingleForm({
-    super.key,
-    required this.question,
+    Key? key,
+    Question? question,
     required this.padding,
     required this.controller,
-    required this.formKey,
-  }) {
-    items = question.availableAnswers
+    String? title,
+    String? availableAnswers,
+  })  : question = question ?? Question(ObjectId(), title ?? "", singleValue),
+        super(key: key) {
+    if (availableAnswers != null) {
+      for (var answer in availableAnswers.split(',')) {
+        this.question.availableAnswers.add(answer);
+      }
+    }
+
+    items = this
+        .question
+        .availableAnswers
         .map((question) =>
             DropdownMenuItem<String>(value: question, child: Text(question)))
         .toList();
   }
-
-  late final List<DropdownMenuItem<String>> items;
 
   @override
   State<SingleForm> createState() => _SingleFormState();
@@ -35,9 +45,13 @@ class _SingleFormState extends State<SingleForm> {
   void initState() {
     super.initState();
 
-    if (widget.items.isNotEmpty) {
+    if (widget.controller.text.isNotEmpty) {
+      _selectedOption = widget.controller.text;
+    } else {
       _selectedOption = widget.items.first.value!;
     }
+
+    widget.controller.text = _selectedOption;
   }
 
   @override
@@ -65,7 +79,9 @@ class _SingleFormState extends State<SingleForm> {
         Padding(
           padding: const EdgeInsets.only(bottom: 10, right: 30, left: 30),
           child: DropdownButtonFormField2<String>(
-            value: _selectedOption,
+            value: widget.items.any((item) => item.value == _selectedOption)
+                ? _selectedOption
+                : null,
             items: widget.items,
             validator: (value) {
               if (value == null) {
@@ -103,10 +119,12 @@ class _SingleFormState extends State<SingleForm> {
               padding: EdgeInsets.symmetric(horizontal: 16),
             ),
             onChanged: (String? newValue) {
-              setState(() {
-                widget.controller.text = newValue ?? '';
-                _selectedOption = newValue ?? '';
-              });
+              setState(
+                () {
+                  widget.controller.text = newValue ?? '';
+                  _selectedOption = newValue ?? '';
+                },
+              );
             },
           ),
         ),
