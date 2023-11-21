@@ -184,23 +184,25 @@ class _DashboardSettingsScreenState extends State<DashboardSettingsScreen> {
                         ValueListenableBuilder(
                           valueListenable: _typeNotifier,
                           builder: (context, value, child) {
-                            if (value == "line") {
-                              return LineWidgetSettings(
-                                dashboardWidget: _dashboardWidget,
-                                origin: widget.origin,
-                              );
-                            } else if (value == "pie") {
-                              return PieWidgetSettings(
-                                dashboardWidget: _dashboardWidget,
-                                origin: widget.origin,
-                              );
-                            } else if (value == "text") {
-                              return TextWidgetSettings(
-                                dashboardWidget: _dashboardWidget,
-                                origin: widget.origin,
-                              );
+                            switch (value) {
+                              case lineValue:
+                                return LineWidgetSettings(
+                                  dashboardWidget: _dashboardWidget,
+                                  origin: widget.origin,
+                                );
+                              case pieValue:
+                                return PieWidgetSettings(
+                                  dashboardWidget: _dashboardWidget,
+                                  origin: widget.origin,
+                                );
+                              case textValue:
+                                return TextWidgetSettings(
+                                  dashboardWidget: _dashboardWidget,
+                                  origin: widget.origin,
+                                );
+                              default:
+                                return const SizedBox();
                             }
-                            return const SizedBox();
                           },
                         ),
                         const StandardSpacer(height: mediumSpacerHeight),
