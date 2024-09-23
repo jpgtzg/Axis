@@ -1,7 +1,7 @@
 /// Written by Juan Pablo Gutiérrez
 /// 04 - 07 - 2023
-/// Represents an entire event
 
+/// Represents an entire event
 class Event {
   final String name;
 

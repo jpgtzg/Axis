@@ -1,7 +1,7 @@
 /// Written by Juan Pablo Gutiérrez
 /// 06 - 07 - 2023
-/// Represents a team rank on a ranking table for an event
 
+/// Represents a team rank on a ranking table for an event
 class Rank {
   late String team;
   final double rankingPoints;

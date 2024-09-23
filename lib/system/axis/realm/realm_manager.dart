@@ -40,6 +40,7 @@ Future<bool> setRealm() async {
     realm = Realm(realmConfig);
   }
 
+  /// All data suscription
   final userMatchSub = realm!.subscriptions.findByName('getMatchData');
   if (userMatchSub == null) {
     realm!.subscriptions.update((mutableSubscriptions) {
@@ -92,6 +93,7 @@ Future<bool> setRealm() async {
   return realm == null;
 }
 
+/// Writes a schema object to the realm
 void write(RealmObject schemaObject) async {
   if (realm == null) {
     await setRealm();
@@ -101,6 +103,7 @@ void write(RealmObject schemaObject) async {
   });
 }
 
+/// Updates a schema [MatchFormSettingsSchema] object in the realm, adds it if it doesn't exist
 void updateMatchFormSettings(MatchFormSettingsSchema matchFormSettings) async {
   var fullList = await getMatchFormSettings();
 
@@ -117,6 +120,7 @@ void updateMatchFormSettings(MatchFormSettingsSchema matchFormSettings) async {
   }
 }
 
+/// Returns the match form settings
 Future<MatchFormSettingsSchema?>? getMatchFormSettings() async {
   if (realm == null) {
     await setRealm();
@@ -128,6 +132,7 @@ Future<MatchFormSettingsSchema?>? getMatchFormSettings() async {
   }
 }
 
+/// Updates a schema [PitFormSettingsSchema] object in the realm, adds it if it doesn't exist
 void updatePitFormSettings(PitFormSettingsSchema pitFormSettings) async {
   var fullList = await getPitFormSettings();
 
@@ -144,6 +149,7 @@ void updatePitFormSettings(PitFormSettingsSchema pitFormSettings) async {
   }
 }
 
+/// Returns the pit form settings
 Future<PitFormSettingsSchema?>? getPitFormSettings() async {
   if (realm == null) {
     await setRealm();
@@ -156,6 +162,7 @@ Future<PitFormSettingsSchema?>? getPitFormSettings() async {
   }
 }
 
+/// Updates a schema [Question] object in the realm based of the index and origin, adds it if it doesn't exist
 void updateQuestion(Question updatedQuestion, int index, Origin origin) async {
   if (realm == null) {
     await setRealm();
@@ -206,6 +213,7 @@ void updateQuestion(Question updatedQuestion, int index, Origin origin) async {
   }
 }
 
+/// Updates a schema [DashboardWidget] object in the realm based of the index and origin, adds it if it doesn't exist
 void updateDashboardWidget(
     DashboardWidget dashboardWidget, int index, Origin origin) async {
   if (realm == null) {
@@ -304,7 +312,6 @@ Future<List<PitDataSchema>> getPitData(Team team, Event event) async {
 }
 
 /// Returns the match dashboard data for a given team and event
-
 Future<MatchDashboardSchema?>? getMatchDashboardSettings() async {
   if (realm == null) {
     await setRealm();
@@ -317,6 +324,7 @@ Future<MatchDashboardSchema?>? getMatchDashboardSettings() async {
   }
 }
 
+/// Returns the pit dashboard data for a given team and event
 Future<PitDashboardSchema?>? getPitDashboardSettings() async {
   if (realm == null) {
     await setRealm();
@@ -329,6 +337,7 @@ Future<PitDashboardSchema?>? getPitDashboardSettings() async {
   }
 }
 
+/// Updates the [MatchDashboardSchema] data in the realm
 void updateMatchDashboardSetting(
     MatchDashboardSchema matchDashboardSettings) async {
   var fullList = await getMatchDashboardSettings();
@@ -346,6 +355,7 @@ void updateMatchDashboardSetting(
   }
 }
 
+/// Updates the [PitDashboardSchema] data in the realm
 void updatePitDashboardSetting(PitDashboardSchema pitDashboardSettings) async {
   var fullList = await getPitDashboardSettings();
 

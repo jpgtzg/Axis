@@ -1,7 +1,7 @@
 /// Written by Juan Pablo Gutiérrez
 /// 05 - 07 - 2023
-/// Represents a playable match by a Team
 
+/// Represents a playable match by a Team
 class FRCMatch {
   final String winningAlliance;
   final List<dynamic> blueAlliance;

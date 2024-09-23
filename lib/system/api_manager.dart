@@ -129,8 +129,9 @@ int getTeamNumber(String teamKey) {
 
   try {
     number = int.parse(numericPart);
-    // ignore: empty_catches
-  } catch (e) {}
+  } catch (e) {
+    throw Exception("Could not parse team number");
+  }
 
   return number;
 }

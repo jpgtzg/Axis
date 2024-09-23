@@ -1,6 +1,7 @@
 /// Written by Juan Pablo Gutiérrez
 /// 26 - 07 - 2023
 
+/// Represents the Expected Point Added (EPA) of a team, it is highly predictive measure of a team's performance
 class EPA {
   final double start;
   final double end;

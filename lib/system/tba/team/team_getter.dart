@@ -1,5 +1,6 @@
 /// Written by Juan Pablo Gutiérrez
 /// Gets team-related data
+
 import 'package:axis/system/statbotics/epa.dart';
 import 'package:axis/system/statbotics/statbotics_getter.dart';
 import 'package:axis/system/tba/event/event.dart';

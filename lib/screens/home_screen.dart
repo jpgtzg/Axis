@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 
 import '../widgets/standart_spacer.dart';
 
+/// The main screen of the app
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -38,8 +39,8 @@ class HomeScreen extends StatelessWidget {
                       ),
                       SelectionButton(
                         titleText: "Match Scouting",
-                        widgetScreen: const EventSelectorScreen(
-                            selector: Origin.match),
+                        widgetScreen:
+                            const EventSelectorScreen(selector: Origin.match),
                         primaryColor: Theme.of(context).primaryColor,
                         buttonColor: Colors.lightBlue,
                       ),
